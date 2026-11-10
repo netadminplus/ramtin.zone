@@ -271,6 +271,8 @@ def drop_video_promo(html):
 
 def main():
     posts = json.load(open(EXPORT / "posts.json"))
+    media = json.load(open(EXPORT / "media.json"))
+    byid = {m["id"]: m for m in media}
     # WP REST API returns category names HTML-escaped ("Tips &amp; Tricks");
     # unescape once here so templates escape exactly once.
     cats = {c["id"]: html_lib.unescape(c["name"]) for c in json.load(open(EXPORT / "categories.json"))}
@@ -294,6 +296,12 @@ def main():
         fm.append("categories: [" + ", ".join(f'"{c}"' for c in categories) + "]")
         if yt:
             fm.append(f"youtube_id: {yt}")
+        else:
+            # Blog-only posts (no video): use the WordPress featured image
+            # as the card/hero image, served locally from the repo.
+            feat = byid.get(p["featured_media"])
+            if feat and feat["source_url"] in IMAGE_MAP:
+                fm.append(f"image: {IMAGE_MAP[feat['source_url']]}")
         fm.append(f'description: "{desc.replace(chr(34), chr(39))}"')
         fm.append("migrated_from: netadminhub.com")
         fm.append("---")

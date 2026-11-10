@@ -3,6 +3,7 @@ title: "How to Run an OpenConnect VPN (ocserv) Container on MikroTik"
 date: 2026-05-25
 slug: mikrotik-ocserv-openconnect-vpn-container
 categories: ["MikroTik", "VPN"]
+image: /assets/images/ocserv-openconnect-vpn-mikrotik-container.webp
 description: "A step-by-step guide to running an OpenConnect VPN server (ocserv) as a container on MikroTik RouterOS. Covers networking, firewall rules, user management, and the gotchas most guides skip."
 migrated_from: netadminhub.com
 ---

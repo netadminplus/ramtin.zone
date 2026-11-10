@@ -17,27 +17,27 @@
 <meta name="twitter:title" content="{% block twtitle %}{{ site.name }}{% endblock %}">
 <meta name="twitter:description" content="{% block twdescription %}{{ site.description }}{% endblock %}">
 <meta name="twitter:image" content="{% block twimage %}{{ site.og_image }}{% endblock %}">
-<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
-<link rel="alternate" type="application/rss+xml" title="{{ site.name }} — Blog" href="/feed.xml">
+<link rel="icon" href="{{ prefix }}assets/images/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="{{ site.name }} — Blog" href="{{ prefix }}feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="{{ prefix }}assets/css/style.css">
 {% block head_extra %}{% endblock %}
 </head>
 <body>
 <header class="site-header">
   <div class="container header-inner">
-    <a class="logo" href="/" aria-label="Ramtin Tech Zone — home">
+    <a class="logo" href="{{ prefix }}" aria-label="Ramtin Tech Zone — home">
       <span class="logo-mark">R</span>
       <span class="logo-text">Ramtin <strong>Tech Zone</strong></span>
     </a>
     <nav class="site-nav" aria-label="Main navigation">
-      <a href="/" class="{% if active == 'home' %}active{% endif %}">Blog</a>
-      <a href="/projects/" class="{% if active == 'projects' %}active{% endif %}">Projects</a>
-      <a href="/about/" class="{% if active == 'about' %}active{% endif %}">About</a>
-      <a href="/donate/" class="{% if active == 'donate' %}active{% endif %}">Donate</a>
-      <a href="/contact/" class="{% if active == 'contact' %}active{% endif %}">Contact</a>
+      <a href="{{ prefix }}" class="{% if active == 'home' %}active{% endif %}">Blog</a>
+      <a href="{{ prefix }}projects/" class="{% if active == 'projects' %}active{% endif %}">Projects</a>
+      <a href="{{ prefix }}about/" class="{% if active == 'about' %}active{% endif %}">About</a>
+      <a href="{{ prefix }}donate/" class="{% if active == 'donate' %}active{% endif %}">Donate</a>
+      <a href="{{ prefix }}contact/" class="{% if active == 'contact' %}active{% endif %}">Contact</a>
     </nav>
     <div class="header-socials">
       <a href="https://youtube.com/@ramtintechzone" aria-label="YouTube" title="YouTube">{{ brand('youtube') }}</a>
@@ -61,12 +61,12 @@
     <div>
       <h4>Explore</h4>
       <ul>
-        <li><a href="/">Blog</a></li>
-        <li><a href="/projects/">Projects</a></li>
-        <li><a href="/about/">About</a></li>
-        <li><a href="/donate/">Donate</a></li>
-        <li><a href="/contact/">Contact</a></li>
-        <li><a href="/feed.xml">RSS feed</a></li>
+        <li><a href="{{ prefix }}">Blog</a></li>
+        <li><a href="{{ prefix }}projects/">Projects</a></li>
+        <li><a href="{{ prefix }}about/">About</a></li>
+        <li><a href="{{ prefix }}donate/">Donate</a></li>
+        <li><a href="{{ prefix }}contact/">Contact</a></li>
+        <li><a href="{{ prefix }}feed.xml">RSS feed</a></li>
       </ul>
     </div>
     <div>
@@ -86,7 +86,7 @@
     <span>Persian courses &amp; community: <a href="https://netadminplus.com">netadminplus.com</a></span>
   </div>
 </footer>
-<script src="/assets/js/main.js" defer></script>
+<script src="{{ prefix }}assets/js/main.js" defer></script>
 {% block body_extra %}{% endblock %}
 </body>
 </html>

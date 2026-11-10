@@ -72,6 +72,15 @@ def fmt_duration(seconds):
     return f"{h}:{m:02d}:{s:02d}" if h else f"{m}:{s:02d}"
 
 
+def relink(html, prefix):
+    """Rewrite root-absolute internal links in rendered Markdown to the
+    page-relative prefix, so pages work at any base path."""
+    for token in ("assets/", "posts/", "about/", "donate/", "contact/", "projects/", "feed.xml"):
+        html = html.replace(f'"/{token}', f'"{prefix}{token}')
+    html = html.replace('href="/"', f'href="{prefix}"')
+    return html
+
+
 def load_video_meta():
     """Match videos.json (from yt-dlp) by YouTube ID for views/duration."""
     meta = {}
@@ -136,14 +145,21 @@ def main():
         words = len(re.sub(r"<[^>]+>", " ", render_md(body)).split())
         yt = fm.get("youtube_id")
         v = video_meta.get(yt, {}) if yt else {}
-        thumb = (
-            f"https://i.ytimg.com/vi/{yt}/maxresdefault.jpg"
-            if yt
-            else fm.get("image", "")
-        )
-        thumb_fallback = (
-            f"https://i.ytimg.com/vi/{yt}/hqdefault.jpg" if yt else thumb
-        )
+        if yt:
+            thumb = f"https://i.ytimg.com/vi/{yt}/maxresdefault.jpg"
+            thumb_fallback = f"https://i.ytimg.com/vi/{yt}/hqdefault.jpg"
+            thumb_abs = thumb
+            image = None
+        elif fm.get("image"):
+            # Blog-only post: local featured image, stored without a leading
+            # slash so templates can prefix it per page depth.
+            thumb = fm["image"].lstrip("/")
+            thumb_fallback = thumb
+            thumb_abs = f"{SITE_URL}/{thumb}"
+            image = thumb
+        else:
+            thumb = thumb_fallback = thumb_abs = ""
+            image = None
         posts.append(
             {
                 "title": fm["title"],
@@ -153,13 +169,14 @@ def main():
                 "categories": fm.get("categories", []),
                 "description": fm.get("description", ""),
                 "youtube_id": yt,
-                "image": fm.get("image"),
+                "image": image,
                 "thumb": thumb,
                 "thumb_fallback": thumb_fallback,
+                "thumb_abs": thumb_abs,
                 "views": fmt_views(v.get("view_count")),
                 "duration": fmt_duration(v.get("duration")),
                 "reading_time": max(1, math.ceil(words / 200)),
-                "body_html": render_md(body),
+                "body_html": relink(render_md(body), "../../"),
                 "words": words,
             }
         )
@@ -172,13 +189,16 @@ def main():
             "url": SITE_URL,
             "description": "Practical tutorials about MikroTik, OpenWrt, VPNs, Linux and AI — hands-on guides from Ramtin Rahmani Nejad, a network engineer in IT since 2006.",
             "year": datetime.now().year,
-            "og_image": posts[0]["thumb"] if posts else f"{SITE_URL}/assets/images/favicon.svg",
+            "og_image": posts[0]["thumb_abs"] if posts else f"{SITE_URL}/assets/images/favicon.svg",
         }
     }
 
     # ---- home -------------------------------------------------------
+    # Asset/internal links are relative (prefix) so the site works both at
+    # ramtin.zone (root) and at netadminplus.github.io/ramtin.zone/ (subpath).
     home = env.get_template("home.html").render(
-        **ctx, posts=posts, categories=categories, active="home", canonical="/"
+        **ctx, posts=posts, categories=categories, active="home", canonical="/",
+        prefix="",
     )
     (out / "index.html").write_text(home, encoding="utf-8")
 
@@ -196,6 +216,7 @@ def main():
             next=posts[i + 1] if i + 1 < len(posts) else None,
             canonical=f"/posts/{post['slug']}/",
             active="home",
+            prefix="../../",
         )
         d = out / "posts" / post["slug"]
         d.mkdir(parents=True)
@@ -206,10 +227,11 @@ def main():
         fm, body = parse_post(path)
         html = env.get_template("page.html").render(
             **ctx,
-            page={"title": fm["title"], "body_html": render_md(body),
+            page={"title": fm["title"], "body_html": relink(render_md(body), "../"),
                   "description": fm.get("description")},
             canonical=f"/{fm['slug']}/",
             active=fm["slug"],
+            prefix="../",
         )
         d = out / fm["slug"]
         d.mkdir(parents=True)
@@ -218,7 +240,8 @@ def main():
     # ---- projects ---------------------------------------------------
     projects = fetch_projects()
     proj = env.get_template("projects.html").render(
-        **ctx, projects=projects, canonical="/projects/", active="projects"
+        **ctx, projects=projects, canonical="/projects/", active="projects",
+        prefix="../",
     )
     d = out / "projects"
     d.mkdir(parents=True)

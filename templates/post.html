@@ -4,10 +4,10 @@
 {% block ogtype %}article{% endblock %}
 {% block ogtitle %}{{ post.title }}{% endblock %}
 {% block ogdescription %}{{ post.description }}{% endblock %}
-{% block ogimage %}{{ post.thumb }}{% endblock %}
+{% block ogimage %}{{ post.thumb_abs }}{% endblock %}
 {% block twtitle %}{{ post.title }}{% endblock %}
 {% block twdescription %}{{ post.description }}{% endblock %}
-{% block twimage %}{{ post.thumb }}{% endblock %}
+{% block twimage %}{{ post.thumb_abs }}{% endblock %}
 {% block head_extra %}
 <script type="application/ld+json">
 {
@@ -17,14 +17,14 @@
   "description": {{ post.description | tojson }},
   "datePublished": "{{ post.date }}",
   "author": {"@type": "Person", "name": "Ramtin Rahmani Nejad", "url": "https://ramtin.zone/about/"},
-  "image": {{ post.thumb | tojson }},
+  "image": {{ post.thumb_abs | tojson }},
   "mainEntityOfPage": {"@type": "WebPage", "@id": "{{ site.url }}/posts/{{ post.slug }}/"}
   {% if post.youtube_id %},
   "video": {
     "@type": "VideoObject",
     "name": {{ post.title | tojson }},
     "description": {{ post.description | tojson }},
-    "thumbnailUrl": {{ post.thumb | tojson }},
+    "thumbnailUrl": {{ post.thumb_abs | tojson }},
     "uploadDate": "{{ post.date }}",
     "embedUrl": "https://www.youtube.com/embed/{{ post.youtube_id }}"
   }
@@ -34,7 +34,7 @@
 {% endblock %}
 {% block content %}
 <article class="post container-narrow">
-  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Blog</a> / {% for cat in post.categories %}<a href="/?cat={{ cat }}">{{ cat }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</nav>
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="{{ prefix }}">Blog</a> / {% for cat in post.categories %}<a href="{{ prefix }}?cat={{ cat }}">{{ cat }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</nav>
   <header class="post-header">
     <h1>{{ post.title }}</h1>
     <div class="post-meta">
@@ -51,7 +51,7 @@
   </div>
   <p class="video-link"><a class="btn btn-primary" href="https://www.youtube.com/watch?v={{ post.youtube_id }}">Watch on YouTube</a></p>
   {% elif post.image %}
-  <figure class="post-hero"><img src="{{ post.image }}" alt="{{ post.title }}"></figure>
+  <figure class="post-hero"><img src="{{ prefix }}{{ post.image }}" alt="{{ post.title }}"></figure>
   {% endif %}
 
   <div class="article-body">
@@ -59,12 +59,12 @@
   </div>
 
   <footer class="article-footer">
-    <p>Found this useful? <a href="https://youtube.com/@ramtintechzone">Subscribe to Ramtin Tech Zone on YouTube</a> for more MikroTik, Linux, networking, VPN and AI tutorials — and if a script or tutorial helped you, consider <a href="/donate/">supporting the work</a>.</p>
+    <p>Found this useful? <a href="https://youtube.com/@ramtintechzone">Subscribe to Ramtin Tech Zone on YouTube</a> for more MikroTik, Linux, networking, VPN and AI tutorials — and if a script or tutorial helped you, consider <a href="{{ prefix }}donate/">supporting the work</a>.</p>
   </footer>
 
   <nav class="post-nav" aria-label="More tutorials">
-    {% if prev %}<a class="post-nav-link prev" href="/posts/{{ prev.slug }}/"><span>← Newer</span><strong>{{ prev.title }}</strong></a>{% endif %}
-    {% if next %}<a class="post-nav-link next" href="/posts/{{ next.slug }}/"><span>Older →</span><strong>{{ next.title }}</strong></a>{% endif %}
+    {% if prev %}<a class="post-nav-link prev" href="{{ prefix }}posts/{{ prev.slug }}/"><span>← Newer</span><strong>{{ prev.title }}</strong></a>{% endif %}
+    {% if next %}<a class="post-nav-link next" href="{{ prefix }}posts/{{ next.slug }}/"><span>Older →</span><strong>{{ next.title }}</strong></a>{% endif %}
   </nav>
 
   {% if related %}
@@ -73,10 +73,10 @@
     <div class="card-grid small">
       {% for r in related %}
       <article class="card" data-categories="{{ r.categories | join(',') }}">
-        <a class="card-thumb" href="/posts/{{ r.slug }}/"><img src="{{ r.thumb }}" alt="" loading="lazy" onerror="this.onerror=null;this.src='{{ r.thumb_fallback }}';"></a>
+        <a class="card-thumb" href="{{ prefix }}posts/{{ r.slug }}/"><img src="{% if r.youtube_id %}{{ r.thumb }}{% else %}{{ prefix }}{{ r.thumb }}{% endif %}" alt="" loading="lazy"{% if r.youtube_id %} onerror="this.onerror=null;this.src='{{ r.thumb_fallback }}';"{% endif %}></a>
         <div class="card-body">
           <div class="card-meta">{% for cat in r.categories %}<span class="tag">{{ cat }}</span>{% endfor %}<time datetime="{{ r.date }}">{{ r.date_human }}</time></div>
-          <h3 class="card-title"><a href="/posts/{{ r.slug }}/">{{ r.title }}</a></h3>
+          <h3 class="card-title"><a href="{{ prefix }}posts/{{ r.slug }}/">{{ r.title }}</a></h3>
         </div>
       </article>
       {% endfor %}

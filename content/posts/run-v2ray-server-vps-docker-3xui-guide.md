@@ -3,6 +3,7 @@ title: "Run Your Own V2Ray Server on a Personal VPS (Docker & 3x-ui Guide)"
 date: 2026-03-09
 slug: run-v2ray-server-vps-docker-3xui-guide
 categories: ["VPN"]
+image: /assets/images/Run-your-own-V2Ray-server-netadminhub.com_.webp
 description: "A no-hype guide to running your own V2Ray server on a VPS using Docker and 3x-ui."
 migrated_from: netadminhub.com
 ---

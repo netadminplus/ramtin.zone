@@ -7,7 +7,7 @@
     <p class="hero-sub">Hands-on tutorials from a network engineer — MikroTik, OpenWrt, VPNs and AI tools for sysadmins. Every post pairs with a video on the channel.</p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="https://youtube.com/@ramtintechzone">Watch on YouTube</a>
-      <a class="btn btn-ghost" href="/about/">About Ramtin</a>
+      <a class="btn btn-ghost" href="{{ prefix }}about/">About Ramtin</a>
     </div>
   </div>
 </section>
@@ -31,8 +31,8 @@
   <div class="card-grid" id="card-grid">
     {% for post in posts %}
     <article class="card" data-categories="{{ post.categories | join(',') }}" data-title="{{ post.title | lower }}" data-search="{{ (post.title ~ ' ' ~ post.description) | lower }}">
-      <a class="card-thumb" href="/posts/{{ post.slug }}/" aria-label="{{ post.title }}">
-        <img src="{{ post.thumb }}" alt="" loading="lazy" onerror="this.onerror=null;this.src='{{ post.thumb_fallback }}';">
+      <a class="card-thumb" href="{{ prefix }}posts/{{ post.slug }}/" aria-label="{{ post.title }}">
+        <img src="{% if post.youtube_id %}{{ post.thumb }}{% else %}{{ prefix }}{{ post.thumb }}{% endif %}" alt="" loading="lazy"{% if post.youtube_id %} onerror="this.onerror=null;this.src='{{ post.thumb_fallback }}';"{% endif %}>
         {% if post.duration %}<span class="card-duration">{{ post.duration }}</span>{% endif %}
       </a>
       <div class="card-body">
@@ -40,12 +40,12 @@
           {% for cat in post.categories %}<span class="tag">{{ cat }}</span>{% endfor %}
           <time datetime="{{ post.date }}">{{ post.date_human }}</time>
         </div>
-        <h2 class="card-title"><a href="/posts/{{ post.slug }}/">{{ post.title }}</a></h2>
+        <h2 class="card-title"><a href="{{ prefix }}posts/{{ post.slug }}/">{{ post.title }}</a></h2>
         <p class="card-desc">{{ post.description }}</p>
         <div class="card-foot">
           <span>{{ post.reading_time }} min read</span>
           {% if post.views %}<span>{{ post.views }} views</span>{% endif %}
-          <a class="card-link" href="/posts/{{ post.slug }}/">Read tutorial →</a>
+          <a class="card-link" href="{{ prefix }}posts/{{ post.slug }}/">Read tutorial →</a>
         </div>
       </div>
     </article>
