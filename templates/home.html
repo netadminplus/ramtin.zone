@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+{% if page_num == 1 %}
 <section class="hero">
   <div class="container">
     <p class="hero-eyebrow">Ramtin Tech Zone — Blog</p>
@@ -11,6 +12,12 @@
     </div>
   </div>
 </section>
+{% else %}
+<section class="container page-header">
+  <h1>All tutorials</h1>
+  <p>Page {{ page_num }} of {{ total_pages }}</p>
+</section>
+{% endif %}
 
 <section class="container">
   <div class="toolbar">
@@ -28,7 +35,7 @@
 
   <p id="no-results" class="no-results" hidden>No tutorials match your search. Try a different keyword.</p>
 
-  <div class="card-grid" id="card-grid">
+  <div class="card-grid" id="card-grid" data-prefix="{{ prefix }}">
     {% for post in posts %}
     <article class="card" data-categories="{{ post.categories | join(',') }}" data-title="{{ post.title | lower }}" data-search="{{ (post.title ~ ' ' ~ post.description) | lower }}">
       <a class="card-thumb" href="{{ prefix }}posts/{{ post.slug }}/" aria-label="{{ post.title }}">
@@ -51,5 +58,29 @@
     </article>
     {% endfor %}
   </div>
+
+  {% if total_pages > 1 %}
+  <nav class="pagination" id="pagination" aria-label="Pagination">
+    {% if page_num > 1 %}
+      <a class="page-link" href="{{ prefix }}{% if page_num != 2 %}page/{{ page_num - 1 }}/{% endif %}">← Previous</a>
+    {% else %}
+      <span class="page-link disabled" aria-disabled="true">← Previous</span>
+    {% endif %}
+    {% for n in range(1, total_pages + 1) %}
+      {% if n == page_num %}
+        <span class="page-link current" aria-current="page">{{ n }}</span>
+      {% elif n == 1 %}
+        <a class="page-link" href="{{ prefix }}">{{ n }}</a>
+      {% else %}
+        <a class="page-link" href="{{ prefix }}page/{{ n }}/">{{ n }}</a>
+      {% endif %}
+    {% endfor %}
+    {% if page_num < total_pages %}
+      <a class="page-link" href="{{ prefix }}page/{{ page_num + 1 }}/">Next →</a>
+    {% else %}
+      <span class="page-link disabled" aria-disabled="true">Next →</span>
+    {% endif %}
+  </nav>
+  {% endif %}
 </section>
 {% endblock %}

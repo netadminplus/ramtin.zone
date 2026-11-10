@@ -1,11 +1,23 @@
 // Ramtin Tech Zone — category filter + live search (no dependencies).
+//
+// The home page is paginated server-side (12 posts per page), so the cards
+// in the DOM are only the current page. When a filter or search is active,
+// results come from assets/posts.json (the full index), so they cover all
+// posts site-wide and the pagination hides. Clearing both restores the
+// server-rendered page. If posts.json fails to load, filtering falls back
+// to the cards on the current page.
 (function () {
   var grid = document.getElementById("card-grid");
   if (!grid) return;
-  var cards = Array.prototype.slice.call(grid.querySelectorAll(".card"));
+  var pagination = document.getElementById("pagination");
   var chips = document.querySelectorAll(".chip[data-filter]");
   var search = document.getElementById("search");
   var noResults = document.getElementById("no-results");
+  var prefix = grid.getAttribute("data-prefix") || "";
+  var originalHTML = grid.innerHTML;
+  var index = null;       // full post index, once loaded
+  var indexFailed = false;
+  var indexPromise = null;
   var activeFilter = "all";
 
   // Support ?cat=MikroTik deep links from post pages.
@@ -16,19 +28,103 @@
     if (match) activeFilter = preset;
   }
 
-  function apply() {
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function cardHTML(p) {
+    var thumb = p.thumb_is_local ? prefix + p.thumb : p.thumb;
+    var img = '<img src="' + esc(thumb) + '" alt="" loading="lazy"'
+      + (p.thumb_is_local
+        ? ""
+        : ' onerror="this.onerror=null;this.src=\'' + esc(p.thumb_fallback) + '\';"')
+      + ">";
+    var dur = p.duration
+      ? '<span class="card-duration">' + esc(p.duration) + "</span>"
+      : "";
+    var tags = p.categories
+      .map(function (c) { return '<span class="tag">' + esc(c) + "</span>"; })
+      .join("");
+    var views = p.views ? "<span>" + esc(p.views) + " views</span>" : "";
+    return '<article class="card">'
+      + '<a class="card-thumb" href="' + prefix + "posts/" + esc(p.slug) + '/" aria-label="' + esc(p.title) + '">'
+      + img + dur + "</a>"
+      + '<div class="card-body"><div class="card-meta">' + tags
+      + '<time datetime="' + esc(p.date) + '">' + esc(p.date_human) + "</time></div>"
+      + '<h2 class="card-title"><a href="' + prefix + "posts/" + esc(p.slug) + '/">' + esc(p.title) + "</a></h2>"
+      + '<p class="card-desc">' + esc(p.description) + "</p>"
+      + '<div class="card-foot"><span>' + p.reading_time + " min read</span>" + views
+      + '<a class="card-link" href="' + prefix + "posts/" + esc(p.slug) + '/">Read tutorial →</a></div>'
+      + "</div></article>";
+  }
+
+  function loadIndex() {
+    if (!indexPromise) {
+      indexPromise = fetch(prefix + "assets/posts.json")
+        .then(function (r) {
+          if (!r.ok) throw new Error("posts.json " + r.status);
+          return r.json();
+        })
+        .then(function (data) { index = data; })
+        .catch(function () { indexFailed = true; });
+    }
+    return indexPromise;
+  }
+
+  function renderFromIndex() {
+    var q = (search ? search.value : "").trim().toLowerCase();
+    var matches = index.filter(function (p) {
+      var okFilter = activeFilter === "all" || p.categories.indexOf(activeFilter) !== -1;
+      var hay = (p.title + " " + p.description).toLowerCase();
+      return okFilter && (!q || hay.indexOf(q) !== -1);
+    });
+    grid.innerHTML = matches.map(cardHTML).join("");
+    if (pagination) pagination.style.display = "none";
+    if (noResults) noResults.hidden = matches.length !== 0;
+  }
+
+  // Fallback when posts.json is unavailable: filter only this page's cards.
+  function filterCurrentPage() {
     var q = (search ? search.value : "").trim().toLowerCase();
     var visible = 0;
-    cards.forEach(function (card) {
+    Array.prototype.slice.call(grid.querySelectorAll(".card")).forEach(function (card) {
       var cats = (card.getAttribute("data-categories") || "").split(",");
       var hay = card.getAttribute("data-search") || "";
-      var okFilter = activeFilter === "all" || cats.indexOf(activeFilter) !== -1;
-      var okSearch = !q || hay.indexOf(q) !== -1;
-      var show = okFilter && okSearch;
+      var show =
+        (activeFilter === "all" || cats.indexOf(activeFilter) !== -1) &&
+        (!q || hay.indexOf(q) !== -1);
       card.style.display = show ? "" : "none";
       if (show) visible++;
     });
     if (noResults) noResults.hidden = visible !== 0;
+  }
+
+  function restorePage() {
+    grid.innerHTML = originalHTML;
+    if (pagination) pagination.style.display = "";
+    if (noResults) noResults.hidden = true;
+  }
+
+  function apply() {
+    var q = (search ? search.value : "").trim().toLowerCase();
+    if (activeFilter === "all" && !q) {
+      restorePage();
+      return;
+    }
+    if (index) {
+      renderFromIndex();
+      return;
+    }
+    if (indexFailed) {
+      filterCurrentPage();
+      return;
+    }
+    loadIndex().then(function () {
+      if (index) renderFromIndex();
+      else filterCurrentPage();
+    });
   }
 
   chips.forEach(function (chip) {

@@ -227,14 +227,27 @@ def main():
         }
     }
 
-    # ---- home -------------------------------------------------------
-    # Asset/internal links are relative (prefix) so the site works both at
-    # ramtin.zone (root) and at netadminplus.github.io/ramtin.zone/ (subpath).
-    home = env.get_template("home.html").render(
-        **ctx, posts=posts, categories=categories, active="home", canonical="/",
-        prefix="",
-    )
-    (out / "index.html").write_text(home, encoding="utf-8")
+    # ---- home (paginated) -------------------------------------------
+    # 12 posts per page: the footer stays reachable as the catalog grows.
+    # Page 1 is / ; pages 2+ are /page/N/ (prefix "../", like other pages).
+    # The filter/search still works site-wide: main.js fetches posts.json
+    # (written below) and renders matches from the full index.
+    PER_PAGE = 12
+    total_pages = max(1, math.ceil(len(posts) / PER_PAGE))
+    for page_num in range(1, total_pages + 1):
+        page_posts = posts[(page_num - 1) * PER_PAGE: page_num * PER_PAGE]
+        html = env.get_template("home.html").render(
+            **ctx, posts=page_posts, categories=categories, active="home",
+            canonical="/" if page_num == 1 else f"/page/{page_num}/",
+            prefix="" if page_num == 1 else "../",
+            page_num=page_num, total_pages=total_pages,
+        )
+        if page_num == 1:
+            (out / "index.html").write_text(html, encoding="utf-8")
+        else:
+            d = out / "page" / str(page_num)
+            d.mkdir(parents=True)
+            (d / "index.html").write_text(html, encoding="utf-8")
 
     # ---- post pages -------------------------------------------------
     for i, post in enumerate(posts):
@@ -308,6 +321,8 @@ def main():
     urls = [("", posts[0]["date"] if posts else "2026-11-10")]
     for p in posts:
         urls.append((f"posts/{p['slug']}/", p["date"]))
+    for n in range(2, total_pages + 1):
+        urls.append((f"page/{n}/", posts[0]["date"] if posts else "2026-11-10"))
     for slug in ("about", "donate", "contact", "projects", "design-system"):
         urls.append((f"{slug}/", "2026-11-10"))
     sm = "".join(
@@ -329,6 +344,30 @@ def main():
     # article screenshots live in the repo under static/images/
     if (STATIC / "images").exists():
         shutil.copytree(STATIC / "images", out / "assets" / "images", dirs_exist_ok=True)
+
+    # ---- full post index for client-side filter/search ---------------
+    # main.js fetches this when a filter/search is active, so results
+    # cover all posts site-wide even though each page renders only 12.
+    index = [
+        {
+            "title": p["title"],
+            "slug": p["slug"],
+            "date": p["date"],
+            "date_human": p["date_human"],
+            "categories": p["categories"],
+            "description": p["description"],
+            "thumb": p["thumb"],
+            "thumb_fallback": p["thumb_fallback"],
+            "thumb_is_local": p["thumb_is_local"],
+            "duration": p["duration"],
+            "views": p["views"],
+            "reading_time": p["reading_time"],
+        }
+        for p in posts
+    ]
+    (out / "assets" / "posts.json").write_text(
+        json.dumps(index, ensure_ascii=False), encoding="utf-8"
+    )
 
     print(f"built {len(posts)} posts, {len(projects)} projects -> {out}")
     for p in posts:

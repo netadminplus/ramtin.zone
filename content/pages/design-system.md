@@ -105,6 +105,22 @@ Chips filter content. Tags label a post's topics. Badges show a status — succe
 
 Cards are the home page. One image (16:9), one tag, one title, a three-line description, and a footer with reading time. On hover the card lifts 3px and the border brightens.
 
+## Pagination
+
+The home page shows 12 posts per page. Page 1 is `/`, later pages are `/page/2/`, `/page/3/`, and so on. The footer stays reachable on every page, no matter how many posts the site grows to.
+
+<div class="ds-demo">
+  <nav class="pagination" style="padding:0">
+    <a class="page-link" href="#">← Previous</a>
+    <a class="page-link" href="#">1</a>
+    <span class="page-link current" aria-current="page">2</span>
+    <a class="page-link" href="#">3</a>
+    <a class="page-link" href="#">Next →</a>
+  </nav>
+</div>
+
+The current page is the accent-filled number. When a category filter or search is active, the grid shows matching posts from the whole site (via a generated `posts.json` index) and the pagination hides until the filter is cleared.
+
 ## Callouts
 
 Use callouts for notes, tips, and warnings inside articles. Quotes stay as blockquotes; callouts are for things the reader must not miss.

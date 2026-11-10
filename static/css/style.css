@@ -128,6 +128,32 @@ textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible {
 .card-foot { margin-top: auto; display: flex; align-items: center; gap: var(--space-3); font-size: var(--font-size-sm); color: var(--color-text-muted); }
 .card-link { margin-left: auto; font-weight: var(--font-weight-semibold); white-space: nowrap; }
 
+/* Pagination — numbered home pages (12 posts per page) */
+.pagination {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+  gap: var(--space-2); padding: var(--space-8) 0 var(--space-2);
+}
+.page-link {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 36px; height: 36px; padding: 0 var(--space-3);
+  border: 1px solid var(--color-border); border-radius: var(--radius-md);
+  background: var(--color-surface); color: var(--color-text);
+  font-size: var(--font-size-md); font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  transition: border-color var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
+}
+a.page-link:hover { border-color: var(--color-accent); color: var(--color-accent-hover); }
+.page-link.current {
+  background: var(--color-accent); border-color: var(--color-accent);
+  color: var(--color-text-on-accent);
+}
+.page-link.disabled { color: var(--color-text-muted); opacity: 0.5; cursor: default; }
+
+/* Compact header for paginated home pages (page 2+) */
+.page-header { padding: var(--space-10) 0 var(--space-6); }
+.page-header h1 { font-size: var(--font-size-4xl); margin: 0 0 var(--space-2); }
+.page-header p { color: var(--color-text-muted); margin: 0; }
+
 /* Badges — status labels (soft background + colored text) */
 .badge {
   display: inline-flex; align-items: center; gap: 6px;
