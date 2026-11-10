@@ -9,13 +9,18 @@ What it does:
 2. Skips Shorts (duration <= 90s) and videos that already have a post
    (matched by youtube_id in content/posts/*.md front matter).
 3. For each new long video: fetches full metadata + English transcript,
-   then drafts a full article in Ramtin's structure (intro, what you will
-   learn, chapter sections from the transcript, commands, closing) and
-   writes content/posts/<slug>.md.
+   then drafts a short structured reference in Ramtin's structure (intro,
+   what you will learn, key takeaways, commands, closing) and writes
+   content/posts/<slug>.md.
 4. Rebuilds the site (scripts/build.py).
 
-The drafted article is real content, not a stub -- but it is a draft from
-the transcript. Ramtin reviews new posts and edits them in the repo;
+The draft is a short reference distilled from the transcript, never a
+paste of transcript prose. A transcript is spoken language (filler, ASR
+errors, "you can see") and pasting it as the article body is wrong: the
+18 articles generated that way in Nov 2026 were pulled off the live site
+the same day. Full articles in Ramtin's voice are written by hand;
+this generator only produces the short reference draft.
+Ramtin reviews new posts and edits them in the repo;
 later sync runs never overwrite an existing post file.
 """
 import argparse
@@ -106,7 +111,7 @@ def transcript_sentences(vtt_path):
     lines = []
     for line in text.splitlines():
         line = line.strip()
-        if not line or line.startswith(("WEBVTT", "NOTE")) or "-->" in line:
+        if not line or line.startswith(("WEBVTT", "NOTE", "Kind:", "Language:")) or "-->" in line:
             continue
         if re.match(r"^\d+$", line):
             continue
@@ -161,6 +166,32 @@ PROSE_WORDS = {
 }
 
 
+def key_takeaways(sentences, limit=8):
+    """The most informative transcript sentences, as a short summary.
+
+    A transcript is not an article: this picks a few substantive sentences
+    (no filler starts, no questions, no "you can see" narration) instead
+    of pasting the whole transcript. At most `limit` sentences.
+    """
+    narration = re.compile(
+        r"(you can see|let me|let's|you know|right\?|as you can see|"
+        r"thank you for watching|subscribe|like this video|comment below)",
+        re.I)
+    out = []
+    for s in sentences:
+        if len(out) >= limit:
+            break
+        low = s.lower()
+        if low.startswith(FILLER_STARTS):
+            continue
+        if "?" in s or narration.search(s):
+            continue
+        if len(s) < 80:
+            continue
+        out.append(s)
+    return out
+
+
 def extract_commands(sentences):
     """Lines that look like real RouterOS / shell commands.
 
@@ -196,6 +227,7 @@ def draft_article(video, transcript):
     chapters = video.get("chapters") or []
     sentences = transcript
     cmds = extract_commands(sentences)
+    takeaways = key_takeaways(sentences)
 
     lines = []
     intro = clean_description(desc)
@@ -203,11 +235,8 @@ def draft_article(video, transcript):
         lines.append(intro)
         lines.append("")
     lines.append(
-        "In this tutorial I walk through the whole setup step by step — "
-        "what it is, what you need before you start, and the exact "
-        "configuration that works. The video above shows the full lab; "
-        "below is the written reference so you can follow along or copy "
-        "the commands."
+        "The video above shows the full lab; below is the written reference "
+        "so you can follow along or copy the commands."
     )
     lines.append("")
     if chapters:
@@ -216,15 +245,16 @@ def draft_article(video, transcript):
         for ch in chapters:
             lines.append(f"- {ch.get('title', '').strip()}")
         lines.append("")
-    # chapter sections from the transcript
-    if sentences:
-        lines.append("## How it works")
+    # Short distilled summary only. NEVER paste transcript sentences as
+    # prose: the whole-transcript "How it works" section this function
+    # used to generate was wrong and its 18 articles were pulled from
+    # the live site in Nov 2026.
+    if takeaways:
+        lines.append("## Key takeaways")
         lines.append("")
-        per = max(2, len(sentences) // 4)
-        for i in range(0, min(len(sentences), per * 4), per):
-            chunk = sentences[i:i + per]
-            lines.append(" ".join(chunk))
-            lines.append("")
+        for t in takeaways:
+            lines.append(f"- {t}")
+        lines.append("")
     if cmds:
         lines.append("## Commands used")
         lines.append("")
