@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Projects — {{ site.name }}{% endblock %}
+{% block description %}Open-source tools and scripts by Ramtin Rahmani Nejad — MikroTik monitoring, AI prompts, VPN tooling and more.{% endblock %}
+{% block content %}
+<article class="page container-narrow">
+  <h1>Projects</h1>
+  <p>Open-source tools I build for my own network and share with the community. Everything is free to use — star a repo on GitHub if it helps you.</p>
+  <div class="repo-grid">
+    {% for r in projects %}
+    <div class="repo-card">
+      <h3><a href="{{ r.url }}">{{ r.name }}</a></h3>
+      {% if r.description %}<p>{{ r.description }}</p>{% endif %}
+      <span class="repo-stars">★ {{ r.stars }}{% if r.language %} · {{ r.language }}{% endif %}</span>
+    </div>
+    {% endfor %}
+  </div>
+  <p>More on GitHub: <a href="https://github.com/netadminplus">github.com/netadminplus</a></p>
+</article>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }} — {{ site.name }}{% endblock %}
+{% block description %}{{ post.description }}{% endblock %}
+{% block ogtype %}article{% endblock %}
+{% block ogtitle %}{{ post.title }}{% endblock %}
+{% block ogdescription %}{{ post.description }}{% endblock %}
+{% block ogimage %}{{ post.thumb }}{% endblock %}
+{% block twtitle %}{{ post.title }}{% endblock %}
+{% block twdescription %}{{ post.description }}{% endblock %}
+{% block twimage %}{{ post.thumb }}{% endblock %}
+{% block head_extra %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ post.title | tojson }},
+  "description": {{ post.description | tojson }},
+  "datePublished": "{{ post.date }}",
+  "author": {"@type": "Person", "name": "Ramtin Rahmani Nejad", "url": "https://ramtin.zone/about/"},
+  "image": {{ post.thumb | tojson }},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "{{ site.url }}/posts/{{ post.slug }}/"}
+  {% if post.youtube_id %},
+  "video": {
+    "@type": "VideoObject",
+    "name": {{ post.title | tojson }},
+    "description": {{ post.description | tojson }},
+    "thumbnailUrl": {{ post.thumb | tojson }},
+    "uploadDate": "{{ post.date }}",
+    "embedUrl": "https://www.youtube.com/embed/{{ post.youtube_id }}"
+  }
+  {% endif %}
+}
+</script>
+{% endblock %}
+{% block content %}
+<article class="post container-narrow">
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Blog</a> / {% for cat in post.categories %}<a href="/?cat={{ cat }}">{{ cat }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</nav>
+  <header class="post-header">
+    <h1>{{ post.title }}</h1>
+    <div class="post-meta">
+      <time datetime="{{ post.date }}">{{ post.date_human }}</time>
+      <span>·</span><span>{{ post.reading_time }} min read</span>
+      {% if post.views %}<span>·</span><span>{{ post.views }} views on YouTube</span>{% endif %}
+      {% for cat in post.categories %}<span class="tag">{{ cat }}</span>{% endfor %}
+    </div>
+  </header>
+
+  {% if post.youtube_id %}
+  <div class="video-embed">
+    <iframe src="https://www.youtube-nocookie.com/embed/{{ post.youtube_id }}" title="{{ post.title }}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <p class="video-link"><a class="btn btn-primary" href="https://www.youtube.com/watch?v={{ post.youtube_id }}">Watch on YouTube</a></p>
+  {% elif post.image %}
+  <figure class="post-hero"><img src="{{ post.image }}" alt="{{ post.title }}"></figure>
+  {% endif %}
+
+  <div class="article-body">
+    {{ post.body_html | safe }}
+  </div>
+
+  <footer class="article-footer">
+    <p>Found this useful? <a href="https://youtube.com/@ramtintechzone">Subscribe to Ramtin Tech Zone on YouTube</a> for more MikroTik, Linux, networking, VPN and AI tutorials — and if a script or tutorial helped you, consider <a href="/donate/">supporting the work</a>.</p>
+  </footer>
+
+  <nav class="post-nav" aria-label="More tutorials">
+    {% if prev %}<a class="post-nav-link prev" href="/posts/{{ prev.slug }}/"><span>← Newer</span><strong>{{ prev.title }}</strong></a>{% endif %}
+    {% if next %}<a class="post-nav-link next" href="/posts/{{ next.slug }}/"><span>Older →</span><strong>{{ next.title }}</strong></a>{% endif %}
+  </nav>
+
+  {% if related %}
+  <section class="related">
+    <h2>Keep reading</h2>
+    <div class="card-grid small">
+      {% for r in related %}
+      <article class="card" data-categories="{{ r.categories | join(',') }}">
+        <a class="card-thumb" href="/posts/{{ r.slug }}/"><img src="{{ r.thumb }}" alt="" loading="lazy" onerror="this.onerror=null;this.src='{{ r.thumb_fallback }}';"></a>
+        <div class="card-body">
+          <div class="card-meta">{% for cat in r.categories %}<span class="tag">{{ cat }}</span>{% endfor %}<time datetime="{{ r.date }}">{{ r.date_human }}</time></div>
+          <h3 class="card-title"><a href="/posts/{{ r.slug }}/">{{ r.title }}</a></h3>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div class="container">
+    <p class="hero-eyebrow">Ramtin Tech Zone — Blog</p>
+    <h1>Practical networking, infrastructure &amp; AI.</h1>
+    <p class="hero-sub">Hands-on tutorials from a network engineer — MikroTik, OpenWrt, VPNs and AI tools for sysadmins. Every post pairs with a video on the channel.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="https://youtube.com/@ramtintechzone">Watch on YouTube</a>
+      <a class="btn btn-ghost" href="/about/">About Ramtin</a>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="toolbar">
+    <div class="filters" role="group" aria-label="Filter by category">
+      <button class="chip active" data-filter="all">All</button>
+      {% for cat in categories %}
+      <button class="chip" data-filter="{{ cat }}">{{ cat }}</button>
+      {% endfor %}
+    </div>
+    <div class="search-box">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="search" type="search" placeholder="Search tutorials…" aria-label="Search tutorials">
+    </div>
+  </div>
+
+  <p id="no-results" class="no-results" hidden>No tutorials match your search. Try a different keyword.</p>
+
+  <div class="card-grid" id="card-grid">
+    {% for post in posts %}
+    <article class="card" data-categories="{{ post.categories | join(',') }}" data-title="{{ post.title | lower }}" data-search="{{ (post.title ~ ' ' ~ post.description) | lower }}">
+      <a class="card-thumb" href="/posts/{{ post.slug }}/" aria-label="{{ post.title }}">
+        <img src="{{ post.thumb }}" alt="" loading="lazy" onerror="this.onerror=null;this.src='{{ post.thumb_fallback }}';">
+        {% if post.duration %}<span class="card-duration">{{ post.duration }}</span>{% endif %}
+      </a>
+      <div class="card-body">
+        <div class="card-meta">
+          {% for cat in post.categories %}<span class="tag">{{ cat }}</span>{% endfor %}
+          <time datetime="{{ post.date }}">{{ post.date_human }}</time>
+        </div>
+        <h2 class="card-title"><a href="/posts/{{ post.slug }}/">{{ post.title }}</a></h2>
+        <p class="card-desc">{{ post.description }}</p>
+        <div class="card-foot">
+          <span>{{ post.reading_time }} min read</span>
+          {% if post.views %}<span>{{ post.views }} views</span>{% endif %}
+          <a class="card-link" href="/posts/{{ post.slug }}/">Read tutorial →</a>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

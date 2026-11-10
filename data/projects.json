@@ -1,0 +1,138 @@
+[
+ {
+  "name": "rocketchat-one-command",
+  "url": "https://github.com/netadminplus/rocketchat-one-command",
+  "description": "",
+  "stars": 25,
+  "language": "Shell",
+  "updated": "2026-10-27"
+ },
+ {
+  "name": "mikrotik-prompts",
+  "url": "https://github.com/netadminplus/mikrotik-prompts",
+  "description": "Tested, agent-agnostic AI prompts for configuring MikroTik (RouterOS v7) \u2014 starting with a CGNAT-friendly multi-tunnel bypass. Bilingual EN/FA.",
+  "stars": 6,
+  "language": "",
+  "updated": "2026-10-09"
+ },
+ {
+  "name": "mikrotik-iran-geoip",
+  "url": "https://github.com/netadminplus/mikrotik-iran-geoip",
+  "description": "",
+  "stars": 4,
+  "language": "RouterOS Script",
+  "updated": "2026-05-27"
+ },
+ {
+  "name": "issabelcallmonitoring",
+  "url": "https://github.com/netadminplus/issabelcallmonitoring",
+  "description": "",
+  "stars": 3,
+  "language": "JavaScript",
+  "updated": "2026-07-10"
+ },
+ {
+  "name": "mikrotik-adlist-ir",
+  "url": "https://github.com/netadminplus/mikrotik-adlist-ir",
+  "description": "",
+  "stars": 3,
+  "language": "Shell",
+  "updated": "2026-10-27"
+ },
+ {
+  "name": "simple-sshvpn-manager",
+  "url": "https://github.com/netadminplus/simple-sshvpn-manager",
+  "description": "",
+  "stars": 1,
+  "language": "Shell",
+  "updated": "2026-10-27"
+ },
+ {
+  "name": "I4IRAN",
+  "url": "https://github.com/netadminplus/I4IRAN",
+  "description": "",
+  "stars": 0,
+  "language": "",
+  "updated": "2025-06-20"
+ },
+ {
+  "name": "MikroTik-Grafana",
+  "url": "https://github.com/netadminplus/MikroTik-Grafana",
+  "description": "",
+  "stars": 0,
+  "language": "",
+  "updated": "2026-03-11"
+ },
+ {
+  "name": "conduit-docker",
+  "url": "https://github.com/netadminplus/conduit-docker",
+  "description": "",
+  "stars": 0,
+  "language": "Shell",
+  "updated": "2026-01-31"
+ },
+ {
+  "name": "issabel5-easyvpn",
+  "url": "https://github.com/netadminplus/issabel5-easyvpn",
+  "description": "",
+  "stars": 0,
+  "language": "Shell",
+  "updated": "2026-07-12"
+ },
+ {
+  "name": "mikrotunnel",
+  "url": "https://github.com/netadminplus/mikrotunnel",
+  "description": "",
+  "stars": 0,
+  "language": "Python",
+  "updated": "2025-07-16"
+ },
+ {
+  "name": "modo",
+  "url": "https://github.com/netadminplus/modo",
+  "description": "",
+  "stars": 0,
+  "language": "Python",
+  "updated": "2026-03-27"
+ },
+ {
+  "name": "netkit-legal",
+  "url": "https://github.com/netadminplus/netkit-legal",
+  "description": "Official NetKit privacy policy and support pages",
+  "stars": 0,
+  "language": "HTML",
+  "updated": "2026-08-14"
+ },
+ {
+  "name": "notefy",
+  "url": "https://github.com/netadminplus/notefy",
+  "description": "",
+  "stars": 0,
+  "language": "Python",
+  "updated": "2025-12-26"
+ },
+ {
+  "name": "pasrah",
+  "url": "https://github.com/netadminplus/pasrah",
+  "description": "",
+  "stars": 0,
+  "language": "Python",
+  "updated": "2025-07-14"
+ },
+ {
+  "name": "userman",
+  "url": "https://github.com/netadminplus/userman",
+  "description": "",
+  "stars": 0,
+  "language": "JavaScript",
+  "updated": "2026-03-28"
+ },
+ {
+  "name": "vpnymous-infrastructure",
+  "url": "https://github.com/netadminplus/vpnymous-infrastructure",
+  "description": "",
+  "stars": 0,
+  "language": "TypeScript",
+  "updated": "2025-08-14"
+ }
+]

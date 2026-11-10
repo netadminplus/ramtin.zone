@@ -1,0 +1,92 @@
+{% from "icons.html" import brand %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ site.name }} — Practical Networking, Infrastructure &amp; AI{% endblock %}</title>
+<meta name="description" content="{% block description %}{{ site.description }}{% endblock %}">
+<link rel="canonical" href="{{ site.url }}{{ canonical | default('/') }}">
+<meta property="og:type" content="{% block ogtype %}website{% endblock %}">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:title" content="{% block ogtitle %}{{ site.name }}{% endblock %}">
+<meta property="og:description" content="{% block ogdescription %}{{ site.description }}{% endblock %}">
+<meta property="og:url" content="{{ site.url }}{{ canonical | default('/') }}">
+<meta property="og:image" content="{% block ogimage %}{{ site.og_image }}{% endblock %}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{% block twtitle %}{{ site.name }}{% endblock %}">
+<meta name="twitter:description" content="{% block twdescription %}{{ site.description }}{% endblock %}">
+<meta name="twitter:image" content="{% block twimage %}{{ site.og_image }}{% endblock %}">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="{{ site.name }} — Blog" href="/feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css">
+{% block head_extra %}{% endblock %}
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="/" aria-label="Ramtin Tech Zone — home">
+      <span class="logo-mark">R</span>
+      <span class="logo-text">Ramtin <strong>Tech Zone</strong></span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="/" class="{% if active == 'home' %}active{% endif %}">Blog</a>
+      <a href="/projects/" class="{% if active == 'projects' %}active{% endif %}">Projects</a>
+      <a href="/about/" class="{% if active == 'about' %}active{% endif %}">About</a>
+      <a href="/donate/" class="{% if active == 'donate' %}active{% endif %}">Donate</a>
+      <a href="/contact/" class="{% if active == 'contact' %}active{% endif %}">Contact</a>
+    </nav>
+    <div class="header-socials">
+      <a href="https://youtube.com/@ramtintechzone" aria-label="YouTube" title="YouTube">{{ brand('youtube') }}</a>
+      <a href="https://github.com/netadminplus" aria-label="GitHub" title="GitHub">{{ brand('github') }}</a>
+      <a href="https://t.me/ramtintechzone" aria-label="Telegram" title="Telegram">{{ brand('telegram') }}</a>
+      <a href="https://instagram.com/ramtintechzone" aria-label="Instagram" title="Instagram">{{ brand('instagram') }}</a>
+    </div>
+  </div>
+</header>
+
+<main>
+{% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="logo"><span class="logo-mark">R</span><span class="logo-text">Ramtin <strong>Tech Zone</strong></span></div>
+      <p class="footer-blurb">Practical videos about networking, infrastructure, DevOps and AI — by Ramtin Rahmani Nejad, a network engineer in IT since 2006.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="/">Blog</a></li>
+        <li><a href="/projects/">Projects</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/donate/">Donate</a></li>
+        <li><a href="/contact/">Contact</a></li>
+        <li><a href="/feed.xml">RSS feed</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Follow</h4>
+      <ul class="social-list">
+        <li><a href="https://youtube.com/@ramtintechzone">{{ brand('youtube') }} YouTube</a></li>
+        <li><a href="https://instagram.com/ramtintechzone">{{ brand('instagram') }} Instagram</a></li>
+        <li><a href="https://t.me/ramtintechzone">{{ brand('telegram') }} Telegram</a></li>
+        <li><a href="https://github.com/netadminplus">{{ brand('github') }} GitHub</a></li>
+        <li><a href="https://linkedin.com/in/ramtin-rahmani">{{ brand('linkedin') }} LinkedIn</a></li>
+        <li><a href="https://x.com/ramtin_rahmani">{{ brand('x') }} X</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© {{ site.year }} Ramtin Rahmani Nejad — Ramtin Tech Zone</span>
+    <span>Persian courses &amp; community: <a href="https://netadminplus.com">netadminplus.com</a></span>
+  </div>
+</footer>
+<script src="/assets/js/main.js" defer></script>
+{% block body_extra %}{% endblock %}
+</body>
+</html>

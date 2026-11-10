@@ -1,0 +1,36 @@
+name: Sync new YouTube videos to the blog
+
+on:
+  schedule:
+    # Daily 07:00 Tehran (03:30 UTC) — before Ramtin's day starts.
+    - cron: "30 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install yt-dlp
+      - name: Sync new videos
+        run: |
+          python scripts/sync.py
+      - name: Commit and push if changed
+        run: |
+          git config user.name "ramtin.zone sync"
+          git config user.email "sync@ramtin.zone"
+          git add -A
+          git diff --cached --quiet || git commit -m "Sync new YouTube videos [auto]"
+          git push
+          # The push triggers the Deploy workflow, which rebuilds and
+          # publishes the site to GitHub Pages.
