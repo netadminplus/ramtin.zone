@@ -308,7 +308,7 @@ def main():
     urls = [("", posts[0]["date"] if posts else "2026-11-10")]
     for p in posts:
         urls.append((f"posts/{p['slug']}/", p["date"]))
-    for slug in ("about", "donate", "contact", "projects"):
+    for slug in ("about", "donate", "contact", "projects", "design-system"):
         urls.append((f"{slug}/", "2026-11-10"))
     sm = "".join(
         f"  <url><loc>{SITE_URL}/{u}</loc><lastmod>{lm}</lastmod></url>\n"
