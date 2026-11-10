@@ -35,7 +35,7 @@
 
   <p id="no-results" class="no-results" hidden>No tutorials match your search. Try a different keyword.</p>
 
-  <div class="card-grid" id="card-grid" data-prefix="{{ prefix }}">
+  <div class="card-grid" id="card-grid">
     {% for post in posts %}
     <article class="card" data-categories="{{ post.categories | join(',') }}" data-title="{{ post.title | lower }}" data-search="{{ (post.title ~ ' ' ~ post.description) | lower }}">
       <a class="card-thumb" href="{{ prefix }}posts/{{ post.slug }}/" aria-label="{{ post.title }}">

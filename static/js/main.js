@@ -13,7 +13,9 @@
   var chips = document.querySelectorAll(".chip[data-filter]");
   var search = document.getElementById("search");
   var noResults = document.getElementById("no-results");
-  var prefix = grid.getAttribute("data-prefix") || "";
+  // All URLs are root-absolute: the site lives at ramtin.zone (the
+  // github.io subpath redirects there), so relative ../ paths buy nothing
+  // and proved fragile. Server-rendered cards use the same form.
   var originalHTML = grid.innerHTML;
   var index = null;       // full post index, once loaded
   var indexFailed = false;
@@ -35,7 +37,7 @@
   }
 
   function cardHTML(p) {
-    var thumb = p.thumb_is_local ? prefix + p.thumb : p.thumb;
+    var thumb = p.thumb_is_local ? "/" + p.thumb : p.thumb;
     var img = '<img src="' + esc(thumb) + '" alt="" loading="lazy"'
       + (p.thumb_is_local
         ? ""
@@ -49,20 +51,20 @@
       .join("");
     var views = p.views ? "<span>" + esc(p.views) + " views</span>" : "";
     return '<article class="card">'
-      + '<a class="card-thumb" href="' + prefix + "posts/" + esc(p.slug) + '/" aria-label="' + esc(p.title) + '">'
+      + '<a class="card-thumb" href="/posts/' + esc(p.slug) + '/" aria-label="' + esc(p.title) + '">'
       + img + dur + "</a>"
       + '<div class="card-body"><div class="card-meta">' + tags
       + '<time datetime="' + esc(p.date) + '">' + esc(p.date_human) + "</time></div>"
-      + '<h2 class="card-title"><a href="' + prefix + "posts/" + esc(p.slug) + '/">' + esc(p.title) + "</a></h2>"
+      + '<h2 class="card-title"><a href="/posts/' + esc(p.slug) + '/">' + esc(p.title) + "</a></h2>"
       + '<p class="card-desc">' + esc(p.description) + "</p>"
       + '<div class="card-foot"><span>' + p.reading_time + " min read</span>" + views
-      + '<a class="card-link" href="' + prefix + "posts/" + esc(p.slug) + '/">Read tutorial →</a></div>'
+      + '<a class="card-link" href="/posts/' + esc(p.slug) + '/">Read tutorial →</a></div>'
       + "</div></article>";
   }
 
   function loadIndex() {
     if (!indexPromise) {
-      indexPromise = fetch(prefix + "assets/posts.json")
+      indexPromise = fetch("/assets/posts.json")
         .then(function (r) {
           if (!r.ok) throw new Error("posts.json " + r.status);
           return r.json();
@@ -98,6 +100,9 @@
       card.style.display = show ? "" : "none";
       if (show) visible++;
     });
+    // Filtering replaces the paginated view, so the pagination hides here
+    // too — restorePage() brings it back when the filter is cleared.
+    if (pagination) pagination.style.display = "none";
     if (noResults) noResults.hidden = visible !== 0;
   }
 
