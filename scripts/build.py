@@ -73,11 +73,12 @@ def fmt_duration(seconds):
 
 
 def relink(html, prefix):
-    """Rewrite root-absolute internal links in rendered Markdown to the
-    page-relative prefix, so pages work at any base path."""
-    for token in ("assets/", "posts/", "about/", "donate/", "contact/", "projects/", "feed.xml"):
-        html = html.replace(f'"/{token}', f'"{prefix}{token}')
-    html = html.replace('href="/"', f'href="{prefix}"')
+    """Kept for call-site compatibility; now a no-op.
+
+    All links are root-absolute (the site lives at ramtin.zone — the
+    github.io subpath redirects there), so Markdown bodies keep their
+    "/posts/...", "/assets/..." links as written. The prefix argument is
+    ignored."""
     return html
 
 
@@ -229,7 +230,7 @@ def main():
 
     # ---- home (paginated) -------------------------------------------
     # 12 posts per page: the footer stays reachable as the catalog grows.
-    # Page 1 is / ; pages 2+ are /page/N/ (prefix "../", like other pages).
+    # Page 1 is / ; pages 2+ are /page/N/. All links are root-absolute.
     # The filter/search still works site-wide: main.js fetches posts.json
     # (written below) and renders matches from the full index.
     PER_PAGE = 12

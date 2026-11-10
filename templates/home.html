@@ -8,7 +8,7 @@
     <p class="hero-sub">Hands-on tutorials from a network engineer — MikroTik, OpenWrt, VPNs and AI tools for sysadmins. Every post pairs with a video on the channel.</p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="https://youtube.com/@ramtintechzone">Watch on YouTube</a>
-      <a class="btn btn-ghost" href="{{ prefix }}about/">About Ramtin</a>
+      <a class="btn btn-ghost" href="/about/">About Ramtin</a>
     </div>
   </div>
 </section>
@@ -38,8 +38,8 @@
   <div class="card-grid" id="card-grid">
     {% for post in posts %}
     <article class="card" data-categories="{{ post.categories | join(',') }}" data-title="{{ post.title | lower }}" data-search="{{ (post.title ~ ' ' ~ post.description) | lower }}">
-      <a class="card-thumb" href="{{ prefix }}posts/{{ post.slug }}/" aria-label="{{ post.title }}">
-        <img src="{% if post.thumb_is_local %}{{ prefix }}{{ post.thumb }}{% else %}{{ post.thumb }}{% endif %}" alt="" loading="lazy"{% if not post.thumb_is_local %} onerror="this.onerror=null;this.src='{{ post.thumb_fallback }}';"{% endif %}>
+      <a class="card-thumb" href="/posts/{{ post.slug }}/" aria-label="{{ post.title }}">
+        <img src="{% if post.thumb_is_local %}/{{ post.thumb }}{% else %}{{ post.thumb }}{% endif %}" alt="" loading="lazy"{% if not post.thumb_is_local %} onerror="this.onerror=null;this.src='{{ post.thumb_fallback }}';"{% endif %}>
         {% if post.duration %}<span class="card-duration">{{ post.duration }}</span>{% endif %}
       </a>
       <div class="card-body">
@@ -47,12 +47,12 @@
           {% for cat in post.categories %}<span class="tag">{{ cat }}</span>{% endfor %}
           <time datetime="{{ post.date }}">{{ post.date_human }}</time>
         </div>
-        <h2 class="card-title"><a href="{{ prefix }}posts/{{ post.slug }}/">{{ post.title }}</a></h2>
+        <h2 class="card-title"><a href="/posts/{{ post.slug }}/">{{ post.title }}</a></h2>
         <p class="card-desc">{{ post.description }}</p>
         <div class="card-foot">
           <span>{{ post.reading_time }} min read</span>
           {% if post.views %}<span>{{ post.views }} views</span>{% endif %}
-          <a class="card-link" href="{{ prefix }}posts/{{ post.slug }}/">Read tutorial →</a>
+          <a class="card-link" href="/posts/{{ post.slug }}/">Read tutorial →</a>
         </div>
       </div>
     </article>
@@ -62,7 +62,7 @@
   {% if total_pages > 1 %}
   <nav class="pagination" id="pagination" aria-label="Pagination">
     {% if page_num > 1 %}
-      <a class="page-link" href="{{ prefix }}{% if page_num != 2 %}page/{{ page_num - 1 }}/{% endif %}">← Previous</a>
+      <a class="page-link" href="/{% if page_num != 2 %}page/{{ page_num - 1 }}/{% endif %}">← Previous</a>
     {% else %}
       <span class="page-link disabled" aria-disabled="true">← Previous</span>
     {% endif %}
@@ -70,13 +70,13 @@
       {% if n == page_num %}
         <span class="page-link current" aria-current="page">{{ n }}</span>
       {% elif n == 1 %}
-        <a class="page-link" href="{{ prefix }}">{{ n }}</a>
+        <a class="page-link" href="/">{{ n }}</a>
       {% else %}
-        <a class="page-link" href="{{ prefix }}page/{{ n }}/">{{ n }}</a>
+        <a class="page-link" href="/page/{{ n }}/">{{ n }}</a>
       {% endif %}
     {% endfor %}
     {% if page_num < total_pages %}
-      <a class="page-link" href="{{ prefix }}page/{{ page_num + 1 }}/">Next →</a>
+      <a class="page-link" href="/page/{{ page_num + 1 }}/">Next →</a>
     {% else %}
       <span class="page-link disabled" aria-disabled="true">Next →</span>
     {% endif %}
