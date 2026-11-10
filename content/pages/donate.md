@@ -22,41 +22,42 @@ You can join the community and support me here: **[My Patreon Page](https://patr
 ## Crypto Support
 
 Let’s be honest: getting a crypto notification is one of the coolest feelings :). If you prefer sending a one-time tip via crypto, here are my addresses:
+
 - **Bitcoin (BTC)**
   - **Address:** `bc1q2llgpfnzjtf2tfwnun0grtsjkdm87zeedhe30v`
   - **Network:** Bitcoin (Native)
 
-![](/assets/images/donate-bitcoin-netadminhub.com_.webp)
+<img src="/assets/images/donate-bitcoin-netadminhub.com_.webp" alt="Bitcoin QR code" width="240">
 
 - **Ethereum (ETH)**
   - **Address:** `0xB219edC3F6560FF7F27038924968ac0B76Cd2C43`
   - **Network:** Ethereum Mainnet / Base (Lowest Fees) / Arbitrum
 
-![](/assets/images/donate-eth-netadminhub.com_.webp)
+<img src="/assets/images/donate-eth-netadminhub.com_.webp" alt="Ethereum QR code" width="240">
 
 - **Tether (USDT)**
   - **Address:** `TCYrKuMPLYEoSWms2ZLZseTDcRPoYJR1fW`
   - **Network:** TRC20 (Tron)
 
-![](/assets/images/donate-usdt-netadminhub.com_.webp)
+<img src="/assets/images/donate-usdt-netadminhub.com_.webp" alt="Tether QR code" width="240">
 
 - **Litecoin (LTC)**
   - **Address:** `ltc1q94e6m4nrxmf37452ytvsnl9gptla5cxuy6ld75`
   - **Network:** Litecoin (Native)
 
-![](/assets/images/donate-ltc-netadminhub.com_.webp)
+<img src="/assets/images/donate-ltc-netadminhub.com_.webp" alt="Litecoin QR code" width="240">
 
 - **Tron (TRX)**
   - **Address:** `TCYrKuMPLYEoSWms2ZLZseTDcRPoYJR1fW`
   - **Network:** Tron Native
 
-![](/assets/images/donate-trx-netadminhub.com_.webp)
+<img src="/assets/images/donate-trx-netadminhub.com_.webp" alt="Tron QR code" width="240">
 
 ---
 
 ## Watch the Ads
 
-If you watch my **[YouTube](https://youtube.com/@ramtintechzone)** videos on the , simply letting the ads play is a great way to support me for free. It doesn’t cost you anything but a bit of time, and it makes a huge difference for the channel’s growth.
+If you watch my **[YouTube](https://youtube.com/@ramtintechzone)** videos, simply letting the ads play is a great way to support me for free. It doesn’t cost you anything but a bit of time, and it makes a huge difference for the channel’s growth.
 
 ---
 
