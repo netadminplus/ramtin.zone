@@ -4,6 +4,7 @@ date: 2026-01-16
 slug: boost-your-mikrotik-wifi-range-auto-adjust-signal-with-this-simple-script
 categories: ["MikroTik", "Youtube Videos"]
 youtube_id: 7jeM2Xt9jAE
+image: /assets/images/Boost-Your-MikroTik-WiFi-Range-netadminhub.com_.webp
 description: "Automate your MikroTik TX power to increase signal range during the day and improve router health at night with this simple script."
 migrated_from: netadminhub.com
 ---
@@ -51,11 +52,14 @@ We’ll create two scripts: **“Boost”** for work hours and **“Eco”** for
 ### Step 3: Set the Schedule
 
 Now, let’s automate it. Go to **System > Scheduler** and add two entries:
+
 1. **Work Start (09:00:00):**
+
   - **Name:** Start_Boost
   - **On Event:** `/system script run wifi_boost`
 
 1. **Work End (17:00:00):**
+
   - **Name:** Start_Eco
   - **On Event:** `/system script run wifi_eco`
 

@@ -81,6 +81,23 @@ def relink(html, prefix):
     return html
 
 
+def thumb_available(url):
+    """HEAD-check a YouTube thumbnail. HTTP 404 means the thumbnail is
+    definitely gone (removed/private video) -> False. Any other error
+    (network, rate limit, 403) means 'unknown' -> True, so the build never
+    drops a good thumbnail over a flaky check."""
+    import urllib.error
+    try:
+        req = urllib.request.Request(url, method="HEAD",
+                                     headers={"User-Agent": "ramtin-zone-site-builder"})
+        with urllib.request.urlopen(req, timeout=10) as r:
+            return r.status == 200
+    except urllib.error.HTTPError as e:
+        return e.code != 404
+    except Exception:
+        return True
+
+
 def load_video_meta():
     """Match videos.json (from yt-dlp) by YouTube ID for views/duration."""
     meta = {}
@@ -145,20 +162,36 @@ def main():
         words = len(re.sub(r"<[^>]+>", " ", render_md(body)).split())
         yt = fm.get("youtube_id")
         v = video_meta.get(yt, {}) if yt else {}
+        local_image = fm.get("image", "").lstrip("/") if fm.get("image") else None
         if yt:
-            thumb = f"https://i.ytimg.com/vi/{yt}/maxresdefault.jpg"
-            thumb_fallback = f"https://i.ytimg.com/vi/{yt}/hqdefault.jpg"
-            thumb_abs = thumb
-            image = None
-        elif fm.get("image"):
+            maxres = f"https://i.ytimg.com/vi/{yt}/maxresdefault.jpg"
+            hq = f"https://i.ytimg.com/vi/{yt}/hqdefault.jpg"
+            # Removed/private videos have no thumbnails (404). Fall back to
+            # the post's own featured image instead of a broken card.
+            if thumb_available(maxres):
+                thumb, thumb_fallback, thumb_abs = maxres, hq, maxres
+                thumb_is_local = False
+            elif thumb_available(hq):
+                thumb, thumb_fallback, thumb_abs = hq, hq, hq
+                thumb_is_local = False
+            elif local_image:
+                thumb = thumb_fallback = local_image
+                thumb_abs = f"{SITE_URL}/{local_image}"
+                thumb_is_local = True
+            else:
+                thumb, thumb_fallback, thumb_abs = maxres, hq, maxres
+                thumb_is_local = False
+            image = local_image
+        elif local_image:
             # Blog-only post: local featured image, stored without a leading
             # slash so templates can prefix it per page depth.
-            thumb = fm["image"].lstrip("/")
-            thumb_fallback = thumb
-            thumb_abs = f"{SITE_URL}/{thumb}"
-            image = thumb
+            thumb = thumb_fallback = local_image
+            thumb_abs = f"{SITE_URL}/{local_image}"
+            thumb_is_local = True
+            image = local_image
         else:
             thumb = thumb_fallback = thumb_abs = ""
+            thumb_is_local = True
             image = None
         posts.append(
             {
@@ -173,6 +206,7 @@ def main():
                 "thumb": thumb,
                 "thumb_fallback": thumb_fallback,
                 "thumb_abs": thumb_abs,
+                "thumb_is_local": thumb_is_local,
                 "views": fmt_views(v.get("view_count")),
                 "duration": fmt_duration(v.get("duration")),
                 "reading_time": max(1, math.ceil(words / 200)),

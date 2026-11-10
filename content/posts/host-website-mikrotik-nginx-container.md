@@ -4,6 +4,7 @@ date: 2026-03-06
 slug: host-website-mikrotik-nginx-container
 categories: ["MikroTik", "Youtube Videos"]
 youtube_id: GHJFKlAn0ZY
+image: /assets/images/host-your-website-on-mikrotik.webp
 description: "Learn how to host a website on your MikroTik router using Nginx containers. A humanized, step-by-step guide for networking, mounts, and HTTPS."
 migrated_from: netadminhub.com
 ---
@@ -17,6 +18,7 @@ Watch the full walkthrough on the **Net Admin HUB YouTube channel**:
 ## Getting Started: The Prerequisites
 
 Before we dive into the fun stuff, we need to make sure the foundation is solid. Hosting anything publicly means security is priority number one.
+
 1. **Harden Your Router:** Disable any services you aren’t using (IP > Services), change your default Winbox and HTTP ports, and ensure you aren’t using the default “admin” account.
 1. **Compatibility:** Your MikroTik router needs to be on an ARM, ARM64, or x86 architecture and running RouterOS v7.5 or later.
 1. **The Package:** If you don’t see the “Container” menu, you’ll need to download the “Extra Packages” bundle for your specific version/architecture from ****[MikroTik’s website](https://mikrotik.com/download) , drag & drop it to your winbox and then reboot the router.
@@ -84,9 +86,11 @@ In WinBox, go to Container > Containeer Tab > Config. Here’s what you need to 
 ## Step 4: Preparing Your Website Files (The Mounts)
 
 MikroTik Nginx Container needs a place to look for your HTML files. Instead of keeping files “inside” the container where they are hard to edit, we use **Mounts** to link a folder on your MikroTik disk directly to the container.
+
 1. **Create a Folder:** In your files menu, create a folder named `html`.
 1. **Upload Your Site:** Drag and drop your `index.html` file into that folder.
 1. **Create the Mount:** In the **Mounts** tab, create a new entry:
+
   - **Name:** `HTML`
   - **Source:** `html` (the folder you just created)
   - **Destination:** `/usr/share/nginx/html` (the specific path Nginx expects).
@@ -98,6 +102,7 @@ MikroTik Nginx Container needs a place to look for your HTML files. Instead of k
 ## Step 5: Creating and Running the Container
 
 Now, we bring everything together. In the **Container** tab, click the plus icon to add a new one:
+
 - **Remote Image:** Type `nginx`.
 - **Interface:** Select the `veth1` interface we set up earlier.
 - **Mounts:** Pick the `nginx-root` mount we just made.
@@ -130,6 +135,7 @@ Now that the container is running, it’s technically “live,” but only insid
 By default, Nginx listens on **port 80** for HTTP traffic. However, there’s a small catch: your MikroTik usually uses port 80 for its own web management interface (WebFig) by default.
 
 If you want your website to be accessible on the standard port 80, you have two choices:
+
 1. **Change the MikroTik WWW port:** Move the router’s management port to something else (like 8081).
 1. **Disable the WWW service:** If you only use Winbox, you can just turn off the web service entirely.
 

@@ -73,7 +73,7 @@
     <div class="card-grid small">
       {% for r in related %}
       <article class="card" data-categories="{{ r.categories | join(',') }}">
-        <a class="card-thumb" href="{{ prefix }}posts/{{ r.slug }}/"><img src="{% if r.youtube_id %}{{ r.thumb }}{% else %}{{ prefix }}{{ r.thumb }}{% endif %}" alt="" loading="lazy"{% if r.youtube_id %} onerror="this.onerror=null;this.src='{{ r.thumb_fallback }}';"{% endif %}></a>
+        <a class="card-thumb" href="{{ prefix }}posts/{{ r.slug }}/"><img src="{% if r.thumb_is_local %}{{ prefix }}{{ r.thumb }}{% else %}{{ r.thumb }}{% endif %}" alt="" loading="lazy"{% if not r.thumb_is_local %} onerror="this.onerror=null;this.src='{{ r.thumb_fallback }}';"{% endif %}></a>
         <div class="card-body">
           <div class="card-meta">{% for cat in r.categories %}<span class="tag">{{ cat }}</span>{% endfor %}<time datetime="{{ r.date }}">{{ r.date_human }}</time></div>
           <h3 class="card-title"><a href="{{ prefix }}posts/{{ r.slug }}/">{{ r.title }}</a></h3>

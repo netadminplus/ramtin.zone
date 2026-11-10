@@ -31,6 +31,7 @@ However, if you’re planning on heavy streaming or sharing the connection with 
 ### Why DigitalOcean?
 
 DigitalOcean Droplets are consistently reliable and very affordable for a personal setup.
+
 - **The Plan:** You don’t need a high-end machine. A basic **$4 or $6/month Droplet** is more than enough to handle V2Ray for you and a few friends.
 - **The OS:** Stick with **Ubuntu 24.04 or 22.04 LTS**. It’s the most stable environment for Docker-based setups and has the best community support if you ever need to look something up.
 
@@ -101,6 +102,7 @@ change 3xui credentials
 ### Step 5: Creating Your First Inbound
 
 To actually get connected, you need to set up an “Inbound” in the 3x-ui dashboard. This defines how your device communicates with the server.
+
 1. **Go to Inbounds:** Click the **Add Inbound** button.
 1. **Basics:** Give it a Remark (like “MyPhone”) so you know which device it’s for.
 1. **Protocol & Port:** I usually go with **VLESS**—it’s lightweight and reliable for most modern setups. For the port, you can leave it as the default or pick a random number between 10000 and 65000.
@@ -138,6 +140,7 @@ sudo ufw enable
 Now that your server is running and your inbound is ready, the last step is to connect your devices. 3x-ui makes this easy by giving you two options: you can either scan a **QR code** directly with your phone or **copy the configuration URL** (the `vless://` link) and paste it into your client app.
 
 Here are the most reliable clients I recommend using in 2026:
+
 - **Android:** **v2rayNG** is the go-to choice. It’s stable and supports almost every protocol you’ll need. If you need a detailed walkthrough on how to set it up, check out this **[v2rayNG for Android 2026 guide](https://vpnymous.com/how-to-setup-v2rayng-for-android-2026/)**.
 - **Windows: v2rayN** is the standard choice here. It can look a bit technical when you first open it, but once you import your config, it’s just a single click to get connected. If you want a step-by-step walkthrough, this ****[v2rayN for Windows guide](https://vpnymous.com/how-to-setup-v2rayn-for-windows/) covers everything you need to know.
 - **iOS / Mac:** **V2Box** is excellent for Apple users. It has a clean interface and works seamlessly across both iPhone and Mac.

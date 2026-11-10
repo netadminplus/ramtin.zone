@@ -4,6 +4,7 @@ date: 2026-02-04
 slug: anydesk-pro-tips-and-tricks-for-remote-support
 categories: ["Tips & Tricks", "Youtube Videos"]
 youtube_id: XvdyMrPozPg
+image: /assets/images/anydesk-pro-tips-and-tricks-for-remote-support-netadminhub.com_.webp
 description: "if you dig a little deeper, there are some “aha!” features that turn it into a powerhouse for support and productivity."
 migrated_from: netadminhub.com
 ---
@@ -45,6 +46,7 @@ The roles reverse instantly: they see your screen, and you become the presenter.
 ---
 
 ## 5. Pro Tools: Drawing and Recording
+
 - **Whiteboard:** Use the pen tool to draw circles or arrows on their screen. It makes explaining “Click this button” so much easier when you can actually point to it.
 - **Session Recording:** If you’re performing a task the user needs to learn, hit the record button. They can play it back later in AnyDesk and follow your steps.
 

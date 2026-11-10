@@ -4,6 +4,7 @@ date: 2026-09-01
 slug: mikrotik-reverse-proxy-multiple-services-one-public-ip
 categories: ["MikroTik", "Youtube Videos"]
 youtube_id: x04MG1na8EA
+image: /assets/images/mikrotik-reverse-proxy-netadminhub.com_.webp
 description: "RouterOS now includes a built-in Reverse Proxy. In this hands-on lab, we’ll publish three web applications with different domains over HTTPS using a single public IP address."
 migrated_from: netadminhub.com
 ---
@@ -15,6 +16,7 @@ Until recently, RouterOS wasn’t really the place where I would think about sol
 RouterOS now has a built-in Reverse Proxy feature, so I wanted to see how well it works in a real setup.
 
 In this lab, I’m going to publish three different web applications:
+
 - **File Browser**
 - **IT-Tools**
 - **Homepage**
@@ -22,6 +24,7 @@ In this lab, I’m going to publish three different web applications:
 All three applications will run as containers on the MikroTik itself, but they’ll have separate internal IP addresses and ports.
 
 On the public side, each application will have its own domain name:
+
 - file.netadminhub.com
 - it.netadminhub.com
 - home.netadminhub.com
@@ -51,6 +54,7 @@ You need a RouterOS device that supports the Reverse Proxy feature, and if you w
 MikroTik currently supports RouterOS containers on ARM, ARM64, and x86, while Reverse Proxy itself is not supported on SMIPS devices. MikroTik also strongly recommends external storage for container workloads instead of keeping container data on the router’s internal flash.
 
 **You’ll also need:**
+
 - A public IP address
 - Domain names you control
 - DNS records pointing those domains to the MikroTik
@@ -141,6 +145,7 @@ netstat -tnlp
 ```
 
 In my lab, this confirmed:
+
 - IP: 172.18.0.3
 - Port: 80
 
@@ -202,6 +207,7 @@ netstat -tunlp
 ```
 
 My container shows:
+
 - IP: 172.18.0.4
 - Port: 80
 
@@ -366,6 +372,7 @@ Before requesting certificates or creating Reverse Proxy rules, check:
 ```
 
 There are two ports we care about:
+
 - TCP 80
 - TCP 443
 
@@ -428,6 +435,7 @@ RouterOS Reverse Proxy rules are configured under:
 ```
 
 Each entry can define:
+
 - Backend IP address
 - Backend port
 - SNI hostname
@@ -474,6 +482,7 @@ For example, you could have:
 ![](/assets/images/mikrotik-reverse-proxy2-netadminhub.webp)
 
 Or the backend could be:
+
 - A VM
 - A NAS
 - A local dashboard
@@ -502,6 +511,7 @@ That distinction matters.
 The Reverse Proxy implementation is still much simpler than mature dedicated reverse proxies, and the current MikroTik documentation exposes a relatively small set of configuration options: backend IP, port, SNI, certificate, VRF, and comment.
 
 So if the application you’re publishing depends on:
+
 - WebSockets
 - Special HTTP headers
 - Unusual upgrade behavior
@@ -524,6 +534,7 @@ What makes RouterOS Reverse Proxy interesting is that there are plenty of situat
 If the MikroTik is already sitting at the edge of the network, already owns the public IP, already handles the routing, and can also manage the TLS certificates, having a simple Reverse Proxy available directly in RouterOS can be genuinely useful.
 
 For this lab, we ended up with:
+
 - file.netadminhub.com → 172.18.0.3:80
 - it.netadminhub.com → 172.18.0.4:80
 - home.netadminhub.com → 172.18.0.2:3000
@@ -539,6 +550,7 @@ That’s exactly the kind of small infrastructure problem where this feature mak
 Just keep the scope in mind. Test your application, especially if it uses WebSockets or other behavior beyond straightforward web traffic, before deciding that the router can replace a dedicated reverse proxy in production.
 
 ### Official MikroTik Documentation
+
 - [MikroTik Reverse Proxy Documentation](https://manual.mikrotik.com/docs/network-management/proxy/reverse-proxy)
 - [MikroTik Container Documentation](https://manual.mikrotik.com/docs/containers)
 - [MikroTik Certificates & ACME Documentation](https://manual.mikrotik.com/docs/authentication-authorization-accounting/certificates)

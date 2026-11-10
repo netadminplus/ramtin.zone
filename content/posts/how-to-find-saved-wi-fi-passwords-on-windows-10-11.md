@@ -4,6 +4,7 @@ date: 2026-02-12
 slug: how-to-find-saved-wi-fi-passwords-on-windows-10-11
 categories: ["Tips & Tricks", "Windows", "Youtube Videos"]
 youtube_id: O5wegipxt6E
+image: /assets/images/how-to-find-saved-wi-fi-passwords-on-windows-10-11-netadminhub.com_.webp
 description: "We’ve all been there: a friend comes over and asks for the Wi-Fi password, and suddenly your mind goes blank. You’re already connected, so you…"
 migrated_from: netadminhub.com
 ---
@@ -17,6 +18,7 @@ Watch the full video walkthrough on the **Net Admin HUB** YouTube channel:
 ## Method 1: The Quick Way (Current Connection)
 
 If you’re already connected to the network and just need to see the key, the Control Panel is your best friend.
+
 1. Open the **Control Panel** and head to **Network and Internet > Network and Sharing Center**.
 1. Click on your Wi-Fi name (the blue link next to “Connections”).
 1. In the window that pops up, click **Wireless Properties**.
@@ -29,6 +31,7 @@ There it is! But what if you aren’t currently connected to that specific netwo
 This is my favorite method because it works for *any* Wi-Fi profile saved on your laptop, even if the router is miles away. We’re going to use a built-in tool called `netsh`.
 
 Instead of just giving you a long command to copy-paste, I want to show you how it works so you actually remember it.
+
 1. Open your **Command Prompt (CMD)**.
 1. Type `netsh wlan show profiles` to see a list of every Wi-Fi network your PC remembers.
 1. Once you see the name of the network you need, type this command:

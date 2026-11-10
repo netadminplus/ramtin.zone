@@ -4,6 +4,7 @@ date: 2026-01-19
 slug: mikrotik-server-on-hetzner-cloud
 categories: ["MikroTik", "Youtube Videos"]
 youtube_id: 0hX-v1LNYtU
+image: /assets/images/Run-MikroTik-Server-on-Hetzner-netadminhub.com_.webp
 description: "Running a MikroTik router in the cloud gives you incredible flexibility for VPNs, routing, and lab environments."
 migrated_from: netadminhub.com
 ---
@@ -15,6 +16,7 @@ Don’t worry—getting MikroTik Cloud Hosted Router (CHR) running on Hetzner is
 Watch the full video walkthrough over at the [Net Admin HUB YouTube channel](https://youtu.be/0hX-v1LNYtU)!
 
 ## Why Hetzner for MikroTik?
+
 - **Insane Traffic:** Most plans include 20TB of traffic—perfect for a high-bandwidth VPN or bridge.
 - **Low Latency:** With data centers in Germany, Finland, and the US, you can pick a location close to your users.
 - **Price:** You can run a stable MikroTik instance for just a few euros a month.
@@ -49,6 +51,7 @@ Type `reboot`. In a few seconds, your Ubuntu server will be replaced by a fresh 
 ## Method 2: The Pro Way (Automated Cloud-Config)
 
 This is my favorite. You don’t even need to SSH into Linux. You just paste a script, and Hetzner does the work for you.
+
 1. Click **Add Server** in Hetzner.
 1. Scroll down to **Cloud-config** (User Data).
 1. Paste the YAML script (available in our Telegram community) that downloads and installs the image automatically.
@@ -57,6 +60,7 @@ This is my favorite. You don’t even need to SSH into Linux. You just paste a s
 ## Critical: Don’t Get Hacked!
 
 As soon as your MikroTik is live, it has a public IP and **no password**. Bots will find you in seconds.
+
 1. **Set a Password immediately** via WinBox or Terminal.
 1. **Disable Unused Services:** Go to `IP > Services` and disable `ssh`, `telnet`, and `ftp` if you don’t need them.
 1. **Change Ports:** If you keep WinBox open, move it from the default `8291` to something custom.

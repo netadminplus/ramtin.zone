@@ -4,6 +4,7 @@ date: 2026-02-27
 slug: mikrotik-adlist-block-ads-network-wide
 categories: ["MikroTik", "Youtube Videos"]
 youtube_id: 6RuiR985A78
+image: /assets/images/Block-Ads-Network-Wide-with-MikroTik-AdList-netadminhub.com_.webp
 description: "Learn how to block ads network-wide using the native MikroTik AdList feature in RouterOS 7.15+. No Pi-hole or containers needed for a cleaner network!"
 migrated_from: netadminhub.com
 ---
@@ -23,6 +24,7 @@ The native **[AdList](https://help.mikrotik.com/docs/spaces/ROS/pages/37748767/D
 ## Step 1: Prepare Your Router (The Cache Trap)
 
 Before you start importing massive lists of 70,000+ domains, you need to fix one default setting. By default, MikroTik’s DNS cache is usually set to a tiny 2MB. If you try to import a big list now, you’ll see an “exceeded max cache entries” error in your logs.
+
 1. Go to **IP > DNS**.
 1. Increase the **Cache Size** to something substantial, like **20.00 MiB** (depending on your RAM).
 1. Click **Apply** and then **Cache > Flush Cache** to start fresh.
@@ -30,6 +32,7 @@ Before you start importing massive lists of 70,000+ domains, you need to fix one
 ## Step 2: Importing a Ad List (URL Method)
 
 The easiest way to get started is by using a community-maintained list. The **Steven Blacklist** is a gold standard here.
+
 - **In Terminal:** `/ip dns adlist add url=https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts ssl-verify=no`
 - **In WinBox:** Navigate to **IP > DNS > Adlist**, click **Add**, paste the URL, and uncheck **SSL Verify**.
 
@@ -40,6 +43,7 @@ Once added, you’ll see the “Match Count” start to climb almost immediately
 ## Step 3: Creating Your Own “Blacklist” (File Method)
 
 Sometimes you find a specific local ad domain that isn’t on the global lists. You can create your own `.txt` file for this.
+
 1. **Create the file:** Go to **Files** and create a file named `my-ads.txt`.
 1. **Format:** Inside the file, use the format: `0.0.0.0 domain.com`.
 1. **Import:** In the AdList menu, add a new entry but select **File** instead of URL and point it to your `.txt` file.
@@ -47,6 +51,7 @@ Sometimes you find a specific local ad domain that isn’t on the global lists. 
 ## Step 4: The Exception (Whitelisting)
 
 What if the AdList blocks a site you actually need? Since you can’t edit a URL-based list, you have to create a “Forward” record.
+
 - Go to **IP > DNS > Static**.
 - Add a new entry.
 - **Name:** The domain you want to unblock.
@@ -77,6 +82,7 @@ If you use the **URL method** (like the Steven Blacklist), MikroTik automaticall
 This is a common limitation of DNS-based blocking. Platforms like YouTube and Facebook often serve ads from the **same domains** as their actual content. If you block those domains, you’ll block the entire service. For these “first-party” ads, you would still need a browser extension like uBlock Origin. 5. I added the list, but I still see ads on my computer. Why?
 
 There are usually two culprits:
+
 - **DNS Cache:** Your computer or browser might have the old ad IP addresses cached. Try flushing your computer’s DNS (e.g., `ipconfig /flushdns` on Windows).
 - **Hardcoded DNS:** Some devices or browsers (using “DNS over HTTPS”) might be bypassing your MikroTik. Ensure your devices are set to use the router as their only DNS server.
 6. Can I use multiple lists at the same time?

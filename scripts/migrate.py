@@ -93,9 +93,11 @@ class MDConverter(HTMLParser):
             else:
                 self.emit("  \n")
         elif tag == "ul":
+            self.emit("\n\n")
             self.list_stack.append("ul")
             self.stack.append(("ul", tag))
         elif tag == "ol":
+            self.emit("\n\n")
             self.list_stack.append("ol")
             self.stack.append(("ol", tag))
         elif tag == "li":
@@ -296,12 +298,12 @@ def main():
         fm.append("categories: [" + ", ".join(f'"{c}"' for c in categories) + "]")
         if yt:
             fm.append(f"youtube_id: {yt}")
-        else:
-            # Blog-only posts (no video): use the WordPress featured image
-            # as the card/hero image, served locally from the repo.
-            feat = byid.get(p["featured_media"])
-            if feat and feat["source_url"] in IMAGE_MAP:
-                fm.append(f"image: {IMAGE_MAP[feat['source_url']]}")
+        # Featured image is always recorded: for blog-only posts it is the
+        # primary card/hero image; for video posts it is the fallback when
+        # the YouTube thumbnail is gone (e.g. a removed video).
+        feat = byid.get(p["featured_media"])
+        if feat and feat["source_url"] in IMAGE_MAP:
+            fm.append(f"image: {IMAGE_MAP[feat['source_url']]}")
         fm.append(f'description: "{desc.replace(chr(34), chr(39))}"')
         fm.append("migrated_from: netadminhub.com")
         fm.append("---")

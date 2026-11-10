@@ -14,6 +14,7 @@ The good news is that once you understand how the container networking fits toge
 ## ocserv MikroTik container?! What We’re Building?!
 
 Before touching anything, here’s the full picture:
+
 - MikroTik RouterOS 7.22.1 running with a public IP on ether1
 - We’ll run aminvakil/ocserv as a container, give it a static IP on an internal bridge (172.18.0.3), and forward external port 4433 to it
 - VPN clients will get IPs from the 10.10.10.0/24 pool
@@ -24,6 +25,7 @@ Before touching anything, here’s the full picture:
 ## Prerequisites
 
 Make sure you have these in place before running any command:
+
 - **RouterOS version:** 7.12 or later (tested on 7.22.1) Container mode: Enabled (container: yes)
 - **Container bridge:** An existing bridge — e.g. bridge1-container with gateway 172.18.0.1 **Registry:** https://registry-1.docker.io (Docker Hub) tmpdir: Must be set — RouterOS needs scratch space to unpack image layers
 
@@ -122,6 +124,7 @@ workdir=/etc/ocserv
 ```
 
 **Two things to pay attention to here.**
+
 - First, make sure you include start-on-boot=yes so the ocserv MikroTik container comes back up automatically after a reboot. It’s easy to skip and then wonder why your VPN is down after a power cycle.
 - Second, adding the container triggers the image download automatically. Monitor the progress with:
 
@@ -212,6 +215,7 @@ Credentials are stored in /etc/ocserv/ocpasswd on the persistent mount, so they 
 ## Step 8 — Connect Your Clients
 
 Server: Your public IP or domain
+
 - **Port:** 4433
 - **Protocol:** SSL / OpenConnect / AnyConnect Username /
 - **Password:** Whatever you set in Step 7
@@ -240,6 +244,7 @@ Copy that output and install it as a trusted CA on your client devices. After th
 ## How the Traffic Actually Flows
 
 Just so the full picture is clear:
+
 1. Client connects to YOUR.PUBLIC.IP:4433
 1. MikroTik ether1 receives it
 1. dstnat forwards tcp/udp 4433 to 172.18.0.3:443
@@ -250,6 +255,7 @@ Just so the full picture is clear:
 1. Replies come back, get translated, and reach the client
 
 ## Troubleshooting
+
 - **broken tar during image extraction** — tmpdir is not set. Run /container/config/set tmpdir=/pull
 - **Container exits right after first start** — This is normal. First run generates certificates then stops. Run /container/start again.
 - **Warning: skipping unknown option in logs** — Extra escaping in env var values. Remove all env vars and re-add them with plain value=MyOrg format.
