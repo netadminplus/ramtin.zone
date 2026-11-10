@@ -62,7 +62,7 @@ textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible {
 .hero { padding: var(--space-18) 0 var(--space-10); border-bottom: 1px solid var(--color-border); }
 .hero-eyebrow { color: var(--color-accent-hover); font-weight: var(--font-weight-semibold); font-size: var(--font-size-md); letter-spacing: var(--letter-spacing-wide); text-transform: uppercase; margin: 0 0 var(--space-3); }
 .hero h1 { font-size: var(--font-size-hero); margin: 0 0 var(--space-4); font-weight: var(--font-weight-extrabold); }
-.hero-sub { color: var(--color-text-muted); font-size: var(--font-size-2xl); max-width: 640px; margin: 0 0 28px; }
+.hero-sub { color: var(--color-text-muted); font-size: var(--font-size-2xl); max-width: var(--max-width); margin: 0 0 28px; }
 .hero-cta { display: flex; gap: var(--space-3); flex-wrap: wrap; }
 .btn {
   display: inline-flex; align-items: center; gap: var(--space-2);
