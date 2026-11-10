@@ -23,12 +23,21 @@ import json
 import re
 import subprocess
 import sys
+import time
+import urllib.request
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 SITE = HERE.parent
 CONTENT = SITE / "content" / "posts"
 CHANNEL = "https://www.youtube.com/@ramtintechzone/videos"
+
+# YouTube bot-checks plain yt-dlp defaults from some IPs (this VM included):
+# the first fetch pass failed 25/31 with "Sign in to confirm you're not a
+# bot" and all subtitle downloads hit 429s. The Android player client plus
+# sleeps between requests works; subtitles fall back to the timedtext URL
+# straight from the video metadata. (2026-11-10 fetch run.)
+YT_BASE = ["yt-dlp", "--extractor-args", "youtube:player_client=android"]
 
 FILLER_STARTS = (
     "so ", "and so ", "you know ", "like ", "right? ", "okay ", "ok ",
@@ -62,7 +71,11 @@ def slugify(title):
     s = title.lower()
     s = re.sub(r"[^a-z0-9\s-]", "", s)
     s = re.sub(r"\s+", "-", s.strip())
-    return re.sub(r"-+", "-", s)[:80].strip("-") or "untitled"
+    s = re.sub(r"-+", "-", s).strip("-") or "untitled"
+    if len(s) > 80:
+        # Truncate at a word boundary so slugs never end mid-word.
+        s = s[:80].rsplit("-", 1)[0]
+    return s or "untitled"
 
 
 def clean_description(desc):
@@ -111,13 +124,62 @@ def transcript_sentences(vtt_path):
     return out
 
 
+def timedtext_transcript(video, tmp):
+    """Fallback: download the auto-caption .vtt straight from the timedtext
+    URL in the video metadata (no yt-dlp involved). Returns sentences or []."""
+    for source in ("automatic_captions", "subtitles"):
+        tracks = (video.get(source) or {}).get("en") or []
+        for t in tracks:
+            if t.get("ext") == "vtt" and t.get("url"):
+                try:
+                    req = urllib.request.Request(
+                        t["url"], headers={"User-Agent": "Mozilla/5.0"})
+                    data = urllib.request.urlopen(req, timeout=30).read()
+                    tmp.write_bytes(data)
+                    return transcript_sentences(tmp)
+                except Exception:
+                    continue
+    return []
+
+
+# Words that never appear in a real command line — ASR narration always
+# contains some of them ("System and then resources, you can see...").
+PROSE_WORDS = {
+    "you", "can", "see", "then", "when", "this", "that", "with", "and",
+    "the", "is", "are", "it", "your", "we", "i", "my", "me", "lets",
+    "let", "now", "here", "there", "so", "just", "what", "how", "why",
+    "who", "all", "any", "some", "no", "not", "only", "also", "still",
+    "again", "first", "next", "last", "new", "good", "easy", "sure",
+    "right", "well", "yeah", "yes", "please", "was", "were", "will",
+    "would", "should", "could", "have", "has", "had", "do", "does",
+    "did", "be", "been", "if", "but", "or", "he", "she", "they", "them",
+    "his", "her", "their", "us", "our", "its", "that's", "don't",
+    "can't", "gonna", "wanna", "really", "very", "much", "many", "more",
+    "most", "other", "another", "same", "different", "way", "thing",
+    "things", "video", "channel", "hello", "hi", "guys", "okay", "ok",
+    "im", "i'm", "we're", "you're", "it's", "there's", "here's",
+}
+
+
 def extract_commands(sentences):
-    """Lines that look like RouterOS / shell commands."""
+    """Lines that look like real RouterOS / shell commands.
+
+    The start pattern alone is not enough — ASR narration often begins with
+    a command word ("System and then resources, you can see I'm on the
+    7.26 beta 1."). A real command has no prose words and never ends with
+    a sentence period, so both are required.
+    """
     cmds = []
     pat = re.compile(r"^(/[\w-]+|ip |interface|system|user |ssh |docker |sudo |apt |set |add |print)", re.I)
     for s in sentences:
-        if pat.match(s) and len(s) < 120:
-            cmds.append(s)
+        if not pat.match(s) or len(s) > 120:
+            continue
+        if s.rstrip().endswith("."):
+            continue
+        words = re.findall(r"[a-z']+", s.lower())
+        if any(w.strip("'") in PROSE_WORDS for w in words):
+            continue
+        cmds.append(s)
     return cmds[:12]
 
 
@@ -190,7 +252,7 @@ def main():
     have = existing_ids()
     print(f"{len(have)} posts already exist")
     playlist = json.loads(
-        run(["yt-dlp", "--flat-playlist", "-J", CHANNEL]).stdout
+        run(YT_BASE + ["--flat-playlist", "-J", CHANNEL]).stdout
     )
     new = []
     for entry in playlist.get("entries", []):
@@ -204,11 +266,12 @@ def main():
         vid = entry["id"]
         try:
             video = json.loads(
-                run(["yt-dlp", "-J", f"https://www.youtube.com/watch?v={vid}"]).stdout
+                run(YT_BASE + ["-J", f"https://www.youtube.com/watch?v={vid}"]).stdout
             )
         except subprocess.CalledProcessError as e:
             print(f"  {vid}: metadata failed ({e.stderr[:120]})")
             continue
+        time.sleep(3)
         duration = video.get("duration") or 0
         if duration <= 90:
             print(f"  {vid}: Short ({duration}s), skipped")
@@ -217,8 +280,8 @@ def main():
         transcript = []
         tmp = SITE / "data" / "transcripts" / f"{vid}.en.vtt"
         try:
-            run([
-                "yt-dlp", "--write-auto-subs", "--write-subs",
+            run(YT_BASE + [
+                "--write-auto-subs", "--write-subs",
                 "--sub-lang", "en", "--skip-download",
                 "--sub-format", "vtt",
                 "-o", str(tmp.with_suffix("")),
@@ -228,7 +291,12 @@ def main():
             if cand:
                 transcript = transcript_sentences(cand[0])
         except subprocess.CalledProcessError:
+            print(f"  {vid}: yt-dlp subtitles failed, trying timedtext fallback")
+        if not transcript:
+            transcript = timedtext_transcript(video, tmp)
+        if not transcript:
             print(f"  {vid}: no transcript available")
+        time.sleep(3)
         article = draft_article(video, transcript)
         slug = slugify(video["title"])
         cats = infer_categories(video["title"], video.get("description", ""))

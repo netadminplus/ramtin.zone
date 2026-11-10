@@ -1,0 +1,33 @@
+---
+title: "How to Customize a MikroTik Hotspot Login Page with AI | Custom Login Template"
+date: 2026-10-02
+slug: how-to-customize-a-mikrotik-hotspot-login-page-with-ai-custom-login-template
+categories: ["MikroTik", "AI×Networking", "Youtube Videos"]
+youtube_id: GSPEagKNJDQ
+description: "In this video, I show you how to customize a MikroTik HotSpot login page and replace the default login screen with a clean, modern, branded design. MikroTik HotSpot is a useful feature for providing a"
+auto_generated: true
+---
+In this video, I show you how to customize a MikroTik HotSpot login page and replace the default login screen with a clean, modern, branded design. MikroTik HotSpot is a useful feature for providing authenticated Wi-Fi access. But did you know you can customize its login page with your own branding, logo, slogan, social media links, and service menu?
+
+In this tutorial I walk through the whole setup step by step — what it is, what you need before you start, and the exact configuration that works. The video above shows the full lab; below is the written reference so you can follow along or copy the commands.
+
+## What you will learn
+
+- Introduction & Overview
+- Linux Server Setup & Existing Local Backups
+- Google Drive API & OAuth Client Setup
+- Install Rclone & Connect to Google Drive
+
+## How it works
+
+Kind: captions Language: en So if you know microic you probably know about micro hotspot which is a great feature right and the great thing about micro cut hotspot is that you can customize the login page for your company you can add your logo you can add your slogan your social links and even if you provide some services you can add them as menu on your login page so if you know a little bit about HTML and CSS that is very easy but even if you don't know anything about them with AI power you can do whatever ever you want. In this video we're going to customize the microick hotspot login page. I'm Ramin and on this channel I create practical videos about networking DevOps AI and technology. As you can see here I already logged into my micro routter via Vimbox. And here in IP and then hotspot, you can see there is one active hotspot server. And I assume you all know about uh setting up micro hotspot server which is very easy. But uh if you want me to create some videos about the details and the specific settings just let me know in the comments below. Here you can see the server, you can see the server profile and I already created one uh hotspot account. When we created this hotspot, Microick automatically generates some files for the pages that users need to see the login page, logout page, status page, and some other pages. Here in the files menu, you can see there is one hotspot directory here. Under this directory, you can see there are some HTML pages, JSON file, CSS file. Here you can see there is one JS file for the functionality. Under this one you can see there are two images and under this directory you can see some other HTML pages.
+
+When users try to uh log to our hotspot system uh they will see this default login page and we all know it but we want to customize it. We want to add our company logo, add our slogan, add our social links. For example, if we have a restaurant or a cafe, we want to add our menu on this login page. We just need to download this uh hotspot directory to our system and change the HTML and the CSS and then upload it back to the microick router. And of course you need to know a little bit about HTML and CSS. But don't worry, even if you don't know anything about them, you can create a great login page with AI power. But let's start with changing uh this login page and some maybe some other pages with uh ID. We download it on our system and change it with VS code and then we test it and then we proceed with uh AI. Let's uh download this hotspot directory to my system to this HS directory here. can see all the structure and all the directories here. Let's open folder and on my desktop you can see this HS directory and let's open this one. And you can look around and uh check all of the files. You can change everything if you know a little bit about HTML and CSS.
+
+And now let's get back to Microick Vimbox and remove this directory here and upload this one instead of the previous one. And if I get here on my Chrome and refresh this page, you can see the changes are applied, right? But if you want to create a great login page, for example, a modern, minimal and responsive login page for your specific need, you can use AI power and you don't need to know anything about HTML and CSS. You just need a great prompt so AI understands what you actually want. Here I already prepared my prompt and I will share it on my telegram channel. the links uh the link to my telegram channel is in the description below. You can use this prompt and change it to whatever you want or you can create your own prompt. Let's copy this prompt here and I will use chat GPT uh in this example but you can use uh any AI any agent that you are using. Let's uh log to hotspot so I can have internet access and then proceed with the prompt here. Let's refresh this page to make sure I have internet access. And now I need to let me delete this one and paste the prompt here again. Now I need to zip the directory so I can upload it to the chat GPT. Uh here in this directory let's uh compress this hotspot directory to a zip directory and then upload it to my chat GPT.
+
+Let's proceed with this prompt and wait for a few seconds. As you can see chat GPT gave this uh new zip file here. I can download it and added some description about it. So let's just download this zip file and check it and then upload it to my microick router. Let's remove everything else except this one and rename it to hotspot. You can just use uh Gemini or can you can use chat GPT like me. So here is the uh file we have and uh here on micro let's delete this hotspot directory and upload this one. Now let me get back here and select the directory here and then yeah there we go. And you can see the login page here which is great. And make sure you check the functionality and make sure it is working. So for example, let me log in with my user and yeah that works. That's all for this video and uh just a quick note don't be afraid of uh messing up with this file. You can just reset everything about these pages with just uh one button here.
+
+## Wrapping up
+
+If this helped, subscribe to Ramtin Tech Zone on YouTube for more MikroTik, Linux, networking, VPN and AI tutorials — and if a script or tutorial saved you time, consider supporting the work on the Donate page.

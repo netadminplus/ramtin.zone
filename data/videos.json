@@ -1,0 +1,2473 @@
+[
+  {
+    "id": "lheaAh0YZyk",
+    "title": "How to Block Ads on OpenWrt | Network-Wide Ad Blocking",
+    "description": "With OpenWrt, you can block advertising and tracking domains across your network using the Adblock package, without installing a separate Pi-hole server or configuring ad blockers on individual devices.\n\nIn this video, I demonstrate how to install and configure Adblock on an OpenWrt router and test DNS-based ad blocking in a real network environment.\n\nI start by explaining how DNS-based ad blocking works and how it prevents devices from resolving domains associated with advertisements and tracking.\n\nThen I explore the available Adblock packages, install Adblock and its LuCI interface, and configure the DNS backend and blocklist sources.\n\nI also configure Force Local DNS to redirect standard DNS requests through the router, helping prevent clients from bypassing the local DNS filtering through external DNS servers.\n\nFinally, I test domain blocking, examine DNS responses, and configure DNS reporting to monitor DNS queries and blocked domains.\n\n⏱️ Video Chapters:\n\nTo be added based on the final video timestamps.\n\n🔑 Key Takeaways:\n\n- Network-Wide Ad Blocking: OpenWrt can filter advertising and tracking domains for devices using the router's DNS service.\n- Adblock Package: The Adblock package provides DNS-based domain filtering directly on OpenWrt.\n- LuCI Interface: luci-app-adblock provides a web interface for managing Adblock settings, blocklists, and reports.\n- DNS Blocklists: Multiple blocklist sources can be used to identify and block advertising and tracking domains.\n- Force Local DNS: Redirects standard DNS requests on port 53 to the router's local DNS service.\n- **DNS Reporting:** Uses tcpdump to capture DNS traffic and generate reports about DNS requests and blocked domains.\n- Testing: DNS lookups can be used to verify whether selected domains are being blocked.\n- Limitations: DNS-based filtering cannot reliably block advertisements served from the same domains as legitimate content, including most YouTube ads.\n\n🔗 Related Videos:\n\n▶️ What is OpenWrt? The Powerful Open-Source OS for Your Router\nhttps://youtu.be/eTzKk8yJP3A\n\n▶️ OpenWrt 25.12: OPKG is Gone, APK Is Here!\nhttps://youtu.be/fl99lo_5GLs\n\n▶️ Block ALL Ads on Your Network with MikroTik AdList (No Pi-hole Needed!) 🔥\nhttps://youtu.be/6RuiR985A78\n\n🔗 Useful Resources & Documentation:\n\nOpenWrt Official Website:\nhttps://openwrt.org/\n\nOpenWrt Ad Blocking Documentation:\nhttps://openwrt.org/docs/guide-user/services/ad-blocking\n\nAdblock Package Source Code:\nhttps://github.com/openwrt/packages/tree/master/net/adblock\n\n⚠️ Important Note:\n\nDNS-based ad blocking does not guarantee that every advertisement will be blocked. Its effectiveness depends on the selected blocklists, DNS configuration, and how applications deliver advertisements.\n\nForce Local DNS redirects conventional DNS traffic on port 53, but it does not automatically prevent clients from using encrypted DNS protocols such as DNS over HTTPS (DoH).\n\nDNS reporting requires a properly configured Report Interface and a working tcpdump installation. After enabling reporting or changing the Report Interface, restart the Adblock service to initialize DNS capture.\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n#OpenWrt #Adblock #AdBlocking #Networking #DNS\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🔵 Telegram: https://t.me/ramtintechzone\n🟡 Instagram: https://instagram.com/ramtintechzone\n🔴 Website: https://ramtin.zone",
+    "upload_date": "20261105",
+    "duration": 837,
+    "view_count": 176,
+    "like_count": 9,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=lheaAh0YZyk",
+    "thumbnail": "https://i.ytimg.com/vi/lheaAh0YZyk/sddefault.jpg",
+    "chapters": null,
+    "tags": [
+      "OpenWrt",
+      "OpenWrt Adblock",
+      "OpenWrt Ad Blocking",
+      "OpenWrt Tutorial",
+      "OpenWrt 25.12",
+      "Block Ads",
+      "Block Ads on OpenWrt",
+      "Network Wide Ad Blocking",
+      "DNS Ad Blocking",
+      "DNS Filtering",
+      "Ad Blocking Router",
+      "Router Adblock",
+      "OpenWrt DNS",
+      "LuCI Adblock",
+      "luci-app-adblock",
+      "Adblock Package",
+      "Force Local DNS",
+      "DNS Report",
+      "Block Ads on WiFi",
+      "Block Tracking Domains",
+      "Pi-hole Alternative",
+      "OpenWrt Setup",
+      "OpenWrt Router",
+      "Adblock Setup",
+      "Ad Blocking Tutorial",
+      "Ramtin",
+      "Ramtin Tech Zone",
+      "Ramtin Rahmani Nejad"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "lheaAh0YZyk.vtt"
+    }
+  },
+  {
+    "id": "_s6EfRB2lPo",
+    "title": "WinBox 3 No Longer Works with MikroTik RouterOS 7.25!",
+    "description": "With the release of MikroTik RouterOS 7.25, WinBox 3 can no longer connect to routers running this version. MikroTik now requires WinBox 4.3 or newer.\n\nIn this video, I explain what changed in RouterOS 7.25, why WinBox 3 is no longer compatible, and what MikroTik administrators need to know before upgrading their routers.\n\nI start by examining the new minimum WinBox version requirement and explaining why older versions, including WinBox 3.43, can no longer connect to RouterOS 7.25.\n\nThen I demonstrate the connection issue, download and set up WinBox 4, and connect to a MikroTik router running RouterOS 7.25.\n\nI also take a look at the differences between WinBox 3 and WinBox 4, including interface changes, compatibility, and considerations when migrating saved router connections.\n\nFinally, I discuss what this change means for network administrators and why it's important to check management tool compatibility before upgrading RouterOS, especially on remote or production routers.\n\n⏱️ Video Chapters:\n\n00:00 - Introduction: WinBox 3 and RouterOS 7.25\n00:45 - Why WinBox 3 No Longer Connects\n02:10 - Downloading and Setting Up WinBox 4\n04:15 - Connecting to RouterOS 7.25 with WinBox 4\n05:50 - WinBox 4 Interface Changes and Migration Tips\n07:20 - Summary and Final Thoughts\n\n🔑 Key Takeaways:\n\n- RouterOS 7.25: MikroTik introduced a minimum supported WinBox version of 4.3.\n- WinBox 3 Compatibility: WinBox 3.43 and earlier versions can no longer connect to RouterOS 7.25.\n- Connection Error: Older WinBox versions display the \"router requires newer winbox\" error.\n- WinBox 4: Use WinBox 4.3 or newer to manage routers running RouterOS 7.25.\n- Interface Changes: WinBox 4 introduces a redesigned interface and native support for Windows, Linux, and macOS.\n- Saved Connections: Legacy CDB files can be imported into WinBox 4, while older WBX files are not directly supported.\n- RouterOS Upgrades: Check WinBox compatibility and keep an alternative management method available before upgrading production routers.\n\n🔗 Useful Resources & Documentation:\n\nMikroTik Official Website:\nhttps://mikrotik.com/\n\nMikroTik Downloads:\nhttps://mikrotik.com/download\n\nRouterOS Changelog:\nhttps://mikrotik.com/download/changelogs\n\n⚠️ Important Note:\n\nWinBox 3 has not stopped working with every MikroTik router. The compatibility restriction applies to RouterOS 7.25 and versions enforcing the new minimum WinBox requirement.\n\nA CDB file contains saved WinBox connection information and is not a RouterOS configuration backup.\n\nBefore upgrading RouterOS on a production router, back up your configuration and make sure you have a compatible version of WinBox or an alternative management method, such as SSH.\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n#MikroTik #WinBox #RouterOS #WinBox4 #Networking\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🔵 Telegram: https://t.me/ramtintechzone\n🟡 Instagram: https://instagram.com/ramtintechzone\n🔴 Website: https://ramtin.zone",
+    "upload_date": "20261028",
+    "duration": 484,
+    "view_count": 612,
+    "like_count": 10,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=_s6EfRB2lPo",
+    "thumbnail": "https://i.ytimg.com/vi/_s6EfRB2lPo/sddefault.jpg",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Introduction: WinBox 3 and RouterOS 7.25",
+        "end_time": 45
+      },
+      {
+        "start_time": 45,
+        "title": "Why WinBox 3 No Longer Connects",
+        "end_time": 130
+      },
+      {
+        "start_time": 130,
+        "title": "Downloading and Setting Up WinBox 4",
+        "end_time": 255
+      },
+      {
+        "start_time": 255,
+        "title": "Connecting to RouterOS 7.25 with WinBox 4",
+        "end_time": 350
+      },
+      {
+        "start_time": 350,
+        "title": "WinBox 4 Interface Changes and Migration Tips",
+        "end_time": 440
+      },
+      {
+        "start_time": 440,
+        "title": "Summary and Final Thoughts",
+        "end_time": 484
+      }
+    ],
+    "tags": [
+      "MikroTik",
+      "WinBox 3",
+      "WinBox 4",
+      "RouterOS 7.25",
+      "WinBox 3 not working",
+      "WinBox 3 end of support",
+      "WinBox 3 blocked",
+      "WinBox connection error",
+      "router requires newer winbox",
+      "WinBox 4.3",
+      "MikroTik WinBox update",
+      "MikroTik RouterOS update",
+      "WinBox 3 vs WinBox 4",
+      "WinBox 4 migration",
+      "WinBox CDB import",
+      "WinBox saved routers",
+      "MikroTik troubleshooting",
+      "MikroTik router management",
+      "RouterOS upgrade",
+      "WinBox compatibility",
+      "MikroTik WinBox",
+      "MikroTik tutorial",
+      "WinBox legacy",
+      "MikroTik Tutorial"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "_s6EfRB2lPo.vtt"
+    }
+  },
+  {
+    "id": "pDUvMR2gx_c",
+    "title": "Reverse Engineer Anything (REA): I Tried to Rebuild an App with AI",
+    "description": "Can AI reverse engineer an application without its original source code and build a similar one? That's what I wanted to test using Reverse Engineer Anything (REA), an open-source GitHub project, and Claude Desktop.\n\nIn this video, I explore how AI-powered reverse engineering works, from understanding executables and binary analysis to disassembly, decompilation, and pseudocode.\n\nI'll walk through the REA workflow, explain how it connects to Claude Desktop using MCP (Model Context Protocol), and show how to install and configure it on macOS.\n\nThen we'll put it to the test. I'll ask Claude to use REA to investigate Paintlet, an installed desktop image editor, without accessing its GitHub source code. We'll focus on features like Brush, Shapes, and Flood Fill, then attempt to build a new application with similar functionality.\n\nFinally, we'll examine the results, what REA actually helped us discover, and the limitations of using AI agents for reverse engineering and software development.\n\n🔍 Topics Covered:\nReverse Engineer Anything (REA), AI Reverse Engineering, Claude Desktop, MCP, Binary Analysis, Disassembly, Decompilation, Pseudocode, Ghidra, Hopper, AI Agents, and Application Reconstruction.\n\n🔗 Resources:\nREA GitHub Repository: https://github.com/morluto/rea\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🔵 Telegram: https://t.me/ramtintechzone\n🟡 Instagram: https://instagram.com/ramtintechzone\n🔴 Website: https://ramtin.zone\n\n#ReverseEngineering #REA #ClaudeAI #AIAgents #MCP",
+    "upload_date": "20261023",
+    "duration": 753,
+    "view_count": 158,
+    "like_count": 5,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=pDUvMR2gx_c",
+    "thumbnail": "https://i.ytimg.com/vi_webp/pDUvMR2gx_c/sddefault.webp",
+    "chapters": null,
+    "tags": [
+      "Reverse Engineer Anything",
+      "REA GitHub",
+      "rea-agents",
+      "REA tutorial",
+      "REA setup",
+      "AI reverse engineering",
+      "reverse engineer app with AI",
+      "reverse engineering",
+      "Claude Desktop",
+      "REA Claude Desktop",
+      "Claude MCP",
+      "Model Context Protocol",
+      "MCP server",
+      "rebuild app with AI",
+      "recreate app with AI",
+      "reverse engineering tutorial",
+      "binary analysis",
+      "disassembly",
+      "decompilation",
+      "Ghidra",
+      "Hopper",
+      "macOS reverse engineering",
+      "Paintlet",
+      "Ramtin",
+      "Ramtin Tech Zone",
+      "Ramtin Rahmani Nejad",
+      "reverse engineering with AI"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "pDUvMR2gx_c.vtt"
+    }
+  },
+  {
+    "id": "5Te5-Uo5u1Y",
+    "title": "MikroTik CMR: Manage All Your Routers from One Dashboard",
+    "description": "Manage multiple MikroTik routers from one dashboard using **MikroTik CMR (Centralized Management for RouterOS)**. In this hands-on tutorial, I'll show you how to set up a CMR controller, connect MikroTik routers as clients, and manage your RouterOS devices through a centralized interface.\n\nIf you manage several MikroTik routers across different locations, logging in to each device individually for configuration, monitoring, and updates can become time-consuming. MikroTik CMR provides a centralized management solution that helps simplify these tasks.\n\nIn this video, we'll explore how MikroTik CMR works and walk through a practical setup using a cloud-hosted CHR as the controller, another CHR as a client, and two MikroTik routers behind CGNAT. We'll connect the devices to the controller and explore the centralized dashboard, device information, monitoring, and management capabilities.\n\nWhether you're a network engineer, system administrator, or managing multiple MikroTik routers for your clients, this tutorial will help you understand how to get started with centralized RouterOS management.\n\n⏱️ **Video Chapters:**\n\n00:00 - Introduction to MikroTik CMR\n\n🔑 **Key Topics:**\n\n* What MikroTik CMR is and how centralized RouterOS management works\n* Setting up a MikroTik CMR controller\n* Connecting MikroTik routers as CMR clients\n* Managing MikroTik devices behind CGNAT\n* Monitoring multiple routers from one dashboard\n* Exploring centralized configuration and management capabilities\n* Understanding the benefits of CMR for multi-router networks\n\n🔗 **Useful Resources:**\n\nMikroTik Official Website: https://mikrotik.com\n\nMikroTik Documentation: https://help.mikrotik.com/docs/\n\n⚠️ **Important Note:**\n\nMikroTik CMR requires compatible RouterOS versions and components. Check the official MikroTik documentation and software requirements before deploying it in a production environment. Test configuration changes and software upgrades carefully.\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🌐 **About This Project:**\n\nRamtin Tech Zone is an English-language technology channel focused on practical networking, MikroTik RouterOS, Linux, DevOps, infrastructure, and AI. I share hands-on tutorials, real-world scenarios, and technical explanations to help IT professionals build, manage, and troubleshoot modern infrastructure.\n\n#MikroTik #RouterOS #CMR #NetworkManagement #Networking\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🔵 Telegram: https://t.me/ramtintechzone\n\n🟣 Instagram: https://instagram.com/ramtintechzone\n\n🌐 Website: https://ramtin.zone",
+    "upload_date": "20261020",
+    "duration": 2194,
+    "view_count": 1106,
+    "like_count": 23,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=5Te5-Uo5u1Y",
+    "thumbnail": "https://i.ytimg.com/vi/5Te5-Uo5u1Y/sddefault.jpg",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Introduction to MikroTik CMR",
+        "end_time": 2194
+      }
+    ],
+    "tags": [
+      "mikrotik",
+      "mikrotik cmr",
+      "cmr",
+      "routeros",
+      "mikrotik tutorial",
+      "mikrotik router",
+      "mikrotik routeros",
+      "mikrotik configuration",
+      "mikrotik setup",
+      "mikrotik training",
+      "mikrotik networking",
+      "mikrotik winbox",
+      "centralized router management",
+      "mikrotik centralized management",
+      "mikrotik cmr setup",
+      "mikrotik cmr tutorial",
+      "cmr controller",
+      "cmr client",
+      "cmr dashboard",
+      "manage multiple mikrotik routers",
+      "mikrotik monitoring",
+      "network administration",
+      "ramtin",
+      "ramtin tech zone",
+      "networkchuck",
+      "mikrotik management"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "5Te5-Uo5u1Y.vtt"
+    }
+  },
+  {
+    "id": "saac7rGcObQ",
+    "title": "How AI Agents Actually Work (Explained Simply)",
+    "description": "How do AI agents actually work? What makes them different from AI chatbots and traditional automation workflows?\n\nIn this video, I explain how AI agents work behind the scenes, from large language models (LLMs) and tool calling to the agent loop, RAG, MCP, and security.\n\nWe'll walk through a server troubleshooting scenario to understand how an AI agent uses tools, observes results, and decides what to do next.\n\nWe'll also explore the components of an AI agent system, including the agent harness, memory, tools, and execution boundaries.\n\nFinally, we'll compare different ways to access AI models and discuss when you actually need an AI agent instead of a simple script or automation workflow.\n\n⏱️ Video Chapters:\n\n00:00 - Introduction: What Are AI Agents?\n00:35 - What Is an AI Model? Understanding LLMs\n02:11 - From AI Models to Chatbots\n03:21 - How Tool Calling Works\n04:48 - The Agent Loop: Server Troubleshooting Example\n11:37 - Who Decides the Next Step? Chatbots vs Workflows vs Agents\n12:25 - AI Agent Architecture: Harness, Model, Tools & Memory\n14:01 - What Is RAG (Retrieval-Augmented Generation)?\n15:43 - AI Agent Security, Permissions & Execution Boundaries\n17:09 - What Is MCP (Model Context Protocol)?\n17:58 - Ways to Access AI Models: Subscriptions, APIs & Self-Hosting\n19:06 - AI Assistants, Coding Agents & Automation Platforms\n20:47 - When Do You Actually Need an AI Agent?\n22:04 - Final Thoughts: More Autonomy Isn't Always Better\n\n🔍 Topics Covered:\nAI Agents, LLMs, Tool Calling, Agent Loop, Agent Harness, RAG, MCP, AI Agent Security, AI Automation, and Agent Architecture.\n\nThis is a conceptual explanation of AI agents, not a step-by-step tutorial for building one.\n\n🔗 Connect With Me:\nYouTube: https://www.youtube.com/@ramtintechzone\nInstagram: https://www.instagram.com/ramtintechzone\nTelegram: https://t.me/ramtintechzone\n\n#AIAgents #AgenticAI #LLM #MCP #AIAutomation",
+    "upload_date": "20261016",
+    "duration": 1113,
+    "view_count": 117,
+    "like_count": 4,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=saac7rGcObQ",
+    "thumbnail": "https://i.ytimg.com/vi/saac7rGcObQ/sddefault.jpg",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Introduction: What Are AI Agents?",
+        "end_time": 35
+      },
+      {
+        "start_time": 35,
+        "title": "What Is an AI Model? Understanding LLMs",
+        "end_time": 131
+      },
+      {
+        "start_time": 131,
+        "title": "From AI Models to Chatbots",
+        "end_time": 201
+      },
+      {
+        "start_time": 201,
+        "title": "How Tool Calling Works",
+        "end_time": 288
+      },
+      {
+        "start_time": 288,
+        "title": "The Agent Loop: Server Troubleshooting Example",
+        "end_time": 697
+      },
+      {
+        "start_time": 697,
+        "title": "Who Decides the Next Step? Chatbots vs Workflows vs Agents",
+        "end_time": 745
+      },
+      {
+        "start_time": 745,
+        "title": "AI Agent Architecture: Harness, Model, Tools & Memory",
+        "end_time": 841
+      },
+      {
+        "start_time": 841,
+        "title": "What Is RAG (Retrieval-Augmented Generation)?",
+        "end_time": 943
+      },
+      {
+        "start_time": 943,
+        "title": "AI Agent Security, Permissions & Execution Boundaries",
+        "end_time": 1029
+      },
+      {
+        "start_time": 1029,
+        "title": "What Is MCP (Model Context Protocol)?",
+        "end_time": 1078
+      },
+      {
+        "start_time": 1078,
+        "title": "Ways to Access AI Models: Subscriptions, APIs & Self-Hosting",
+        "end_time": 1113
+      }
+    ],
+    "tags": [
+      "AI Agents",
+      "How AI Agents Work",
+      "AI Agents Explained",
+      "What Are AI Agents",
+      "AI Agent Tutorial",
+      "AI Agent Architecture",
+      "Agentic AI",
+      "AI vs Chatbot",
+      "LLM Agents",
+      "Large Language Models",
+      "Tool Calling",
+      "AI Agent Loop",
+      "Agent Harness",
+      "MCP Explained",
+      "RAG Explained",
+      "AI Automation",
+      "AI Workflows",
+      "AI Agent Security",
+      "AI Tools",
+      "AI for Beginners",
+      "Custom AI Agents",
+      "AI Agent Frameworks",
+      "AI Agent Fundamentals",
+      "AI Agent Components",
+      "AI Agent vs Chatbot",
+      "AI Agent Tool Use",
+      "Ramtin",
+      "RamtinTechZone"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "saac7rGcObQ.vtt"
+    }
+  },
+  {
+    "id": "RkhyYrpAC8w",
+    "title": "I Deleted My Linux Server. Can Google Drive Bring It Back?",
+    "description": "Can you use Google Drive as remote backup storage for your Linux server?\n\nIn this video, I test exactly that using Rclone, an open-source tool for transferring files between local systems and cloud storage services.\n\nAfter upgrading my Google account and getting 5TB of storage, I decided to use some of that space to store my existing Linux server backups remotely.\n\nI'll show you how to enable the Google Drive API, configure OAuth credentials, connect Rclone to Google Drive, upload backup files, and verify that the transfer completed successfully.\n\nThen comes the real test: I'll delete my original VPS, create a fresh Ubuntu server, download the backups from Google Drive, and restore my applications to see if everything works.\n\nThe server runs a small Docker Compose stack with Nextcloud, Gitea, and PostgreSQL. The backup system is already configured, so this tutorial focuses on remote backup storage and recovery, not creating backups from scratch.\n\n⏱️ Video Chapters:\n\n00:00 - Introduction & Overview\n01:00 - Linux Server Setup & Existing Local Backups\n04:26 - Google Drive API & OAuth Client Setup\n07:31 - Install Rclone & Connect to Google Drive\n12:16 - Upload Linux Server Backups to Google Drive\n13:37 - Verify Backup Files with Rclone\n15:09 - Delete the VPS & Deploy a Fresh Ubuntu Server\n16:29 - Download Backups from Google Drive & Restore the Server\n20:58 - Test the Server Recovery\n24:26 - Final Thoughts\n\n🔑 Key Topics:\n\n* Using Google Drive for Linux Server Backups\n* Connecting Rclone to Google Drive\n* Uploading and Verifying Backup Files\n* Restoring a Linux Server from Remote Backups\n\n🔗 Useful Resources:\n\nRclone: https://rclone.org/\n\nRclone Google Drive Guide: https://rclone.org/drive/\n\nGoogle Cloud Console: https://console.cloud.google.com/\n\n⚠️ Important Note:\n\nThis video demonstrates remote backup storage and recovery using an existing backup system. For production use, encrypt your backup archives, protect your credentials, automate transfers, and regularly test your backups.\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🌐 About This Channel:\n\nRamtin Tech Zone covers practical networking, Linux, DevOps, cloud infrastructure, and AI tutorials.\n\n#Linux #Rclone #GoogleDrive #LinuxBackup #ServerBackup #SysAdmin\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🔵 Telegram: https://t.me/ramtintechzone\n\n🟡 Instagram: https://instagram.com/ramtintechzone\n\n🔴 Website: https://ramtin.zone",
+    "upload_date": "20261010",
+    "duration": 1568,
+    "view_count": 181,
+    "like_count": 4,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=RkhyYrpAC8w",
+    "thumbnail": "https://i.ytimg.com/vi/RkhyYrpAC8w/sddefault.jpg",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Introduction & Overview",
+        "end_time": 60
+      },
+      {
+        "start_time": 60,
+        "title": "Linux Server Setup & Existing Local Backups",
+        "end_time": 266
+      },
+      {
+        "start_time": 266,
+        "title": "Google Drive API & OAuth Client Setup",
+        "end_time": 451
+      },
+      {
+        "start_time": 451,
+        "title": "Install Rclone & Connect to Google Drive",
+        "end_time": 736
+      },
+      {
+        "start_time": 736,
+        "title": "Upload Linux Server Backups to Google Drive",
+        "end_time": 817
+      },
+      {
+        "start_time": 817,
+        "title": "Verify Backup Files with Rclone",
+        "end_time": 909
+      },
+      {
+        "start_time": 909,
+        "title": "Delete the VPS & Deploy a Fresh Ubuntu Server",
+        "end_time": 989
+      },
+      {
+        "start_time": 989,
+        "title": "Download Backups from Google Drive & Restore the Server",
+        "end_time": 1258
+      },
+      {
+        "start_time": 1258,
+        "title": "Test the Server Recovery",
+        "end_time": 1466
+      },
+      {
+        "start_time": 1466,
+        "title": "Final Thoughts",
+        "end_time": 1568
+      }
+    ],
+    "tags": [
+      "linux backup",
+      "linux server backup",
+      "google drive backup",
+      "backup linux to google drive",
+      "rclone",
+      "rclone google drive",
+      "rclone tutorial",
+      "rclone backup",
+      "linux disaster recovery",
+      "disaster recovery",
+      "vps backup",
+      "linux vps backup",
+      "server backup and restore",
+      "restore linux server",
+      "offsite backup",
+      "remote backup",
+      "docker compose backup",
+      "postgresql backup",
+      "nextcloud backup",
+      "gitea backup",
+      "self hosted backup",
+      "google drive 5tb",
+      "linux sysadmin",
+      "devops",
+      "Ramtin Tech Zone",
+      "ramtintechzone"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "RkhyYrpAC8w.vtt"
+    }
+  },
+  {
+    "id": "GSPEagKNJDQ",
+    "title": "How to Customize a MikroTik Hotspot Login Page with AI | Custom Login Template",
+    "description": "In this video, I show you how to customize a MikroTik HotSpot login page and replace the default login screen with a clean, modern, branded design.\n\nMikroTik HotSpot is a useful feature for providing authenticated Wi-Fi access. But did you know you can customize its login page with your own branding, logo, slogan, social media links, and service menu?\n\nIn this tutorial, I demonstrate a custom MikroTik HotSpot login page designed for Ramtin Tech Zone, featuring a modern dark interface, teal accents, username and password fields, and a custom login button.\n\nWe’ll look at how a standard MikroTik HotSpot captive portal can be transformed into a professional login experience for a business, guest Wi-Fi network, café, hotel, or other public hotspot.\n\nWhether you're a network engineer, system administrator, or MikroTik user, this is a practical example of customizing the RouterOS HotSpot login interface.\n\n⏱️ Video Chapters:\n\n00:00 - Introduction & Overview\n01:00 - Linux Server Setup & Existing Local Backups\n04:26 - Google Drive API & OAuth Client Setup\n07:31 - Install Rclone & Connect to Google Drive\n12:16 - Upload Linux Server Backups to Google Drive\n13:37 - Verify Backup Files with Rclone\n15:09 - Delete the VPS & Deploy a Fresh Ubuntu Server\n16:29 - Download Backups from Google Drive & Restore the Server\n20:58 - Test the Server Recovery\n24:26 - Final Thoughts\n\n🔑 Key Topics:\n\n* MikroTik HotSpot Login Page Customization\n* Custom MikroTik HotSpot Login Template\n* MikroTik RouterOS HotSpot\n* Custom Captive Portal\n* HotSpot Login Page Design\n* MikroTik Guest Wi-Fi\n* Branded Wi-Fi Login Page\n* MikroTik Network Administration\n\n🔗 Useful Resources:\n\nMikroTik: https://mikrotik.com/\nRouterOS Documentation: https://help.mikrotik.com/docs/\n\n⚠️ Important Note:\n\nBack up your original MikroTik HotSpot files before making changes. Make sure your custom login page preserves the required HotSpot authentication functionality, and test it on your own router before deploying it in a production network.\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🌐 About This Project:\n\nRamtin Tech Zone covers practical networking, MikroTik, RouterOS, Linux, DevOps, and network administration tutorials.\n\n#MikroTik #MikroTikHotspot #HotspotLoginPage #RouterOS #MikroTikTutorial #Hotspot #CaptivePortal #NetworkEngineering #Networking #SysAdmin\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🔵 Telegram: https://t.me/ramtintechzone\n🟡 Instagram: https://instagram.com/ramtintechzone\n🔴 Website: https://ramtin.zone",
+    "upload_date": "20261002",
+    "duration": 608,
+    "view_count": 712,
+    "like_count": 14,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=GSPEagKNJDQ",
+    "thumbnail": "https://i.ytimg.com/vi/GSPEagKNJDQ/sddefault.jpg",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Introduction & Overview",
+        "end_time": 60
+      },
+      {
+        "start_time": 60,
+        "title": "Linux Server Setup & Existing Local Backups",
+        "end_time": 266
+      },
+      {
+        "start_time": 266,
+        "title": "Google Drive API & OAuth Client Setup",
+        "end_time": 451
+      },
+      {
+        "start_time": 451,
+        "title": "Install Rclone & Connect to Google Drive",
+        "end_time": 608
+      }
+    ],
+    "tags": [
+      "mikrotik",
+      "MikroTik HotSpot",
+      "mikrotik hotspot login page",
+      "custom mikrotik hotspot",
+      "mikrotik login page",
+      "hotspot login page",
+      "customize mikrotik hotspot",
+      "mikrotik hotspot customization",
+      "custom hotspot login",
+      "mikrotik routeros",
+      "RouterOS hotspot",
+      "mikrotik tutorial",
+      "hotspot captive portal",
+      "captive portal",
+      "custom captive portal",
+      "wifi login page",
+      "guest wifi",
+      "hotspot template",
+      "mikrotik html",
+      "Ramtin Tech Zone",
+      "ramtintechzone",
+      "mikrotik hotspot design",
+      "hotspot login template"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "GSPEagKNJDQ.vtt"
+    }
+  },
+  {
+    "id": "19ryjVKr1JU",
+    "title": "I Let Claude Configure My MikroTik Router. Here’s What Happened",
+    "description": "In this video, I test whether Claude AI can actually configure a MikroTik router.\n\nInstead of manually configuring RouterOS myself, I give Claude SSH access to a MikroTik router and let it build a complete network configuration based on a real-world scenario.\n\nI use Claude in VS Code as the AI agent. Claude connects to the MikroTik through SSH, inspects the existing configuration, identifies the RouterOS version and hardware, and then configures the router step by step.\n\nThe goal is not simply to generate MikroTik commands. Claude has to inspect, configure, troubleshoot, and validate a real network device.\n\nThe target configuration includes:\n\n- A main LAN with normal Internet access\n- A separate VPN network using an L2TP VPN connection\n- A guest network with MikroTik HotSpot authentication\n\nThe VPN network uses policy-based routing so its traffic goes through the L2TP VPN, while the main network continues using the normal WAN connection.\n\nThe guest network is isolated from the internal networks and uses MikroTik HotSpot for authentication.\n\nClaude also configures DHCP, DNS, NAT, routing, policy routing, firewall rules, bridges, wireless networks, and network isolation.\n\nOne interesting part of the experiment is the management connection. The initial Wi-Fi and management path changes during the configuration, so Claude has to handle the network change, reconnect to the router, and continue the configuration.\n\nAfter the configuration is complete, I test the actual network behavior, including Internet access, VPN routing, HotSpot authentication, firewall isolation, and SSH management.\n\nFinally, I review what Claude configured, what required troubleshooting, and what still needs to be manually verified.\n\nThis is not a traditional MikroTik configuration tutorial. It is a practical experiment to see how far an AI agent can actually go when it has SSH access to a real network device.\n\n⏱️ Video Chapters:\n00:00 - Introduction & Concept\n00:40 - Current Setup & Default Config in WinBox\n01:40 - Network Requirements & Prompt Overview\n06:32 - Router Access & SSH Security\n08:18 - Running Claude Code & Handling Disconnections\n09:27 - Resolving Hotspot Interruption\n11:24 - Claude's Generated Report & Backups\n12:45 - Verifying Configuration in WinBox\n15:03 - Testing VPN Wi-Fi\n16:04 - Conclusion & Final Tips\n\n🔑 Key Takeaways:\n\n- Claude AI + MikroTik\n- Claude in VS Code\n- AI Network Configuration\n- SSH Access\n- L2TP VPN\n- MikroTik HotSpot\n- Firewall and Network Isolation\n- Policy-Based Routing\n- AI Network Troubleshooting\n- Network Validation\n\n🔗 Useful Resources:\n\nClaude:\nhttps://claude.ai/\n\nAnthropic:\nhttps://www.anthropic.com/\n\nMikroTik:\nhttps://mikrotik.com/\n\nRouterOS Documentation:\nhttps://help.mikrotik.com/docs/\n\n⚠️ Important Note:\n\nThis experiment uses a dedicated test MikroTik router.\n\nDo not copy the configuration directly into a production network without understanding and validating it for your own environment.\n\nRouterOS features and commands can vary depending on the RouterOS version and MikroTik hardware. Always check the official MikroTik documentation for your version.\n\nAfter the experiment, change the administrator credentials and replace any Wi-Fi passwords used during the configuration.\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🌐 About This Project:\n\nThis project explores the practical use of AI agents in network engineering.\n\nInstead of asking Claude to simply generate commands, I give it access to a real MikroTik router through SSH and let it inspect, configure, troubleshoot, and validate the network.\n\n#ClaudeAI #Claude #ClaudeCode #MikroTik #RouterOS #AI #NetworkAutomation #NetworkEngineering #SSH #VPN #L2TP #MikroTikHotspot #Firewall #DevOps #SysAdmin\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🔵 Telegram: https://t.me/ramtintechzone\n🟡 Instagram: https://instagram.com/ramtintechzone\n🔴 Website: https://ramtin.zone",
+    "upload_date": "20260924",
+    "duration": 1044,
+    "view_count": 1255,
+    "like_count": 21,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=19ryjVKr1JU",
+    "thumbnail": "https://i.ytimg.com/vi_webp/19ryjVKr1JU/sddefault.webp",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Introduction & Concept",
+        "end_time": 40
+      },
+      {
+        "start_time": 40,
+        "title": "Current Setup & Default Config in WinBox",
+        "end_time": 100
+      },
+      {
+        "start_time": 100,
+        "title": "Network Requirements & Prompt Overview",
+        "end_time": 392
+      },
+      {
+        "start_time": 392,
+        "title": "Router Access & SSH Security",
+        "end_time": 498
+      },
+      {
+        "start_time": 498,
+        "title": "Running Claude Code & Handling Disconnections",
+        "end_time": 567
+      },
+      {
+        "start_time": 567,
+        "title": "Resolving Hotspot Interruption",
+        "end_time": 684
+      },
+      {
+        "start_time": 684,
+        "title": "Claude's Generated Report & Backups",
+        "end_time": 765
+      },
+      {
+        "start_time": 765,
+        "title": "Verifying Configuration in WinBox",
+        "end_time": 903
+      },
+      {
+        "start_time": 903,
+        "title": "Testing VPN Wi-Fi",
+        "end_time": 964
+      },
+      {
+        "start_time": 964,
+        "title": "Conclusion & Final Tips",
+        "end_time": 1044
+      }
+    ],
+    "tags": [
+      "mikrotik",
+      "Claude",
+      "ai",
+      "mikrotik Claude",
+      "Claude mikrotik",
+      "mikrotik ai",
+      "configure mikrotik with ai",
+      "Claude Code",
+      "prompt engineering",
+      "ramtin",
+      "ramtin Tech zone",
+      "mikrotik tutorial",
+      "Claude tutorial",
+      "mikrotik router",
+      "mikrotik RouterOS",
+      "networkchuck"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "19ryjVKr1JU.vtt"
+    }
+  },
+  {
+    "id": "AWpNIzRkI1Y",
+    "title": "Host a Website for FREE with Cloudflare | AI Website Tutorial",
+    "description": "In this video, I build a complete personal portfolio website with AI and deploy it for free on Cloudflare.\n\nThe goal is to create a professional, modern, and responsive personal website without using a backend, database, CMS, or complicated build process.\n\nI start by defining the website structure and requirements, then use AI to generate the complete static website using HTML, CSS, and JavaScript.\n\nThe website is designed to be easy to customize, with personal information such as the name, bio, skills, experience, projects, contact information, and social links organized in one configuration file.\n\nThis means you can download the project, replace your own information and links in one place, and have your own personal portfolio website without rebuilding the entire design.\n\nAfter creating and testing the website locally, I deploy the static files to Cloudflare using Workers & Pages.\n\nI also show how to connect a custom domain, configure the DNS records, verify the deployed website, update the deployment, and take a look at some of the Cloudflare features available for the project.\n\nMost importantly, this entire workflow can be done without a traditional hosting server, database, or backend.\n\n⏱️ Video Chapters:\n\n00:00 - Introduction: Build a Personal Website with AI\n00:59 - Using AI to Build the Website\n02:44 - Getting Started with Cloudflare Workers & Pages\n03:18 - Creating a Cloudflare Application & Uploading the Static Website\n04:27 - Testing the Deployed Website\n05:04 - Connecting a Custom Domain\n06:13 - Testing the Website on Cloudflare\n06:54 - Updating the Website & Managing Deployments\n07:30 - Checking Domain DNS Record\n08:20 - Cloudflare Free Plan Limitations\n09:47 - Considerations for Dynamic Websites\n10:52 - Automatic Deployment & Version Management with GitHub & GitLab\n11:35 - Cloudflare Workers Observability\n\n🔑 Key Takeaways:\n\n- Build with AI: Use AI to create a complete personal portfolio website from a detailed set of requirements.\n- Static Website: The project uses only HTML, CSS, and JavaScript, with no backend or database.\n- Easy Customization: Personal information is separated from the UI so you can replace the content without redesigning the website.\n- Cloudflare Deployment: Upload and deploy the static website directly through Cloudflare Workers & Pages.\n- Custom Domain: Connect your own domain to the deployed website.\n- DNS Configuration: Configure and verify the DNS records required for the custom domain.\n- Easy Updates: Update the website by uploading a new version of the static files.\n- Deployment Management: Cloudflare provides deployment and version management for the application.\n- Free Hosting: A personal static website can be hosted on Cloudflare without running your own traditional web server.\n\n🔗 Useful Resources & Documentation:\n\nCloudflare:\nhttps://www.cloudflare.com/\n\nCloudflare Workers:\nhttps://workers.cloudflare.com/\n\nCloudflare Pages:\nhttps://pages.cloudflare.com/\n\nCloudflare DNS:\nhttps://www.cloudflare.com/dns/\n\nCloudflare Workers Documentation:\nhttps://developers.cloudflare.com/workers/\n\n⚠️ Important Note:\n\nCloudflare's dashboard and product structure can change over time, so some menu names or deployment options may look different depending on when you follow this tutorial.\n\nThe website created in this video is a static website and does not require a backend, database, authentication system, or traditional hosting server.\n\nIf you want to use your own domain, make sure the domain is added to Cloudflare and that the required DNS records are correctly configured.\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🌐 About This Project:\n\nIn this video, we build a professional personal portfolio website designed for developers, system administrators, network engineers, DevOps engineers, and other technology professionals.\n\nThe project is intentionally kept simple so that anyone can download it, replace their personal information and social links, and deploy their own website without needing to understand complex web development frameworks.\n\nThe final result is a fast, responsive, customizable static website that can be deployed directly to Cloudflare.\n\n#Cloudflare #WebsiteHosting #CloudflarePages #CloudflareWorkers #AI #AICoding #WebDevelopment #DevOps #Linux #Networking #StaticWebsite #cloudflareWorker\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🔵 Telegram: https://t.me/ramtintechzone\n🟡 Instagram: https://instagram.com/ramtintechzone\n🔴 Website: https://ramtin.zone",
+    "upload_date": "20260918",
+    "duration": 756,
+    "view_count": 2415,
+    "like_count": 48,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=AWpNIzRkI1Y",
+    "thumbnail": "https://i.ytimg.com/vi/AWpNIzRkI1Y/sddefault.jpg",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Introduction: Build a Personal Website with AI",
+        "end_time": 59
+      },
+      {
+        "start_time": 59,
+        "title": "Using AI to Build the Website",
+        "end_time": 164
+      },
+      {
+        "start_time": 164,
+        "title": "Getting Started with Cloudflare Workers & Pages",
+        "end_time": 198
+      },
+      {
+        "start_time": 198,
+        "title": "Creating a Cloudflare Application & Uploading the Static Website",
+        "end_time": 267
+      },
+      {
+        "start_time": 267,
+        "title": "Testing the Deployed Website",
+        "end_time": 304
+      },
+      {
+        "start_time": 304,
+        "title": "Connecting a Custom Domain",
+        "end_time": 373
+      },
+      {
+        "start_time": 373,
+        "title": "Testing the Website on Cloudflare",
+        "end_time": 414
+      },
+      {
+        "start_time": 414,
+        "title": "Updating the Website & Managing Deployments",
+        "end_time": 450
+      },
+      {
+        "start_time": 450,
+        "title": "Checking Domain DNS Record",
+        "end_time": 500
+      },
+      {
+        "start_time": 500,
+        "title": "Cloudflare Free Plan Limitations",
+        "end_time": 587
+      },
+      {
+        "start_time": 587,
+        "title": "Considerations for Dynamic Websites",
+        "end_time": 652
+      },
+      {
+        "start_time": 652,
+        "title": "Automatic Deployment & Version Management with GitHub & GitLab",
+        "end_time": 695
+      },
+      {
+        "start_time": 695,
+        "title": "Cloudflare Workers Observability",
+        "end_time": 756
+      }
+    ],
+    "tags": [
+      "cloudflare",
+      "cloudflare pages",
+      "cloudflare workers",
+      "cloudflare tutorial",
+      "cloudflare free hosting",
+      "deploy website on cloudflare",
+      "host website on cloudflare",
+      "static website hosting",
+      "personal portfolio website",
+      "build website with ai",
+      "ai website builder",
+      "ai coding",
+      "create website with ai",
+      "deploy static website",
+      "free website hosting",
+      "web development",
+      "devops",
+      "cloudflare pages tutorial",
+      "cloudflare deployment",
+      "ramtin rahmani nejad",
+      "ramtin tech zone",
+      "free hosting",
+      "cloudflare worker"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "AWpNIzRkI1Y.vtt"
+    }
+  },
+  {
+    "id": "fl99lo_5GLs",
+    "title": "OpenWrt 25.12: OPKG is Gone, APK Is Here!",
+    "description": "OpenWrt 25.12 brings some important changes, including one of the biggest changes in recent OpenWrt releases: the move from OPKG to APK.\n\nIn this video, I take a look at what's new in OpenWrt 25.12, what these changes mean in practice, and what you should check before upgrading your router.\n\nOpenWrt is replacing the traditional OPKG package manager with APK, which means package management commands and workflows are changing. If you use SSH, install packages from the terminal, or run your own scripts and automation on OpenWrt, this is something you need to understand.\n\nI also cover improvements to the upgrade process, including Attended Sysupgrade and owut, along with under-the-hood changes, new hardware support, and updated core components.\n\nMore importantly, we'll look at the practical question:\n\nShould you upgrade your OpenWrt router to 25.12 now, or wait?\n\n⏱️ Video Chapters:\n\n00:00 - Introduction: OpenWrt 25.12\n00:54 - What's New in OpenWrt 25.12\n01:32 - OPKG to APK: The New Package Manager\n01:58 - OPKG vs APK Commands\n05:20 - Upgrade Process Improvements: OpenWrt Attended Sysupgrade\n07:29 - Under-the-Hood Changes\n09:28 - Does Your Device Support OpenWrt 25.12?\n12:19 - New Hardware Support\n13:58 - Should You Upgrade to OpenWrt 25.12?\n15:30 - Final Thoughts\n\n🔑 Key Takeaways:\n\n- OPKG to APK: OpenWrt 25.12 replaces the traditional OPKG package manager with APK.\n- New Commands: APK uses different command-line arguments, so existing commands and scripts may need to be updated.\n- Easier Upgrades: Attended Sysupgrade is now integrated by default.\n- owut: A new and improved command-line tool for checking and managing OpenWrt upgrades.\n- Better Package Preservation: Attended Sysupgrade can rebuild firmware images with your installed packages.\n- New Hardware Support: OpenWrt 25.12 adds support for more devices and hardware platforms.\n- Core Updates: Important core components, including the Linux kernel and networking packages, have been updated.\n- Upgrade Carefully: Before upgrading, always check device compatibility and review the upgrade notes for your specific setup.\n\n🔗 Useful Resources & Documentation:\n\nOpenWrt 25.12 Release Notes:\nhttps://openwrt.org/releases/25.12/notes-25.12.0\n\nOpenWrt APK Package Manager:\nhttps://openwrt.org/docs/guide-user/additional-software/apk\n\nOfficial OPKG to APK Cheat Sheet:\nhttps://openwrt.org/docs/guide-user/additional-software/opkg-to-apk-cheatsheet\n\nAttended Sysupgrade:\nhttps://openwrt.org/docs/guide-user/installation/attended.sysupgrade\n\nowut Documentation:\nhttps://openwrt.org/docs/guide-user/installation/sysupgrade.owut\n\nFirmware Selector:\nhttps://firmware-selector.openwrt.org/\n\n⚠️ Important Note:\n\nBefore upgrading your OpenWrt router, make sure your device is supported and always create a backup of your current configuration.\n\nThe upgrade process can vary depending on your current OpenWrt version, device, installed packages, and custom configuration.\n\nIf you're upgrading from an older OpenWrt release, make sure to check the official release notes and upgrade documentation before proceeding.\n\nAlso, if you're upgrading from OpenWrt 23.05 or an earlier release, check the official documentation carefully because a direct sysupgrade to OpenWrt 25.12 is not officially supported.\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🌐 About OpenWrt:\n\nOpenWrt is a Linux-based operating system for routers and embedded networking devices. It gives you more control over your network, including advanced routing, firewalling, VPNs, package management, and many other features.\n\nOpenWrt 25.12 introduces important changes to package management and the upgrade experience, making it an important release for both regular users and people who manage OpenWrt devices through the command line and automation.\n\n#OpenWrt #OpenWrt2512 #Networking #Linux #Router #OPKG #APK #Sysupgrade #OpenSource\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🔵 Telegram: https://t.me/ramtinzone\n🟡 Instagram: https://instagram.com/ramtinzone\n🔴 Support the channel: https://ramtin.zone",
+    "upload_date": "20260910",
+    "duration": 978,
+    "view_count": 2723,
+    "like_count": 22,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=fl99lo_5GLs",
+    "thumbnail": "https://i.ytimg.com/vi_webp/fl99lo_5GLs/sddefault.webp",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Introduction: OpenWrt 25.12",
+        "end_time": 54
+      },
+      {
+        "start_time": 54,
+        "title": "What's New in OpenWrt 25.12",
+        "end_time": 92
+      },
+      {
+        "start_time": 92,
+        "title": "OPKG to APK: The New Package Manager",
+        "end_time": 118
+      },
+      {
+        "start_time": 118,
+        "title": "OPKG vs APK Commands",
+        "end_time": 320
+      },
+      {
+        "start_time": 320,
+        "title": "Upgrade Process Improvements: OpenWrt Attended Sysupgrade",
+        "end_time": 449
+      },
+      {
+        "start_time": 449,
+        "title": "Under-the-Hood Changes",
+        "end_time": 568
+      },
+      {
+        "start_time": 568,
+        "title": "Does Your Device Support OpenWrt 25.12?",
+        "end_time": 739
+      },
+      {
+        "start_time": 739,
+        "title": "New Hardware Support",
+        "end_time": 838
+      },
+      {
+        "start_time": 838,
+        "title": "Should You Upgrade to OpenWrt 25.12?",
+        "end_time": 930
+      },
+      {
+        "start_time": 930,
+        "title": "Final Thoughts",
+        "end_time": 978
+      }
+    ],
+    "tags": [
+      "openwrt",
+      "openwrt 25.12",
+      "openwrt 25.12 tutorial",
+      "openwrt 25.12 upgrade",
+      "openwrt whats new",
+      "openwrt update",
+      "openwrt upgrade",
+      "opkg to apk",
+      "openwrt apk",
+      "openwrt package manager",
+      "apk package manager",
+      "openwrt tutorial",
+      "openwrt tutorial for beginners",
+      "openwrt router",
+      "openwrt linux",
+      "openwrt sysupgrade",
+      "attended sysupgrade",
+      "openwrt attended sysupgrade",
+      "openwrt firmware upgrade",
+      "router upgrade",
+      "linux networking",
+      "networking",
+      "open source router",
+      "ramtin",
+      "ramtin rahmani nejad",
+      "ramtin zone"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "fl99lo_5GLs.vtt"
+    }
+  },
+  {
+    "id": "kJp0NVP3hUU",
+    "title": "MikroTik Reverse Proxy: Host Multiple Websites on One Public IP",
+    "description": "In this MikroTik Reverse Proxy tutorial, I show you how to host multiple web applications with different domains on a single public IP address and secure them with HTTPS.\n\nUsing MikroTik RouterOS built-in Reverse Proxy, we'll route incoming requests to the correct internal application based on the requested domain name. This gives us a clean way to publish multiple web services to the internet without needing a separate public IP address for each application.\n\nFor this demonstration, I'm using a MikroTik CHR with three containerized web applications: Homepage, File Browser, and IT-Tools. Each application runs on its own internal IP address and port, while MikroTik handles the public HTTPS connections and routes the traffic to the correct backend.\n\nI cover the complete MikroTik Reverse Proxy configuration step-by-step: checking the backend IP addresses and ports, reviewing the network architecture, configuring DNS, preparing the required RouterOS services, generating Let's Encrypt certificates with the built-in ACME client, configuring SNI-based routing, and finally testing all three applications over HTTPS.\n\nYou'll also learn how SNI (Server Name Indication) allows MikroTik to identify which domain the client is requesting and send the connection to the correct backend application, even though all three domains use the same public IP address.\n\n⏱️ Video Chapters:\n00:00 - Introduction: MikroTik Reverse Proxy\nXX:XX - Checking the Backend Applications\nXX:XX - Understanding the Network Architecture\nXX:XX - DNS Configuration\nXX:XX - Preparing MikroTik Services\nXX:XX - Creating Let's Encrypt SSL Certificates\nXX:XX - Understanding SNI\nXX:XX - Creating Reverse Proxy Rules\nXX:XX - Testing HTTPS Access\nXX:XX - Using External Backend Servers\nXX:XX - Limitations & Final Thoughts\n\n🔑 Key Takeaways:\n\n- One Public IP: Publish multiple web applications with different domains through a single public IP address.\n- Built-in Reverse Proxy: Use MikroTik RouterOS native Reverse Proxy without installing a separate reverse proxy server.\n- HTTPS & Let's Encrypt: Generate SSL certificates directly on MikroTik using the built-in ACME client.\n- SNI Routing: Route incoming HTTPS requests to different backend applications based on the requested domain name.\n- TLS Termination: Let MikroTik handle the public HTTPS connection while backend applications can continue using HTTP internally.\n- Flexible Backends: Your backend does not have to be a MikroTik container. It can also be a Linux server, virtual machine, NAS, or any other reachable web application.\n\n🔗 Useful Resources & Documentation:\n\nMikroTik Reverse Proxy Documentation:\nhttps://manual.mikrotik.com/docs/network-management/proxy/reverse-proxy/\n\nMikroTik Container Documentation:\nhttps://manual.mikrotik.com/docs/containers/\n\nMikroTik Certificate Documentation:\nhttps://manual.mikrotik.com/docs/authentication-authorization-accounting/certificates/\n\n📦 Container Setup Commands:\n\nThe commands I used to deploy Homepage, File Browser, and IT-Tools on MikroTik are available on my Telegram channel:\nhttps://t.me/netadminhub\n\n⚠️ Important Note:\n\nMikroTik Reverse Proxy is still a new RouterOS feature, so make sure you test it with your application before using it in production.\n\nDuring my testing, the normal web interface worked correctly with the applications shown in this video. However, I also tested Uptime Kuma, and its WebSocket connection did not work with my Reverse Proxy setup.\n\nIf your application depends on WebSockets or other advanced HTTP features, make sure you test everything before deploying it in a production environment.\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🌐 About MikroTik RouterOS:\n\nMikroTik RouterOS is a powerful network operating system used on MikroTik routers and virtual CHR instances. It provides routing, firewalling, VPN, traffic management, containers, and many other networking features.\n\nWith the built-in Reverse Proxy feature, RouterOS can accept HTTPS connections for multiple domain names on a single public IP address and route them to different backend web applications.\n\n#MikroTik #RouterOS #ReverseProxy #Networking #HTTPS #LetsEncrypt #Containers #DevOps\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20260901",
+    "duration": 1147,
+    "view_count": 2390,
+    "like_count": 58,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=kJp0NVP3hUU",
+    "thumbnail": "https://i.ytimg.com/vi/kJp0NVP3hUU/sddefault.jpg",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Introduction: MikroTik Reverse Proxy",
+        "end_time": 1147
+      }
+    ],
+    "tags": [
+      "mikrotik",
+      "mikrotik routeros",
+      "mikrotik reverse proxy",
+      "mikrotik reverse proxy setup",
+      "mikrotik reverse proxy tutorial",
+      "routeros reverse proxy",
+      "mikrotik tutorial",
+      "mikrotik tutorial for beginners",
+      "mikrotik configuration",
+      "mikrotik setup",
+      "mikrotik https",
+      "mikrotik ssl",
+      "mikrotik letsencrypt",
+      "mikrotik acme",
+      "mikrotik container",
+      "mikrotik chr",
+      "reverse proxy",
+      "reverse proxy tutorial",
+      "reverse proxy https",
+      "network tutorial",
+      "networking",
+      "ramtin",
+      "ramtin rahmani nejad",
+      "netadminhub",
+      "net admin hub"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "kJp0NVP3hUU.vtt"
+    }
+  },
+  {
+    "id": "MG6PI4KQpoA",
+    "title": "WireGuard on OpenWrt: Route Everything Through a VPN Tunnel 🔐",
+    "description": "In this OpenWrt tutorial, I show you how to set up a high-performance WireGuard VPN and configure your router to route all outbound internet traffic through a secure tunnel. This setup is the ultimate solution for ensuring privacy and security for every device in your home or office network.\n\nFor this demonstration, I'm using the budget-friendly Xiaomi Mi4a Gigabit Edition, but the steps are identical for any router running OpenWrt. Whether you're a beginner or an advanced user, you'll learn how to handle the configuration both manually for a deep dive and via the fast import method for quick results.\n\nI cover the entire process step-by-step: from initial router hardening and preventing IP conflicts to installing the necessary packages and optimizing performance with advanced features like Software Flow Offloading and MTU adjustments.\n\n⏱️ Video Chapters:\n00:00 - Introduction: WireGuard on OpenWrt\n01:11 - Basic Hardening: Setting Root Password & Wi-Fi & Interface Configuration\n04:05 - Initial Test: Verifying WireGuard Config on PC\n06:07 - How to Install WireGuard Packages on OpenWrt\n07:26  - Method 1: Manual WireGuard Interface & Peer Setup\n11:38 - Method 2: Fast Setup using the Import Configuration Feature\n13:47 - Performance Optimization: MTU Settings & Software Flow Offloading\n15:40 - Final Thoughts: Why a Kill Switch is Vital (Concept Overview) & Conclusion\n\n🔑 Key Takeaways:\n\n- WireGuard Efficiency: Why WireGuard is superior to OpenVPN for modest hardware due to its lightweight design.\n- Manual vs. Import: Understanding the logic behind private/public keys versus using a one-click configuration.\n- Routing Logic: Ensuring the \"Route Allowed IPs\" option is correctly set to tunnel your entire LAN traffic.\n- Performance Fixes: Using Software Flow Offloading to reduce CPU overhead and adjusting MTU to 1412 for stable connections (especially for PPPoE users).\n- Kill Switch: Brief overview of how to prevent IP leaks if the VPN connection drops.\n\n🔗 Useful Resources & Documentation:\nOpenWrt WireGuard Guide:\nhttps://openwrt.org/docs/guide-user/services/vpn/wireguard/start\nWireGuard Official Website:\nhttps://www.wireguard.com\n\n⚠️ Important Note:\nAlways ensure your router has a stable internet connection before starting the package installation. If you are using a router with limited Flash memory, check the available space before installing Lucy-proto-wireguard. For a dedicated video on building a \"Bulletproof Kill Switch,\" let me know in the comments!\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🌐 About OpenWrt:\nOpenWrt is a highly extensible GNU/Linux distribution for embedded devices (typically wireless routers). Unlike many other distributions for routers, OpenWrt is built from the ground up to be a full-featured, easily modifiable operating system for your router. In practice, this means that you can have all the features you need with none of the bloat, powered by a modern Linux kernel.\n\n#openwrt #WireGuard #VPN #Networking #Privacy #XiaomiRouter #DevOps\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20260223",
+    "duration": 973,
+    "view_count": 7544,
+    "like_count": 102,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=MG6PI4KQpoA",
+    "thumbnail": "https://i.ytimg.com/vi/MG6PI4KQpoA/sddefault.jpg",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Introduction: WireGuard on OpenWrt",
+        "end_time": 71
+      },
+      {
+        "start_time": 71,
+        "title": "Basic Hardening: Setting Root Password & Wi-Fi & Interface Configuration",
+        "end_time": 245
+      },
+      {
+        "start_time": 245,
+        "title": "Initial Test: Verifying WireGuard Config on PC",
+        "end_time": 367
+      },
+      {
+        "start_time": 367,
+        "title": "How to Install WireGuard Packages on OpenWrt",
+        "end_time": 446
+      },
+      {
+        "start_time": 446,
+        "title": "Method 1: Manual WireGuard Interface & Peer Setup",
+        "end_time": 698
+      },
+      {
+        "start_time": 698,
+        "title": "Method 2: Fast Setup using the Import Configuration Feature",
+        "end_time": 827
+      },
+      {
+        "start_time": 827,
+        "title": "Performance Optimization: MTU Settings & Software Flow Offloading",
+        "end_time": 940
+      },
+      {
+        "start_time": 940,
+        "title": "Final Thoughts: Why a Kill Switch is Vital (Concept Overview) & Conclusion",
+        "end_time": 973
+      }
+    ],
+    "tags": [
+      "openwrt",
+      "wireguard",
+      "openwrt wireguard",
+      "openwrt wireguard vpn",
+      "openwrt wireguard client",
+      "openwrt router",
+      "openwrt tutorial",
+      "openwrt tutorial for beginners",
+      "openwrt luci tutorial",
+      "openwrt setup",
+      "openwrt vpn",
+      "openwrt vpn setup",
+      "vpn router",
+      "vpn router setup",
+      "openwrt firmware",
+      "home router",
+      "xiaomi mi4a router",
+      "xiaomi router",
+      "network tutorial",
+      "networking",
+      "ramtin",
+      "ramtin rahmani nejad",
+      "netadminhub",
+      "net admin hub"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "MG6PI4KQpoA.vtt"
+    }
+  },
+  {
+    "id": "9Hwb0eI6x10",
+    "title": "MikroTik CHR on AWS EC2: Deployment, Security Groups & Basic Hardening + FREE TIER 🚀",
+    "description": "In this MikroTik tutorial, I show you how to set up a MikroTik Cloud Server (CHR) on AWS (Amazon Web Services). AWS is the most powerful and reliable cloud provider in the world, and thanks to the AWS Marketplace, we can easily deploy RouterOS on an EC2 instance.\n\n🚀 Start with AWS Free Tier 👇\nhttps://aws.amazon.com/free/\n\nIn this video, you will learn how to find the official MikroTik CHR image, launch it on an EC2 t3.micro instance, and configure it for free. Having a MikroTik in the cloud is a game-changer; you can use it as a dedicated VPN server, a core router for your cloud infrastructure, or even to connect your home and office networks securely.\n\nI cover the entire process step-by-step: from choosing the right AMI and configuring AWS Security Groups (Firewall), to the initial Winbox login and essential security hardening to protect your cloud router from day one.\n\n⏱️ Video Chapters:\n00:00 - Introduction & Why MikroTik on AWS?\n00:38 - Launching an EC2 Instance for MikroTik\n01:44 - Finding the MikroTik CHR AMI in AWS Marketplace\n02:25 - Instance Type (Free Tier Eligible), other settings & Launch the Instance\n04:36 - Setting up Security Groups (Allowing Winbox & Services)\n06:41 - Essential Router Hardening: Strong Passwords & Disabling unused Ports\n07:42 - Activating CHR Trial License for Full Bandwidth\n08:27 - Update MikroTik RouterOS\n08:54 - Final Verification & Conclusion\n\n🔑 Key Takeaways:\n- How to deploy MikroTik CHR on AWS EC2 using the Marketplace.\n- Configuring AWS Security Groups to allow Winbox, SSH, and VPN traffic.\n- Activating the trial license to remove the 1Mbps limit and get full bandwidth.\n- Basic router hardening: disabling unnecessary services and setting admin passwords.\n\n🔗 Useful Links:\nMikroTik CHR Documentation:\nhttps://help.mikrotik.com/docs/display/ROS/Cloud+Hosted+Router+-+CHR\nDownload Winbox:\nhttps://mikrotik.com/download\n\n⚠️ Important Note:\nThe security steps in this video are for the initial setup. For a production-grade server, you need advanced firewall rules. If you want a dedicated video on Professional MikroTik Hardening, let me know in the comments! Always use strong passwords and keep your RouterOS updated.\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🌐 About MikroTik RouterOS:\nMikroTik RouterOS is a powerful, all-in-one operating system that can turn any computer or MikroTik hardware into a high-performance router. Known for its stability, security, and flexibility, RouterOS is a top choice for network administrators and service providers worldwide. It offers advanced features like routing, firewalls, bandwidth management, and VPN servers. RouterOS is widely trusted for its stability, VPN support, routing features, firewall, bandwidth control, and more. MikroTik also manufactures a variety of hardware like routers, switches, and wireless gear—all powered by RouterOS.\n\n#MikroTik #AWS #RouterOS #Networking #EC2\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20260210",
+    "duration": 569,
+    "view_count": 492,
+    "like_count": 9,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=9Hwb0eI6x10",
+    "thumbnail": "https://i.ytimg.com/vi/9Hwb0eI6x10/sddefault.jpg",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Introduction & Why MikroTik on AWS?",
+        "end_time": 38
+      },
+      {
+        "start_time": 38,
+        "title": "Launching an EC2 Instance for MikroTik",
+        "end_time": 104
+      },
+      {
+        "start_time": 104,
+        "title": "Finding the MikroTik CHR AMI in AWS Marketplace",
+        "end_time": 145
+      },
+      {
+        "start_time": 145,
+        "title": "Instance Type (Free Tier Eligible), other settings & Launch the Instance",
+        "end_time": 276
+      },
+      {
+        "start_time": 276,
+        "title": "Setting up Security Groups (Allowing Winbox & Services)",
+        "end_time": 401
+      },
+      {
+        "start_time": 401,
+        "title": "Essential Router Hardening: Strong Passwords & Disabling unused Ports",
+        "end_time": 462
+      },
+      {
+        "start_time": 462,
+        "title": "Activating CHR Trial License for Full Bandwidth",
+        "end_time": 507
+      },
+      {
+        "start_time": 507,
+        "title": "Update MikroTik RouterOS",
+        "end_time": 534
+      },
+      {
+        "start_time": 534,
+        "title": "Final Verification & Conclusion",
+        "end_time": 569
+      }
+    ],
+    "tags": [
+      "mikrotik",
+      "mikrotik server",
+      "mikrotik router",
+      "mikrotik setup",
+      "mikrotik configuration",
+      "digitalocean",
+      "digital ocean",
+      "digital ocean tutorial",
+      "mikrotik tutorial",
+      "mikrotik tips and tricks",
+      "mikrotik learning",
+      "routeros",
+      "ramtin",
+      "ramtin rahmani nejad",
+      "netadminhub",
+      "net admin hub",
+      "aws",
+      "amazon web services",
+      "ec2 instance",
+      "MikroTik Cloud Server",
+      "CHR",
+      "MikroTik CHR",
+      "RouterOS",
+      "MikroTik RouterOS",
+      "AWS EC2",
+      "AWS Server",
+      "what is mikrotik",
+      "mikrotik routeros"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "9Hwb0eI6x10.vtt"
+    }
+  },
+  {
+    "id": "7qD3G6utj8A",
+    "title": "How to Setup WireGuard VPN on MikroTik + Policy Based Routing Guide",
+    "description": "In this MikroTik tutorial, I address one of the most requested topics for RouterOS v7: setting up a high-performance WireGuard VPN and managing traffic flow. You will learn how to not only establish a secure tunnel but also how to config Policy-Based Routing (PBR) to control exactly which parts of your local network use the VPN.\n\nThis technique is essential for modern networking, allowing you to selectively route LAN traffic based on your specific needs—whether it’s sending all traffic through the tunnel for privacy or creating exceptions for specific websites to bypass geo-restrictions (like Netflix or banking services).\n\nI cover the process step-by-step: from using the time-saving WG Import feature in Winbox to performing a full manual configuration. We then configure Mangle rules and Routing Table to ensure your traffic goes exactly where you want it.\n\n⏱️ Video Chapters:\n00:00 - Introduction: WireGuard VPN & Policy-Based Routing (PBR)\n00:51 - Initial Test: Verifying the WireGuard Connection on PC\n02:31 - RouterOS Requirements & the New \"WG Import\" Feature\n03:30 - Analyzing and Preparing the WireGuard Config File\n04:31 - Method 1: Easy One-Click Setup using \"WG Import\"\n06:43 - Method 2: Step-by-Step Manual Interface Configuration\n08:41 - Why we need Policy-Based Routing (PBR)?\n09:48 - PBR Setup: Configuring Mangle Rules & Routing Table\n12:06 - NAT Settings & Managing the WAN Interface List\n12:58 - Performance Fix: MTU Optimization & MSS Clamping\n14:45 - Creating Route Exceptions using Address Lists\n16:12 - Final Verification and Connection Summary\n\n🔑 Key Takeaways:\n\n- WireGuard is one of the fastest and most secure VPN protocol supported by MikroTik (RouterOS v7+).\n- The WG Import feature (available in RouterOS 7.12+) significantly reduces setup time and human error.\n- Policy-Based Routing (PBR) gives you granular control over your LAN, allowing for complex routing scenarios.\n- Mangle Rules are the \"brain\" behind traffic marking, enabling the router to differentiate between local and VPN-bound packets.\n- MTU & MSS Clamping are crucial for preventing packet fragmentation and ensuring smooth web browsing over the tunnel.\n\n🌐 Useful Resources & Documentation:\n\nMikroTik WireGuard Official Documentation: https://help.mikrotik.com/docs/spaces/ROS/pages/69664792/WireGuard\n\n⚠️ Important Note: WireGuard is only available on RouterOS version 7 and later. If you are running version 6, you must upgrade your firmware to follow this tutorial. Always ensure you have a backup of your configuration before making changes to firewall and routing rules.\n\n🌐 About MikroTik RouterOS:\nMikroTik RouterOS is a powerful, all-in-one operating system that can turn any computer or MikroTik hardware into a high-performance router. Known for its stability, security, and flexibility, RouterOS is a top choice for network administrators and service providers worldwide. It offers advanced features like routing, firewalls, bandwidth management, and VPN servers. RouterOS is widely trusted for its stability, VPN support, routing features, firewall, bandwidth control, and more. MikroTik also manufactures a variety of hardware like routers, switches, and wireless gear—all powered by RouterOS.\n\n#MikroTik #ROSEPackage #RouterOS #SMB #WindowsShare #DiskSpace #hApAxLite #MediaServer #Networking\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate\n🟢 Buy VPN with Crypto: https://vpnymous.com",
+    "upload_date": "20260122",
+    "duration": 1040,
+    "view_count": 6334,
+    "like_count": 106,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=7qD3G6utj8A",
+    "thumbnail": "https://i.ytimg.com/vi/7qD3G6utj8A/sddefault.jpg",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Introduction: WireGuard VPN & Policy-Based Routing (PBR)",
+        "end_time": 51
+      },
+      {
+        "start_time": 51,
+        "title": "Initial Test: Verifying the WireGuard Connection on PC",
+        "end_time": 151
+      },
+      {
+        "start_time": 151,
+        "title": "RouterOS Requirements & the New \"WG Import\" Feature",
+        "end_time": 210
+      },
+      {
+        "start_time": 210,
+        "title": "Analyzing and Preparing the WireGuard Config File",
+        "end_time": 271
+      },
+      {
+        "start_time": 271,
+        "title": "Method 1: Easy One-Click Setup using \"WG Import\"",
+        "end_time": 403
+      },
+      {
+        "start_time": 403,
+        "title": "Method 2: Step-by-Step Manual Interface Configuration",
+        "end_time": 521
+      },
+      {
+        "start_time": 521,
+        "title": "Why we need Policy-Based Routing (PBR)?",
+        "end_time": 588
+      },
+      {
+        "start_time": 588,
+        "title": "PBR Setup: Configuring Mangle Rules & Routing Table",
+        "end_time": 726
+      },
+      {
+        "start_time": 726,
+        "title": "NAT Settings & Managing the WAN Interface List",
+        "end_time": 778
+      },
+      {
+        "start_time": 778,
+        "title": "Performance Fix: MTU Optimization & MSS Clamping",
+        "end_time": 885
+      },
+      {
+        "start_time": 885,
+        "title": "Creating Route Exceptions using Address Lists",
+        "end_time": 972
+      },
+      {
+        "start_time": 972,
+        "title": "Final Verification and Connection Summary",
+        "end_time": 1040
+      }
+    ],
+    "tags": [
+      "wireguard",
+      "wireguard vpn",
+      "mikrotik",
+      "wireguard mikrotik",
+      "mikrotik wireguard",
+      "mikrotik wireguard client",
+      "mikrotik wireguard setup",
+      "mikrotik wireguard configuration",
+      "Ramtin",
+      "Ramtin Rahmani Nejad",
+      "Net Admin Hub",
+      "netadminhub",
+      "mikrotik wireguard qr code",
+      "wireguard tunnel mikrotik",
+      "mikrotik wireguard tunnel",
+      "mikrotik tips",
+      "mikrotik tutorial",
+      "mikrotik tunnel",
+      "mikortik routeros",
+      "mikrotik vpn",
+      "MikroTik Tunneling",
+      "mikrotik router",
+      "mikrotik routeros",
+      "routeros"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "7qD3G6utj8A.vtt"
+    }
+  },
+  {
+    "id": "D9q2OqkFHtk",
+    "title": "MikroTik Cloud Server on DigitalOcean: Install, Basic Security & Trial License + $200 FREE CREDIT 🔥",
+    "description": "In this MikroTik tutorial, I show you how to set up a MikroTik Cloud Server on DigitalOcean. DigitalOcean is a high-quality and affordable cloud provider, but they don’t offer RouterOS in their default OS list.\n\n🔗 Sign Up & Get $200 Free Credit on DigitalOcean 👇\n  https://m.do.co/c/87cd890ecaaf\n\nIn this video, you will learn how to upload a custom CHR image and create a 4-dollar MikroTik droplet. I also cover how to activate the CHR trial license, which is essential if you want to use the full bandwidth that DigitalOcean provides for your server.\n\nI cover the process step-by-step: from downloading the correct image and uploading it as a Custom Image, to the initial configuration and basic security steps to protect your router immediately after it goes live.\n\n⏱️ Video Chapters:\n00:00 - Introduction to DigitalOcean & $200 Free Credit\n00:37 - Starting the Process: Creating a New Cloud Server (Droplet)\n01:59 - Using Custom Images for MikroTik RouterOS\n02:15 - Downloading the MikroTik CHR Image\n02:45 - Uploading and Naming the Custom Image\n03:33 - Setting up the MikroTik Droplet on DigitalOcean\n05:00  - Essential Hardening: Setting Strong Passwords, Disabling Services & Changing Default Ports\n07:19 - Activating CHR Trial for Unlimited Bandwidth\n09:06 - Final Verification: Connectivity Test and Configuration Export\n\n🔑 Key Takeaways:\n\n- How to use the Custom Image feature on DigitalOcean to install unsupported OS.\n- Setting up a MikroTik Cloud Server for just $4/month.\n- Activating the trial license to remove the 1Mbps speed limit and get full bandwidth.\n- Basic security hardening: disabling unnecessary services and changing default ports.\n\n 🔗 Download MikroTik CHR Image:\nhttps://mikrotik.com/download/chr\n\n⚠️ Important Note: The security steps in this video are basic setup only. This is not enough for a production server. If you want a dedicated video on professional MikroTik Hardening, let me know in the comments! Always set a strong password and disable services you don't use.\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🌐 About MikroTik RouterOS:\nMikroTik RouterOS is a powerful, all-in-one operating system that can turn any computer or MikroTik hardware into a high-performance router. Known for its stability, security, and flexibility, RouterOS is a top choice for network administrators and service providers worldwide. It offers advanced features like routing, firewalls, bandwidth management, and VPN servers. RouterOS is widely trusted for its stability, VPN support, routing features, firewall, bandwidth control, and more. MikroTik also manufactures a variety of hardware like routers, switches, and wireless gear—all powered by RouterOS.\n\n#MikroTik #ROSEPackage #RouterOS #SMB #WindowsShare #DiskSpace #hApAxLite #MediaServer #Networking\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20260119",
+    "duration": 625,
+    "view_count": 970,
+    "like_count": 15,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=D9q2OqkFHtk",
+    "thumbnail": "https://i.ytimg.com/vi_webp/D9q2OqkFHtk/sddefault.webp",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Introduction to DigitalOcean & $200 Free Credit",
+        "end_time": 37
+      },
+      {
+        "start_time": 37,
+        "title": "Starting the Process: Creating a New Cloud Server (Droplet)",
+        "end_time": 119
+      },
+      {
+        "start_time": 119,
+        "title": "Using Custom Images for MikroTik RouterOS",
+        "end_time": 135
+      },
+      {
+        "start_time": 135,
+        "title": "Downloading the MikroTik CHR Image",
+        "end_time": 165
+      },
+      {
+        "start_time": 165,
+        "title": "Uploading and Naming the Custom Image",
+        "end_time": 213
+      },
+      {
+        "start_time": 213,
+        "title": "Setting up the MikroTik Droplet on DigitalOcean",
+        "end_time": 300
+      },
+      {
+        "start_time": 300,
+        "title": "Essential Hardening: Setting Strong Passwords, Disabling Services & Changing Default Ports",
+        "end_time": 439
+      },
+      {
+        "start_time": 439,
+        "title": "Activating CHR Trial for Unlimited Bandwidth",
+        "end_time": 546
+      },
+      {
+        "start_time": 546,
+        "title": "Final Verification: Connectivity Test and Configuration Export",
+        "end_time": 625
+      }
+    ],
+    "tags": [
+      "mikrotik",
+      "mikrotik server",
+      "mikrotik router",
+      "mikrotik setup",
+      "mikrotik configuration",
+      "digitalocean",
+      "digital ocean",
+      "digital ocean tutorial",
+      "mikrotik tutorial",
+      "mikrotik tips and tricks",
+      "mikrotik learning",
+      "routeros",
+      "ramtin",
+      "ramtin rahmani nejad",
+      "netadminhub",
+      "net admin hub"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "D9q2OqkFHtk.vtt"
+    }
+  },
+  {
+    "id": "ogN3AVqONtY",
+    "title": "MikroTik ROSE Storage: Mount a Windows Share (SMB) on RouterOS! | NO STORAGE LIMITS HACK 🔥",
+    "description": "In this MikroTik tutorial, I address a common challenge for many RouterOS users: limited internal storage. You will learn how to install the specialized ROSE (RouterOS Enterprise) package and configure its SMB feature to mount a Windows Shared Folder directly onto your MikroTik device.\n\nThis technique effectively expands your router's disk capacity, allowing you to use the external network share for hosting large files, DLNA/Media Server content, or network backups (especially useful for models like the hAP ax lite that lack a USB port).\n\n💡 Continuation of the previous video! If you want to know how to use this expanded storage, watch our previous video where we covered the full setup of the MikroTik DLNA Media Server:\n\n🔗 MikroTik DLNA Server Setup (Previous Video):\nhttps://youtu.be/2NemslWUWU4\n\nI cover the process step-by-step: from downloading and installing the ROSE package, configuring the SMB mount via WinBox and Terminal commands, and successfully verifying that the external shared files are accessible on the router.\n\n⏱️ Video Chapters:\n00:00 - Introduction: The MikroTik Storage Limitation (The USB Port)\n01:40 - The Solution: Introduction to the MikroTik ROSE Package\n03:37 - How to Download and Install the MikroTik ROSE Storage Package\n04:29 - Configuring MikroTik SMB Mount via Terminal Command (disk add)\n06:10 - Verifying the Mounted Windows Share and Accessible Files\n06:42 - Confirming MikroTik Media Server Auto-Creation\n07:00 - Live Test: Streaming from MikroTik to Mobile App (VLC)\n07:30 - Final Thoughts\n\n🔑 Key Takeaways:\n- ROSE (RouterOS Enterprise) Package is essential for advanced disk management features like SMB, RAID, and iSCSI.\n- The SMB feature allows you to mount a Windows Shared Directory as local storage on RouterOS.\n- This is the perfect workaround for MikroTik devices without a USB port (e.g., hAP ax lite, L009).\n- The mounted storage can be used for any RouterOS service that requires disk space (e.g., Media Server, File Downloads, Advanced Logging, Backups).\n- The mount configuration can be easily set up using /disk/add command in the Terminal.\n\n🌐 Useful Resources & Documentation:\n\nMikroTik ROSE Package Official Documentation: https://help.mikrotik.com/docs/spaces/ROS/pages/259031065/ROSE-storage\n\n⚠️ Important Note:\nEnsure the CPU architecture of your router (ARM, ARM64, x86, TILE) is supported by the ROSE package before attempting installation. Always back up your configuration before installing new packages.\n\n🌐 About MikroTik RouterOS:\nMikroTik RouterOS is a powerful, all-in-one operating system that can turn any computer or MikroTik hardware into a high-performance router. Known for its stability, security, and flexibility, RouterOS is a top choice for network administrators and service providers worldwide. It offers advanced features like routing, firewalls, bandwidth management, and VPN servers. RouterOS is widely trusted for its stability, VPN support, routing features, firewall, bandwidth control, and more. MikroTik also manufactures a variety of hardware like routers, switches, and wireless gear—all powered by RouterOS.\n\n#MikroTik #ROSEPackage #RouterOS #SMB #WindowsShare #DiskSpace #hApAxLite #MediaServer #Networking\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20251120",
+    "duration": 501,
+    "view_count": 2561,
+    "like_count": 32,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=ogN3AVqONtY",
+    "thumbnail": "https://i.ytimg.com/vi_webp/ogN3AVqONtY/sddefault.webp",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Introduction: The MikroTik Storage Limitation (The USB Port)",
+        "end_time": 100
+      },
+      {
+        "start_time": 100,
+        "title": "The Solution: Introduction to the MikroTik ROSE Package",
+        "end_time": 217
+      },
+      {
+        "start_time": 217,
+        "title": "How to Download and Install the MikroTik ROSE Storage Package",
+        "end_time": 269
+      },
+      {
+        "start_time": 269,
+        "title": "Configuring MikroTik SMB Mount via Terminal Command (disk add)",
+        "end_time": 370
+      },
+      {
+        "start_time": 370,
+        "title": "Verifying the Mounted Windows Share and Accessible Files",
+        "end_time": 402
+      },
+      {
+        "start_time": 402,
+        "title": "Confirming MikroTik Media Server Auto-Creation",
+        "end_time": 420
+      },
+      {
+        "start_time": 420,
+        "title": "Live Test: Streaming from MikroTik to Mobile App (VLC)",
+        "end_time": 450
+      },
+      {
+        "start_time": 450,
+        "title": "Final Thoughts",
+        "end_time": 501
+      }
+    ],
+    "tags": [
+      "mikrotik",
+      "routeros",
+      "mikrotik tutorial",
+      "mikrotik tips",
+      "ramtin",
+      "ramtin rahmani nejad",
+      "ramtin mikrotik",
+      "netadminhub",
+      "net admin hub",
+      "mikrotik router",
+      "what is mikrotik",
+      "mikrotik configuration",
+      "mikrotik rose",
+      "mikrotik smb share",
+      "mikrotik setup",
+      "mikrotik basics",
+      "mikrotik container",
+      "learn mikrotik",
+      "mikrotik routeros",
+      "mikrotik router configuration",
+      "mikrotik shared folder",
+      "network storage",
+      "mikrotik dlna",
+      "mikrotik media server",
+      "mikrotik initial setup",
+      "mikrotik initial configuration"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "ogN3AVqONtY.vtt"
+    }
+  },
+  {
+    "id": "2NemslWUWU4",
+    "title": "Turn Your MikroTik Router Into a Powerful DLNA Media Server! (Easy Home Streaming Guide) 🔥",
+    "description": "In this MikroTik tutorial, you will learn the essential steps to configure the powerful, built-in DLNA Media Server feature, turning your MikroTik router into the ultimate home media hub!\n\nDLNA (Digital Living Network Alliance) is the standard for seamless media sharing within your home network. The RouterOS v7 DLNA server allows your Smart TVs, mobile phones, and media players (like VLC and Kodi) to instantly discover and stream movies, music, and photos directly from a USB drive connected to your router.\n\nWe cover the entire technical setup: from ensuring correct file system compatibility like exFAT for 4K streaming, to advanced filtering based on IP addresses, and performance considerations for Wi-Fi 6 devices.\n\n⏱️ Video Chapters:\n00:00 - MikroTik DLNA Server Overview: Components and Functionality\n01:34 - System Requirements Check (RouterOS v7.14+, CPU Architecture & Storage)\n03:32 - Formatting USB Drive (exFAT)\n04:11 - Uploading Media Files to MikroTik\n04:33 - Step-by-Step  MikroTik DLNA Media Server Setup in WinBox\n05:35 - Live Test: Streaming from MikroTik to VLC\n06:24 - Content Control: Setting up Kids' Media Server\n07:44 - Content Control & Filtering: Limiting Media Access by IP Address\n09:04 - Mobile Test (VLC Android): Proving Content Restriction\n09:50 - Final Thoughts: Performance, Wi-Fi 6, and ROSE Package\n\n🔑 Key Takeaways:\n- DLNA Media Server is available in RouterOS v7.14 and newer.\n- You must use exFAT if your media files are larger than 4GB.\n- You can use the allowed-ip setting to secure or customize media access for specific devices.\n- Network performance, especially with high-bitrate media, is highly dependent on your router’s CPU and the use of Wi-Fi 6 (e.g., hAP ax series).\n- The ROSE package offers advanced file sharing, enabling you to mount shared Windows folders (SMB) as storage for the DLNA server.\n\n⚠️ A Note on Performance:\nWhile the DLNA server utilizes minimal resources, performance when streaming high-bitrate media (like $4K$) is directly tied to the router's CPU capabilities and the speed of the connected USB drive. Ensure you use an external drive capable of sustained high-speed reading.\n\n🌐 About MikroTik RouterOS:\nMikroTik RouterOS is a powerful, all-in-one operating system that can turn any computer or MikroTik hardware into a high-performance router. Known for its stability, security, and flexibility, RouterOS is a top choice for network administrators and service providers worldwide.\n\nIt offers advanced features like routing, firewalls, bandwidth management, and VPN servers. RouterOS is widely trusted for its stability, VPN support, routing features, firewall, bandwidth control, and more. MikroTik also manufactures a variety of hardware like routers, switches, and wireless gear—all powered by RouterOS.\n\n#mikrotik #backtohome #bth #vpntutorial #wireguard #vpnserver #cgnat #remoteaccess #routeros #publicip #networksecurity\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20251117",
+    "duration": 660,
+    "view_count": 1670,
+    "like_count": 44,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=2NemslWUWU4",
+    "thumbnail": "https://i.ytimg.com/vi_webp/2NemslWUWU4/sddefault.webp",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "MikroTik DLNA Server Overview: Components and Functionality",
+        "end_time": 94
+      },
+      {
+        "start_time": 94,
+        "title": "System Requirements Check (RouterOS v7.14+, CPU Architecture & Storage)",
+        "end_time": 212
+      },
+      {
+        "start_time": 212,
+        "title": "Formatting USB Drive (exFAT)",
+        "end_time": 251
+      },
+      {
+        "start_time": 251,
+        "title": "Uploading Media Files to MikroTik",
+        "end_time": 273
+      },
+      {
+        "start_time": 273,
+        "title": "Step-by-Step  MikroTik DLNA Media Server Setup in WinBox",
+        "end_time": 335
+      },
+      {
+        "start_time": 335,
+        "title": "Live Test: Streaming from MikroTik to VLC",
+        "end_time": 384
+      },
+      {
+        "start_time": 384,
+        "title": "Content Control: Setting up Kids' Media Server",
+        "end_time": 464
+      },
+      {
+        "start_time": 464,
+        "title": "Content Control & Filtering: Limiting Media Access by IP Address",
+        "end_time": 544
+      },
+      {
+        "start_time": 544,
+        "title": "Mobile Test (VLC Android): Proving Content Restriction",
+        "end_time": 590
+      },
+      {
+        "start_time": 590,
+        "title": "Final Thoughts: Performance, Wi-Fi 6, and ROSE Package",
+        "end_time": 660
+      }
+    ],
+    "tags": [
+      "MikroTik",
+      "MikroTik DLNA",
+      "MikroTik Media Server",
+      "mikrotik tutorial",
+      "Media Server Mikrotik",
+      "Mikrotik Router",
+      "Mikrotik RouterOS",
+      "RouterOS",
+      "Ramtin",
+      "Ramtin Rahmani Nejad",
+      "netadminhub",
+      "net admin hub",
+      "networkchuck",
+      "mikrotik setup guide",
+      "ramtin mikrotik",
+      "mikrotik tricks",
+      "mikrotik basics",
+      "mikrotik mtcna",
+      "learn mikrotik",
+      "Media Server",
+      "DLNA",
+      "DLNA MikroTik",
+      "mikrotik tips",
+      "networking",
+      "what is mikrotik",
+      "mikrotik course",
+      "mikrotik configuration",
+      "mikrotik routerboard",
+      "mikrotik training",
+      "router"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "2NemslWUWU4.vtt"
+    }
+  },
+  {
+    "id": "CRLUQgU1_Xs",
+    "title": "MikroTik Back To Home: VPN Server WITHOUT Public IP (Easiest WireGuard VPN Setup Ever) 🔥",
+    "description": "In this essential MikroTik tutorial, you'll learn how to set up your own Remote Access VPN Server that works perfectly without a Public IP Address—the definitive answer to the massive CG-NAT problem!\n\nMikroTik's Back To Home (BTH) feature is a game-changer. It leverages the secure WireGuard protocol and MikroTik’s own global relay servers to establish an End-to-End Encrypted VPN tunnel, allowing you to access your home network or bypass geo-restrictions from anywhere in the world. It requires ZERO CLI commands for the initial setup, managed entirely through the dedicated MikroTik Back to Home mobile app and WireGuard Client.\n\nWe walk through the entire technical mechanism: from understanding how the relay system allows NAT traversal, to performing a live demonstration of GeoIP bypass and successful access to internal LAN resources. We also talk about guest user management, showing you how to control client policies using the essential allow-lan feature to maintain network security.\n\nIf you struggle with VPN server setup complexity or are constantly blocked by CG-NAT, this is the simplest, efficient, and secure MikroTik VPN solution available today!\n\n⚠️ A Note on Performance and Security: While the BTH feature is powerful, please note: If your connection is routed via MikroTik's relay servers (due to not having a Public IP), the overall connection speed might be limited. The fastest connections are always direct (when a Public IP is available). Also, BTH is intended for home access, not for anonymity.\n\n⏱️ Video Chapters:\n00:00 - Intro & The CG-NAT Problem\n01:07 - MikroTik Back to Home Features: WireGuard & Relay Mechanism Overview\n02:26 - System Requirements Check (RouterOS v7.12+ & CPU Architecture)\n04:19 - Quick Overview of the Direct vs. Relay Mechanism\n06:11 - Step-by-Step Mobile App (Zero CLI) Setup\n08:35 - Live Test: Proving LAN Access and GeoIP Bypass\n10:47 - Guest User Management: Creating Peers in Winbox\n11:41 - Controlling Access: Setting the allow-lan Policy\n15:36 - Final Thoughts, Caveats (Speed/Relay) & Conclusion\n\n🔑 Key Takeaways:\n- BTH uses WireGuard and works even when your router is behind CG-NAT.\n- The connection is always End-to-End Encrypted, even when passing through MikroTik’s relay servers.\n- The initial setup requires ZERO CLI and is managed via the mobile app.\n- You must use the allow-lan policy to restrict guest access to Internet Only.\n- The primary downside is potential speed limitation when using the relay.\n\nAbout MikroTik RouterOS\nMikroTik RouterOS is a powerful, all-in-one operating system that can turn any computer or MikroTik hardware into a high-performance router. Known for its stability, security, and flexibility, RouterOS is a top choice for network administrators and service providers worldwide.\n\nIt offers advanced features like routing, firewalls, bandwidth management, and VPN servers. RouterOS is widely trusted for its stability, VPN support, routing features, firewall, bandwidth control, and more. MikroTik also manufactures a variety of hardware like routers, switches, and wireless gear—all powered by RouterOS.\n\n#mikrotik #backtohome #bth #vpntutorial #wireguard #vpnserver #cgnat #remoteaccess #routeros #publicip #networksecurity\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20251113",
+    "duration": 1187,
+    "view_count": 20416,
+    "like_count": 256,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=CRLUQgU1_Xs",
+    "thumbnail": "https://i.ytimg.com/vi/CRLUQgU1_Xs/sddefault.jpg",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Intro & The CG-NAT Problem",
+        "end_time": 67
+      },
+      {
+        "start_time": 67,
+        "title": "MikroTik Back to Home Features: WireGuard & Relay Mechanism Overview",
+        "end_time": 146
+      },
+      {
+        "start_time": 146,
+        "title": "System Requirements Check (RouterOS v7.12+ & CPU Architecture)",
+        "end_time": 259
+      },
+      {
+        "start_time": 259,
+        "title": "Quick Overview of the Direct vs. Relay Mechanism",
+        "end_time": 371
+      },
+      {
+        "start_time": 371,
+        "title": "Step-by-Step Mobile App (Zero CLI) Setup",
+        "end_time": 515
+      },
+      {
+        "start_time": 515,
+        "title": "Live Test: Proving LAN Access and GeoIP Bypass",
+        "end_time": 647
+      },
+      {
+        "start_time": 647,
+        "title": "Guest User Management: Creating Peers in Winbox",
+        "end_time": 701
+      },
+      {
+        "start_time": 701,
+        "title": "Controlling Access: Setting the allow-lan Policy",
+        "end_time": 936
+      },
+      {
+        "start_time": 936,
+        "title": "Final Thoughts, Caveats (Speed/Relay) & Conclusion",
+        "end_time": 1187
+      }
+    ],
+    "tags": [
+      "mikrotik",
+      "wireguard vpn",
+      "wireguard vpn setup",
+      "mikrotik wireguarduard",
+      "mikrotik vpn setup",
+      "wire guard",
+      "mikrotik wireguard configuration",
+      "vpn mikrotik",
+      "mikrotik training",
+      "wireguard mikrotik setup",
+      "mikrotik wireguard windows",
+      "ramtin",
+      "ramtin rahmani nejad",
+      "net admin hub",
+      "netadminhub",
+      "networkchuck",
+      "network tutorial",
+      "mikrotik tips",
+      "mikrotik wireguard",
+      "wireguard server",
+      "mikrotik vpn server",
+      "mikrotik back to home",
+      "cgnat",
+      "wireguard on mikrotik",
+      "wireguard mikrotik client",
+      "routeros"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "CRLUQgU1_Xs.vtt"
+    }
+  },
+  {
+    "id": "EbeIQxGbxzY",
+    "title": "Uptime Kuma on MikroTik: Self-Hosted Monitoring with Telegram Alerts (Container Setup) 🔥",
+    "description": "In this step-by-step tutorial, you'll learn how to run Uptime Kuma container on MikroTik Router! We will use the MikroTik Container package to host Uptime Kuma—a powerful, free, and self-hosted monitoring tool—directly on your MikroTik RouterOS device.\n\nThis guide provides the full, comprehensive process for turning your MikroTik into a reliable, low-resource monitoring server.\n\nWe cover key networking and alerting steps essential for a robust solution:\n📦 Installing and Enabling the Container Package (RouterOS +v7.5).\n🌉 Configuring the isolated network (Bridge and VETH Interfaces) for the Uptime Kuma container.\n🛡️ Setting up Firewall NAT rules to access the dashboard and enable public/secure access.\n🔔 Integrating Telegram Notifications to receive instant downtime alerts on your phone.\n🌐 Achieving secure, public access via a domain name and HTTPS using an external proxy service (like Cloudflare).\n\nThis setup is perfect for monitoring web servers, DNS health, internal devices, or crucial business services.\n\n⏱️ Video Chapters:\n00:00 - Intro & The Goal: Why Use MikroTik for Uptime Monitoring\n00:44 - What is Utime Kuma?\n01:26 - MikroTik Compatibility Check: CPU Architecture, RouterOS Version Requirements, Container Package Installation & Activation (Prerequisite Check)\n02:51 - MikroTik Container Networking Setup: Bridge, VETH Interface & SRC NAT\n05:01 - MikroTik Container Config: Setting Registry URL & Temp Directory\n05:27 - UptimeKuma Container Config: Creting Env and Mount\n07:11 - Uptime Kuma Container Creation & First Run Troubleshooting\n09:13 - Public Access: Destination NAT Rule for Dashboard Access\n11:16 - Securing Access: Cloudflare DNS & HTTPS Setup\n12:13 - First Login & Dashboard Overview\n13:26 - Configuring Telegram Notification Alerts on Uptimekuma\n15:51 - Creating Your First Monitors on Uptime Kuma\n17:42 - Testing Alerts: Virtualizing Downtime with a Firewall Rule\n19:09 - Final Thoughts & Conclusion\n\n🔑 Key Takeaways: Uptime Kuma offers incredible value for zero cost. The MikroTik Container feature isolates the monitoring tool, and the crucial Destination NAT rule allows you to access the dashboard securely from outside your network. By linking to Telegram, you never miss a critical downtime alert. The full solution relies on using a VETH interface and proper directory Mounts for persistent storage.\n\nThe MikroTik Container package is incredibly powerful, and running monitoring tools is one of its most essential applications. Want to see other projects? Leave a comment below with the service you want me to containerize next!\n\nWhat is MikroTik RouterOS? The Ultimate Networking Platform\nhttps://mikrotik.com/software\n\nRouterOS is a highly robust and versatile operating system used by ISPs and network professionals globally. Its container feature, available on specific architectures (x86, ARM, ARM64), unlocks advanced self-hosting and service management capabilities directly on the router hardware.\n#MikroTik #RouterOS #Monitoring #Container #Uptimekuma\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20251109",
+    "duration": 1196,
+    "view_count": 1943,
+    "like_count": 33,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=EbeIQxGbxzY",
+    "thumbnail": "https://i.ytimg.com/vi/EbeIQxGbxzY/sddefault.jpg",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Intro & The Goal: Why Use MikroTik for Uptime Monitoring",
+        "end_time": 44
+      },
+      {
+        "start_time": 44,
+        "title": "What is Utime Kuma?",
+        "end_time": 86
+      },
+      {
+        "start_time": 86,
+        "title": "MikroTik Compatibility Check: CPU Architecture, RouterOS Version Requirements, Container Package Installation & Activation (Prerequisite Check)",
+        "end_time": 171
+      },
+      {
+        "start_time": 171,
+        "title": "MikroTik Container Networking Setup: Bridge, VETH Interface & SRC NAT",
+        "end_time": 301
+      },
+      {
+        "start_time": 301,
+        "title": "MikroTik Container Config: Setting Registry URL & Temp Directory",
+        "end_time": 327
+      },
+      {
+        "start_time": 327,
+        "title": "UptimeKuma Container Config: Creting Env and Mount",
+        "end_time": 431
+      },
+      {
+        "start_time": 431,
+        "title": "Uptime Kuma Container Creation & First Run Troubleshooting",
+        "end_time": 553
+      },
+      {
+        "start_time": 553,
+        "title": "Public Access: Destination NAT Rule for Dashboard Access",
+        "end_time": 676
+      },
+      {
+        "start_time": 676,
+        "title": "Securing Access: Cloudflare DNS & HTTPS Setup",
+        "end_time": 733
+      },
+      {
+        "start_time": 733,
+        "title": "First Login & Dashboard Overview",
+        "end_time": 806
+      },
+      {
+        "start_time": 806,
+        "title": "Configuring Telegram Notification Alerts on Uptimekuma",
+        "end_time": 951
+      },
+      {
+        "start_time": 951,
+        "title": "Creating Your First Monitors on Uptime Kuma",
+        "end_time": 1062
+      },
+      {
+        "start_time": 1062,
+        "title": "Testing Alerts: Virtualizing Downtime with a Firewall Rule",
+        "end_time": 1149
+      },
+      {
+        "start_time": 1149,
+        "title": "Final Thoughts & Conclusion",
+        "end_time": 1196
+      }
+    ],
+    "tags": [
+      "uptime kuma",
+      "mikrotik",
+      "docker",
+      "how to install uptime kuma",
+      "mikrotik tutorial",
+      "mikrotik container",
+      "mikrotik uptimekuma",
+      "uptimekuma on mikrotik",
+      "install uptime kuma",
+      "mikrotik mtcna",
+      "ramtin",
+      "ramtin rahmani nejad",
+      "netadminhub",
+      "net admin hub",
+      "mikrotik router",
+      "mikrotik setup",
+      "mikrotik license",
+      "mikrotik configuration",
+      "networkchuck",
+      "network monitoring",
+      "mikrotik monitoring",
+      "mikrotik course",
+      "ramtin mikrotik",
+      "what is mikrotik",
+      "mikrotik basics",
+      "mikrotik docker",
+      "routeros",
+      "mikrotik tips"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "EbeIQxGbxzY.vtt"
+    }
+  },
+  {
+    "id": "GHJFKlAn0ZY",
+    "title": "Host Your Website on MikroTik with Nginx Container + Domain & HTTPS 🔥",
+    "description": "In this comprehensive tutorial, you'll learn exactly how to bypass expensive traditional web hosting and leverage the power of your existing MikroTik router! We will utilize the MikroTik Container package to host a website (an Nginx server) directly on your RouterOS device.\n\nThis guide provides the full, step-by-step process for turning your MikroTik into a web server, complete with a secure public presence.\n\nWe cover key networking and security steps essential for real-world deployment:\n* 📦 **Installing and Enabling the Container Package** (RouterOS v7.x)\n* 🌉 **Configuring the necessary Bridge and VETH Interfaces** for container isolation.\n* 🛡️ **Setting up Firewall NAT rules** (Destination NAT) to route external traffic to your internal Nginx container.\n* 🌐 **Achieving secure, public access** via a domain name and **HTTPS** using an external proxy service (like Cloudflare).\n\nThis setup is perfect for hosting a personal resume, small business landing pages, or local documentation.\n\n⏱️ Video Chapters:\n00:00 - Intro & The Goal: Why Use MikroTik for Web Hosting\n00:42 - MikroTik Compatibility Check: CPU Architecture & RouterOS Version Requirements\n02:07 - Container Package Installation & Activation (Key Step for Web Server)\n04:53 - MikroTik Container Networking Setup: Bridge,VETH Interface & SRC NAT\n07:02 - MikroTik Container Config: Setting the Docker Registry\n08:25 - Deploying HTML Files: Uploading & Mounting HTML for Nginx Web Server\n10:05 - Nginx Container Creation & First Run\n11:52 - Public Access: Destination NAT Rule for Port 80\n12:55 - Troubleshooting: Testing Public Access & Fixing  Permissions\n16:31 - Finalizing Security: Domain Connection & HTTPS via Cloudflare\n18:06 - Final Thoughts\n\n🔑 Key Takeaways: To ensure security, always harden your MikroTik first by disabling unnecessary services. The virtual **VETH** interface isolates the container's network, and the crucial **Destination NAT** rule is what maps incoming HTTP/HTTPS traffic to the container's internal IP. The full solution relies on a container image (like Nginx) expecting the website files to be mapped to its internal **HTML** directory.\n\nThe MikroTik Container package is incredibly powerful, and web hosting is just one exciting application. Want to see other projects? Leave a comment below with the service you want me to containerize next (e.g., VPN Server, Monitoring Tool, etc.)!\n\nWhat is MikroTik RouterOS? The Ultimate Networking Platform\nhttps://mikrotik.com/software\n\nRouterOS is a highly robust and versatile operating system used by ISPs and network professionals globally. Its container feature, available on specific architectures (x86, ARM, ARM64), unlocks advanced self-hosting and service management capabilities directly on the router hardware.\n#MikroTik #RouterOS #Nginx #Container #WebHosting\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20251101",
+    "duration": 1139,
+    "view_count": 3711,
+    "like_count": 77,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=GHJFKlAn0ZY",
+    "thumbnail": "https://i.ytimg.com/vi_webp/GHJFKlAn0ZY/sddefault.webp",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Intro & The Goal: Why Use MikroTik for Web Hosting",
+        "end_time": 42
+      },
+      {
+        "start_time": 42,
+        "title": "MikroTik Compatibility Check: CPU Architecture & RouterOS Version Requirements",
+        "end_time": 127
+      },
+      {
+        "start_time": 127,
+        "title": "Container Package Installation & Activation (Key Step for Web Server)",
+        "end_time": 293
+      },
+      {
+        "start_time": 293,
+        "title": "MikroTik Container Networking Setup: Bridge,VETH Interface & SRC NAT",
+        "end_time": 422
+      },
+      {
+        "start_time": 422,
+        "title": "MikroTik Container Config: Setting the Docker Registry",
+        "end_time": 505
+      },
+      {
+        "start_time": 505,
+        "title": "Deploying HTML Files: Uploading & Mounting HTML for Nginx Web Server",
+        "end_time": 605
+      },
+      {
+        "start_time": 605,
+        "title": "Nginx Container Creation & First Run",
+        "end_time": 712
+      },
+      {
+        "start_time": 712,
+        "title": "Public Access: Destination NAT Rule for Port 80",
+        "end_time": 775
+      },
+      {
+        "start_time": 775,
+        "title": "Troubleshooting: Testing Public Access & Fixing  Permissions",
+        "end_time": 991
+      },
+      {
+        "start_time": 991,
+        "title": "Finalizing Security: Domain Connection & HTTPS via Cloudflare",
+        "end_time": 1086
+      },
+      {
+        "start_time": 1086,
+        "title": "Final Thoughts",
+        "end_time": 1139
+      }
+    ],
+    "tags": [
+      "mikrotik",
+      "nginx",
+      "mikrotik router",
+      "mikrotik container",
+      "mikrotik container nginx",
+      "mikrotik web server",
+      "what is nginx",
+      "mikrotik setup",
+      "mikrotik tutorial",
+      "what is mikrotik",
+      "network config",
+      "mikrotik router configuration",
+      "networkchuck",
+      "ramtin",
+      "ramtin rahmani nejad",
+      "netadminhub",
+      "net admin hub",
+      "mikrotik basics",
+      "mikrotik docker",
+      "docker",
+      "ngnix docker",
+      "nginx proxy manager",
+      "mikrotik configuration",
+      "mikrotik tips",
+      "web host",
+      "website",
+      "website hosting",
+      "container mikrotik",
+      "routeros",
+      "learn mikrotik"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "GHJFKlAn0ZY.vtt"
+    }
+  },
+  {
+    "id": "dIpGyRqigtI",
+    "title": "OpenWRT WiFi Extender Setup: Wireless Client & Wi-Fi Repeater Mode to Eliminate Dead Zones 🔥",
+    "description": "In this video, you'll learn exactly how to set up your OpenWRT router as a reliable Wi-Fi Range Extender (Repeater Mode) to eliminate wireless dead zones and boost signal strength across your home or office. Stop dealing with frustrating weak signals!\n\nThis guide simplifies the complex process of configuring the OpenWRT device's Wi-Fi card to function as a Wireless Client (Station). This is essential for getting high-performance wireless coverage exactly where you need it, whether for standard use or to extend access for your advanced networking setups.\n\nI will walk you through the precise steps to create the necessary virtual interfaces, manage firewall settings, and ensure seamless network flow between your main network and the extended coverage area.\n\nSay goodbye to expensive pre-configured extenders! Your powerful OpenWRT router can do the job better and faster, natively!\n\n⏱️ Video Chapters:\n00:00 - Intro & The Goal (Why Use Client Mode)\n01:03 - Initial Router Check (WAN, LAN Bridge Setup)\n02:07 - Enabling Wireless Cards and change SSID\n03:16 - Scanning & Connecting to Main AP\n03:49 - Configuring the new WAN Interface (WAN_WiFi)\n04:27 - Final Test (Ping & Traceroute Verification)\n\n🔑 Key Takeaways: The fastest method involves creating a new Virtual Interface and assigning it to the existing WAN Firewall Zone. You must verify that your OpenWRT router's LAN IP does not conflict with the upstream router's IP (e.g., both using 192.168.1.1). The router functions as a Station (Client) to receive the signal, and as an Access Point to rebroadcast it.\n\nWhat is OpenWrt? The Powerful Open-Source OS for Your Router\nhttps://youtu.be/eTzKk8yJP3A\n\nRouterOS OpenWRT is a highly flexible, community-developed Linux distribution for embedded devices like routers. It is known for its stability, extensive customization options, and superior performance compared to stock firmware.\n\nOpenWRT allows for advanced features like VPN clients, detailed routing controls, and fine-tuning wireless performance, making it a top choice for network enthusiasts and administrators worldwide.\n\n#openwrt\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20251025",
+    "duration": 353,
+    "view_count": 13535,
+    "like_count": 117,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=dIpGyRqigtI",
+    "thumbnail": "https://i.ytimg.com/vi_webp/dIpGyRqigtI/sddefault.webp",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Intro & The Goal (Why Use Client Mode)",
+        "end_time": 63
+      },
+      {
+        "start_time": 63,
+        "title": "Initial Router Check (WAN, LAN Bridge Setup)",
+        "end_time": 127
+      },
+      {
+        "start_time": 127,
+        "title": "Enabling Wireless Cards and change SSID",
+        "end_time": 196
+      },
+      {
+        "start_time": 196,
+        "title": "Scanning & Connecting to Main AP",
+        "end_time": 229
+      },
+      {
+        "start_time": 229,
+        "title": "Configuring the new WAN Interface (WAN_WiFi)",
+        "end_time": 267
+      },
+      {
+        "start_time": 267,
+        "title": "Final Test (Ping & Traceroute Verification)",
+        "end_time": 353
+      }
+    ],
+    "tags": [
+      "openwrt",
+      "openwrt router",
+      "wifi",
+      "openwrt vpn",
+      "openwrt setup",
+      "wifi mesh alternative",
+      "openwrt settings",
+      "flash openwrt",
+      "openwrt raspberry pi",
+      "router",
+      "openwrt tutorial",
+      "openwrt install",
+      "openwrt upgrade",
+      "how to flash openwrt",
+      "WiFi Extender",
+      "WiFi Repeater",
+      "Ramtin",
+      "Ramtin Rahmani Nejad",
+      "netadminhub",
+      "Net Admin Hub",
+      "install openwrt",
+      "openwrt configuration",
+      "wifi repeater",
+      "extend wifi",
+      "router setup",
+      "openwrt linksys",
+      "openwrt vlan",
+      "networking",
+      "extend wifi range",
+      "networkchuck",
+      "wireless",
+      "mikrotik"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "dIpGyRqigtI.vtt"
+    }
+  },
+  {
+    "id": "6RuiR985A78",
+    "title": "Block ALL Ads on Your Network with MikroTik AdList (No Pi-hole Needed!) 🔥",
+    "description": "In this video, you'll learn exactly how to set up the powerful new AdList feature in MikroTik RouterOS DNS settings to achieve network-level ad blocking. Stop unwanted banner ads and slow website load times without relying on separate servers or browser extensions!\n\nThe MikroTik AdList feature, available natively since RouterOS v7.15, allows you to use your MikroTik router as a high-performance DNS sinkhole. This is the cleanest and most efficient way to block ads, trackers, and malicious domains for all devices connected to your network—including Smart TVs, phones, and IoT devices.\n\nWe'll cover how to import massive, community-maintained blocklists (like the StevenBlack list), how to manage the DNS cache size for optimal performance, and how to create exceptions (whitelists) for any domain you need to unblock.\n\nSay goodbye to complex setups like running Pi-hole or AdGuard Home on a separate device. Your MikroTik router can do it all, natively!\n\n⏱️ Video Chapters:\n00:00 - Intro & Why Use MikroTik AdList for Ad Blocking\n01:07 - Checking the MikroTik Adlist Doc & RouterOS Version Requirements\n02:54 - Crucial Step: Increasing the DNS Cache Size\n03:17 - Method 1: Importing a Public Ad Block List via URL\n06:11 - Testing the Ad Blocker & Reviewing Match Counts\n06:48 - Method 2: Creating a Custom Block List using a File (Null Routing Explained)\n10:47 - How to Create an Exception (Whitelist) for Any Domain\n12:09 - Pause the Adblocker on MikroTik\n12:44 - Final Thoughts & Conclusion\n\n🔑 Key Takeaways:\nAdList uses null routing (returning 0.0.0.0) to prevent ad domains from loading.\n\nThe feature works on all MikroTik CPU architectures (MIPSBE, SMIPS, ...).\n\nYou must increase the DNS Cache Size to handle large blocklists (e.g., 79,000+ domains).\n\nAbout MikroTik RouterOS\nMikroTik RouterOS is a powerful, all-in-one operating system that can turn any computer or MikroTik hardware into a high-performance router. Known for its stability, security, and flexibility, RouterOS is a top choice for network administrators and service providers worldwide.\n\nIt offers advanced features like routing, firewalls, bandwidth management, and VPN servers. RouterOS is widely trusted for its stability, VPN support, routing features, firewall, bandwidth control, and more. MikroTik also manufactures a variety of hardware like routers, switches, and wireless gear—all powered by RouterOS.\n\n#mikrotik #adblocker #pihole #mikrotikadlist #routeros #dnssinkhole #adguardhome #networksecurity\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20251015",
+    "duration": 778,
+    "view_count": 15632,
+    "like_count": 315,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=6RuiR985A78",
+    "thumbnail": "https://i.ytimg.com/vi_webp/6RuiR985A78/sddefault.webp",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Intro & Why Use MikroTik AdList for Ad Blocking",
+        "end_time": 67
+      },
+      {
+        "start_time": 67,
+        "title": "Checking the MikroTik Adlist Doc & RouterOS Version Requirements",
+        "end_time": 174
+      },
+      {
+        "start_time": 174,
+        "title": "Crucial Step: Increasing the DNS Cache Size",
+        "end_time": 197
+      },
+      {
+        "start_time": 197,
+        "title": "Method 1: Importing a Public Ad Block List via URL",
+        "end_time": 371
+      },
+      {
+        "start_time": 371,
+        "title": "Testing the Ad Blocker & Reviewing Match Counts",
+        "end_time": 408
+      },
+      {
+        "start_time": 408,
+        "title": "Method 2: Creating a Custom Block List using a File (Null Routing Explained)",
+        "end_time": 647
+      },
+      {
+        "start_time": 647,
+        "title": "How to Create an Exception (Whitelist) for Any Domain",
+        "end_time": 729
+      },
+      {
+        "start_time": 729,
+        "title": "Pause the Adblocker on MikroTik",
+        "end_time": 764
+      },
+      {
+        "start_time": 764,
+        "title": "Final Thoughts & Conclusion",
+        "end_time": 778
+      }
+    ],
+    "tags": [
+      "mikrotik",
+      "routeros",
+      "router",
+      "adblocker",
+      "mikrotik router",
+      "mikrotik tutorial",
+      "routerboard",
+      "learn mikrotik",
+      "mikrotik tips",
+      "network tips",
+      "network tips and tricks",
+      "netadminhub",
+      "ramtin",
+      "ramtin rahmani nejad",
+      "net admin hub",
+      "mikrotik setup",
+      "mikrotik configuration",
+      "pihole",
+      "adguard",
+      "adblock",
+      "mikrotik adlist",
+      "ramtin mikrotik",
+      "mikrotik mtcna",
+      "mikrotik course",
+      "networking",
+      "networkchuck",
+      "mikrotik mtcre",
+      "mikrotik full tutorial"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "6RuiR985A78.vtt"
+    }
+  },
+  {
+    "id": "HOnCbwIt1WY",
+    "title": "Old Phones are DEAD: VOIP & UCaaS Explained in 5 Minutes 📞",
+    "description": "Is your business paying too much for old, rigid phone lines? It’s time to switch to the modern standard! In this complete guide, you’ll learn how to master Cloud PBX and UCaaS—the technology that powers remote work and allows you to slash your business communication costs 🔥. We break down the technical differences, the key protocols (SIP and RTP), and the pros/cons of every major vendor in just minutes.\n\nStop guessing and start building a better system! Here is 5mins review to understanding modern business communication.\nIf you want to move your team into the future of communication, this is the masterclass you need. If this guide was helpful, please like and share the video, and definitely subscribe to the Net Admin Plus channel for more expert IT and networking content!\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20250929",
+    "duration": 391,
+    "view_count": 175,
+    "like_count": 6,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=HOnCbwIt1WY",
+    "thumbnail": "https://i.ytimg.com/vi/HOnCbwIt1WY/sddefault.jpg",
+    "chapters": null,
+    "tags": [
+      "voip",
+      "business phone systems",
+      "what is voip",
+      "voip explained",
+      "voip tutorial",
+      "voip app",
+      "voip services",
+      "how voip works",
+      "pbx",
+      "ip pbx",
+      "issabel voip",
+      "asterisk",
+      "cucm",
+      "cisco",
+      "avaya",
+      "voip phone system",
+      "business voip",
+      "hosted voip",
+      "voip for beginners",
+      "voip tutorial for beginners",
+      "ramtiin",
+      "net admin hub",
+      "voice over ip",
+      "voip system",
+      "best voip services",
+      "voip for business",
+      "voip service",
+      "voip vs sip",
+      "cloud phone systems"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "HOnCbwIt1WY.vtt"
+    }
+  },
+  {
+    "id": "eTzKk8yJP3A",
+    "title": "What is OpenWrt? The Powerful Open-Source OS for Your Router",
+    "description": "Curious about OpenWrt? Learn what it is and why it’s a game-changer for your router.\n\nIn this video, we break down what OpenWrt is and why it's one of the most powerful and flexible operating systems for routers. Whether you're a beginner or a network enthusiast, this guide will help you understand the key features and benefits of using OpenWrt.\n\nOpenWrt is a free, open-source Linux-based OS that transforms your router into a customizable and advanced network tool. With support for packages, VPNs, firewalls, and performance tweaks, OpenWrt gives you full control over your network.\n\nIf you're into networking, home labs, or privacy, OpenWrt is a must-know tool in your tech stack.\n🔔 Don't forget to like, comment, and subscribe for more content like this!\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20250408",
+    "duration": 376,
+    "view_count": 8191,
+    "like_count": 97,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=eTzKk8yJP3A",
+    "thumbnail": "https://i.ytimg.com/vi_webp/eTzKk8yJP3A/sddefault.webp",
+    "chapters": null,
+    "tags": [
+      "openwrt",
+      "what is openwrt",
+      "openwrt router",
+      "openwrt wireguard",
+      "what is open webui",
+      "openwrt setup",
+      "openwrt tutorial",
+      "install openwrt",
+      "install openwrt on pc",
+      "openwrt one",
+      "net admin hub",
+      "netadminhub",
+      "ramtin",
+      "ramtin rahmani nejad"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "eTzKk8yJP3A.vtt"
+    }
+  },
+  {
+    "id": "O5wegipxt6E",
+    "title": "How to Find Saved Wi-Fi Passwords on Windows 10 & 11 (2 Easy Methods)",
+    "description": "In this quick tutorial, you'll learn how to find saved Wi-Fi passwords on Windows 10 and Windows 11 — even if you're no longer connected to the network.\n\nWe cover two simple methods to view your stored wireless passwords:\n- Using the Windows Control Panel (if you're currently connected)\n- Using the Command Prompt (CMD) for any saved network\n\nThis is especially useful if you've forgotten your Wi-Fi password but your PC has connected to it before.\n\n🔐 Command to Find Wi-Fi Password via CMD:\nnetsh wlan show profiles name=\"sweet-home\" key=clear\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n⏱️ Video Chapters:\n00:00 – Introduction\n00:32 – Find Wi-Fi Password via Control Panel\n01:16 – Find Wi-Fi Password via CMD\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\nWhether you're troubleshooting or just curious, these tricks can save you time and frustration.\nDon't forget to like & subscribe for more Windows tips! 🔧\n\n#Windows #WiFi\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20250406",
+    "duration": 355,
+    "view_count": 63,
+    "like_count": 2,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=O5wegipxt6E",
+    "thumbnail": "https://i.ytimg.com/vi_webp/O5wegipxt6E/sddefault.webp",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Introduction",
+        "end_time": 32
+      },
+      {
+        "start_time": 32,
+        "title": "Find Wi-Fi Password via Control Panel",
+        "end_time": 76
+      },
+      {
+        "start_time": 76,
+        "title": "Find Wi-Fi Password via CMD",
+        "end_time": 355
+      }
+    ],
+    "tags": [
+      "wifi password show",
+      "password",
+      "wifi password",
+      "find wifi password",
+      "wireless password",
+      "wifi",
+      "wifi password change",
+      "wifi password show app",
+      "wifi 7",
+      "wifi windows",
+      "wifi password cmd",
+      "wifi password cmd command windows 10",
+      "wifi cmd command password",
+      "wireless password recovery",
+      "windows wifi option not showing",
+      "windows tips",
+      "windows tips and tricks",
+      "windows",
+      "ramtin",
+      "netadminhub",
+      "net admin hub",
+      "networking",
+      "windows network",
+      "networkchuck",
+      "windows wireless",
+      "windows find wifi password"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "O5wegipxt6E.vtt"
+    }
+  },
+  {
+    "id": "QUpdKt-6obA",
+    "title": "Speed Up Windows 11 🚀 | 13 Easy Tips to Boost Performance Instantly",
+    "description": "Is your Windows 11 running slow? Try these simple performance hacks to boost speed — no extra software needed!\n\nMany users experience slow performance after installing Windows 11.\nIn this video, we’ll show you practical ways to speed up Windows 11 and improve overall system performance — without installing any third-party tools.\n\nFrom disabling visual effects to optimizing background processes, we go through step-by-step tips to help your PC run faster and smoother.\n\n⏱️ Video Chapters:\n00:36 - Disable Transparency Effects\n01:25 - Limit Visual Effects\n02:06 - Disable Unnecessary Startup Programs\n03:16 - Turn Off Background Apps\n04:44 - Adjust Windows Power Plan\n06:06 - Clear Temp & Junk Files\n09:07 - Uninstall Unused Programs\n10:03 - Defragment Drives\n12:01 - Disable Restartable Apps\n12:25 - Turn Off Core Isolation\n12:40 - Disable Game Mode\n12:58 - Avoid Third-Party Antivirus\n13:39 - Keep Windows Updated\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\nThese Windows 11 performance tips are simple, effective, and beginner-friendly.\nLet us know in the comments which tweak made the biggest difference for you!\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20250405",
+    "duration": 695,
+    "view_count": 80,
+    "like_count": 2,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=QUpdKt-6obA",
+    "thumbnail": "https://i.ytimg.com/vi/QUpdKt-6obA/sddefault.jpg",
+    "chapters": [
+      {
+        "start_time": 0,
+        "end_time": 36,
+        "title": "<Untitled Chapter 1>"
+      },
+      {
+        "start_time": 36,
+        "title": "Disable Transparency Effects",
+        "end_time": 85
+      },
+      {
+        "start_time": 85,
+        "title": "Limit Visual Effects",
+        "end_time": 126
+      },
+      {
+        "start_time": 126,
+        "title": "Disable Unnecessary Startup Programs",
+        "end_time": 196
+      },
+      {
+        "start_time": 196,
+        "title": "Turn Off Background Apps",
+        "end_time": 284
+      },
+      {
+        "start_time": 284,
+        "title": "Adjust Windows Power Plan",
+        "end_time": 366
+      },
+      {
+        "start_time": 366,
+        "title": "Clear Temp & Junk Files",
+        "end_time": 547
+      },
+      {
+        "start_time": 547,
+        "title": "Uninstall Unused Programs",
+        "end_time": 603
+      },
+      {
+        "start_time": 603,
+        "title": "Defragment Drives",
+        "end_time": 695
+      }
+    ],
+    "tags": [
+      "windows11",
+      "windows 11",
+      "boost windows 11 performance",
+      "windows 11 optimization for gaming",
+      "windows 11 24h2",
+      "optimize windows 11",
+      "optimize windows",
+      "increase windows 11 performance",
+      "windows 11 speed up",
+      "windows speed up",
+      "ramtin",
+      "ramtin rahmani nejad",
+      "net admin hub",
+      "netadminhub",
+      "windows tips",
+      "windows tips and tricks",
+      "windows 10",
+      "windows optimization",
+      "windows tricks",
+      "how to make windows 11 faster",
+      "how to optimize windows 11 for gaming",
+      "how to speed up windows 10",
+      "speed up windows"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "QUpdKt-6obA.vtt"
+    }
+  },
+  {
+    "id": "XvdyMrPozPg",
+    "title": "AnyDesk Like a Pro: Tricks That Make a Real Difference 🔥",
+    "description": "In this Net Admin Plus video, you’ll learn how to use AnyDesk, one of the most powerful remote support tools available today.\n\nAnyDesk allows you to remotely connect to a computer or mobile device and control it as if you were sitting right in front of it.\nIn this tutorial, we cover essential AnyDesk tips and tricks — from connecting with and without a password, to enabling Privacy Mode, transferring files, and using interactive tools to make your remote support smoother and more secure.\n\n⏱️ Video Chapters:\n00:35 - Installing AnyDesk and Connecting to a Remote System\n02:07 - Viewing Remote System Info\n02:49 - Transferring Files via AnyDesk\n04:01 - Adjusting Display Quality, Fullscreen Mode & Mouse Cursor\n05:16 - Using the Chat Feature in AnyDesk\n05:58 - Switch Side Function Explained\n06:34 - Taking Screenshots from Remote System\n06:46 - Disabling Mouse & Keyboard of Remote User\n07:30 - Recording Screen with AnyDesk\n09:34 - Using Drawing & Annotation Tools\n10:30 - Activating Privacy Mode to Hide Remote Screen\n12:10 - Setting a Password for Secure Access\n13:34 - Exploring AnyDesk Settings\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\nWhether you’re new to AnyDesk or looking to master its advanced features, this video will help you become more efficient at remote support.\nLet me know your favorite AnyDesk trick in the comments!\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\nRemote support refers to the ability to access and troubleshoot devices—such as computers, servers, or mobile phones—from a different location using internet-based tools. It's widely used by IT teams, customer support engineers, and system admins to resolve technical issues without being physically present. Remote support saves time, reduces downtime, and improves response times, making it essential in today’s digital workplace.\n\nPopular remote support software includes AnyDesk, TeamViewer, Chrome Remote Desktop, and Microsoft Remote Desktop. These tools allow secure, real-time control over remote systems, support for file transfers, session recording, multi-platform access, and even unattended access with custom permissions. Each tool has its strengths, but AnyDesk stands out for its speed, lightweight design, and strong encryption, making it a favorite for both individuals and businesses.\n#anydesk \n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20250403",
+    "duration": 781,
+    "view_count": 2208,
+    "like_count": 37,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=XvdyMrPozPg",
+    "thumbnail": "https://i.ytimg.com/vi/XvdyMrPozPg/sddefault.jpg",
+    "chapters": [
+      {
+        "start_time": 0,
+        "end_time": 35,
+        "title": "<Untitled Chapter 1>"
+      },
+      {
+        "start_time": 35,
+        "title": "Installing AnyDesk and Connecting to a Remote System",
+        "end_time": 127
+      },
+      {
+        "start_time": 127,
+        "title": "Viewing Remote System Info",
+        "end_time": 169
+      },
+      {
+        "start_time": 169,
+        "title": "Transferring Files via AnyDesk",
+        "end_time": 241
+      },
+      {
+        "start_time": 241,
+        "title": "Adjusting Display Quality, Fullscreen Mode & Mouse Cursor",
+        "end_time": 316
+      },
+      {
+        "start_time": 316,
+        "title": "Using the Chat Feature in AnyDesk",
+        "end_time": 358
+      },
+      {
+        "start_time": 358,
+        "title": "Switch Side Function Explained",
+        "end_time": 394
+      },
+      {
+        "start_time": 394,
+        "title": "Taking Screenshots from Remote System",
+        "end_time": 406
+      },
+      {
+        "start_time": 406,
+        "title": "Disabling Mouse & Keyboard of Remote User",
+        "end_time": 450
+      },
+      {
+        "start_time": 450,
+        "title": "Recording Screen with AnyDesk",
+        "end_time": 574
+      },
+      {
+        "start_time": 574,
+        "title": "Using Drawing & Annotation Tools",
+        "end_time": 630
+      },
+      {
+        "start_time": 630,
+        "title": "Activating Privacy Mode to Hide Remote Screen",
+        "end_time": 730
+      },
+      {
+        "start_time": 730,
+        "title": "Setting a Password for Secure Access",
+        "end_time": 781
+      }
+    ],
+    "tags": [
+      "anydesk",
+      "anydesk remote desktop",
+      "anydesk tutorial",
+      "anydesk iphone",
+      "remote desktop connection",
+      "remote support",
+      "remote viewing",
+      "remote desktop",
+      "remote support software",
+      "anydesk tips",
+      "ramtin",
+      "net admin hub",
+      "netadminhub",
+      "ramtin rahmani nejad",
+      "how to use anydesk"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "XvdyMrPozPg.vtt"
+    }
+  },
+  {
+    "id": "qmUi5j3k9D8",
+    "title": "Share Files on MikroTik: Set Up SMB Shared Folder (No PC Needed!) 🔥",
+    "description": "In this Net Admin HUB video, I'll show you how to set up file sharing on MikroTik by creating a shared folder (aka \"shared folder\" or \"SMB share\") right on your MikroTik router.\n\n⏱️ Video Chapters:\n00:00 - Intro\n01:13 - How to Share Files on MikroTik | Create a Shared Folder\n07:30 - Final Tips\n\nInstead of relying on a separate PC to handle file sharing on your network, you can use your MikroTik router as a file server. With SMB (Server Message Block) support built into RouterOS, MikroTik can act as a simple file-sharing hub for your local network.\n\nJust like Windows uses the SMB protocol for network file sharing, MikroTik does too—so all you have to do is enable it and configure the shared folder.\n\n💡 Pro tip: Most MikroTik routers don’t have a lot of internal disk space. So, for effective file sharing, use a MikroTik model with a USB port—you can plug in a flash drive or external hard disk and make that available over the network.\n\nThis is a great way to let users on your LAN share and access files without the need for a dedicated server.\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\nAbout MikroTik RouterOS\nMikroTik RouterOS is a powerful, all-in-one operating system that can turn any computer into a high-performance router. Known for its stability, security, and flexibility, RouterOS is a top choice for network administrators and service providers worldwide.\nIt offers advanced features like routing, firewalls, bandwidth management, and VPN servers. One of its key strengths is its support for multiple VPN protocols, making it an excellent choice for setting up MikroTik VPN servers quickly and easily.\n\nWhy MikroTik RouterOS?\nRouterOS is a powerful and flexible operating system that turns any machine into a robust router. It's widely trusted for its stability, VPN support, routing features, firewall, bandwidth control, and more. MikroTik also manufactures a variety of hardware like routers, switches, and wireless gear—all powered by RouterOS.\n#mikrotik\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20250330",
+    "duration": 431,
+    "view_count": 2615,
+    "like_count": 48,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=qmUi5j3k9D8",
+    "thumbnail": "https://i.ytimg.com/vi/qmUi5j3k9D8/sddefault.jpg",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Intro",
+        "end_time": 73
+      },
+      {
+        "start_time": 73,
+        "title": "How to Share Files on MikroTik | Create a Shared Folder",
+        "end_time": 431
+      }
+    ],
+    "tags": [
+      "mikrotik",
+      "routeros",
+      "router os",
+      "mikrotik tutorial",
+      "mikrotik router",
+      "mikrotik tricks",
+      "mikrotik tips and tricks",
+      "mikrotik tips",
+      "ramtin",
+      "net admin hub",
+      "netadminhub",
+      "ramtin rahmani nejad",
+      "networking",
+      "network"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "qmUi5j3k9D8.vtt"
+    }
+  },
+  {
+    "id": "FDBhw-TO6vI",
+    "title": "MikroTik First-Time Setup: Everything You Need to Know ✅",
+    "description": "In this NetAdminHub video, you’ll learn how to perform the initial configuration of a MikroTik router. Whether you’re completely new to MikroTik or have some hands-on experience, this step-by-step guide will help you set up your MikroTik router quickly and correctly.\n\nWe start by reviewing the default MikroTik settings and then reset the router to perform a clean initial setup.\n\nHere’s what you’ll learn in this MikroTik beginner tutorial:\n- Set up a DHCP Client so the MikroTik router receives an IP address from your modem\n- Assign an IP address to the bridge port\n- Configure a DHCP Server for your local network\n- Enable NAT to give internet access to your internal users\n- Set up MikroTik wireless configuration and disable unnecessary services to improve security\n- Configure a static IP address, set a default route, and finally connect the MikroTik router to the internet using a PPPoE Client\n\nBy the end of this MikroTik setup tutorial, you'll be ready to move beyond the basics and start building more advanced network configurations with confidence.\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\nWhat is MikroTik?\nMikroTik is a Latvian company that develops routers, switches, and wireless systems for internet connectivity worldwide. At the core of MikroTik devices is RouterOS, a powerful and flexible operating system designed for advanced networking. MikroTik is widely used by network engineers, ISPs, and IT admins for its rich features, cost-efficiency, and reliable performance.\n\nWhether you're setting up a home lab or managing a complex enterprise network, MikroTik offers solutions for routing, firewalling, bandwidth management, VPN, and more. With support for protocols like OSPF, BGP, and WireGuard, MikroTik has become a top choice for both beginners and professionals looking to build secure and scalable networks.\n#mikrotik \n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20250328",
+    "duration": 1195,
+    "view_count": 708,
+    "like_count": 12,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=FDBhw-TO6vI",
+    "thumbnail": "https://i.ytimg.com/vi_webp/FDBhw-TO6vI/sddefault.webp",
+    "chapters": null,
+    "tags": [
+      "mikrotik",
+      "routeros",
+      "mikrotik router",
+      "mikrotik tricks",
+      "mikrotik config",
+      "mikrotik setup",
+      "mikrotik fist time setup",
+      "what is mikrotik",
+      "mikrotik dhcp",
+      "how to config mikrotik",
+      "mikrotik initial setup",
+      "home router",
+      "home lab",
+      "networking",
+      "net admin hub",
+      "netadminhub",
+      "ramtin",
+      "Ramtin Rahmani Nejad"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "FDBhw-TO6vI.vtt"
+    }
+  },
+  {
+    "id": "0hX-v1LNYtU",
+    "title": "Run MikroTik Server on Hetzner Cloud ☁️",
+    "description": "In this NetAdminHub video, we walk through two methods for installing MikroTik RouterOS on a Hetzner server. Since Hetzner doesn’t offer a MikroTik image by default, we explore how to get around this limitation and successfully deploy a MikroTik-based server in the Hetzner cloud.\n\n🔧 What you'll learn:\nInstalling MikroTik RouterOS on a Linux server (Method 1)\nDeploying MikroTik RouterOS with Hetzner Cloud Config (Method 2)\n\n⏱️ Video Chapters:\n00:00 - Introduction\n00:25 - Install MikroTik on Linux Server (Method 1)\n05:11 - Choose the Right CHR Image\n06:03 - Deploy MikroTik via Cloud Config (Method 2)\n10:34 - Fix Bandwidth Limitations + Activate Trial License\n12:48 - Final Thoughts\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\nAbout Hetzner:\nHetzner is one of the most popular cloud providers in Europe, offering stable and affordable cloud servers. However, MikroTik RouterOS isn’t available by default in Hetzner’s OS images. This video shows how to work around that and create a fully functional MikroTik server using two practical approaches.\n#hetzner\n\nWhy MikroTik RouterOS?\nRouterOS is a powerful and flexible operating system that turns any machine into a robust router. It's widely trusted for its stability, VPN support, routing features, firewall, bandwidth control, and more. MikroTik also manufactures a variety of hardware like routers, switches, and wireless gear—all powered by RouterOS.\n#mikrotik\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20250324",
+    "duration": 700,
+    "view_count": 1539,
+    "like_count": 39,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=0hX-v1LNYtU",
+    "thumbnail": "https://i.ytimg.com/vi/0hX-v1LNYtU/sddefault.jpg",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Introduction",
+        "end_time": 25
+      },
+      {
+        "start_time": 25,
+        "title": "Install MikroTik on Linux Server (Method 1)",
+        "end_time": 311
+      },
+      {
+        "start_time": 311,
+        "title": "Choose the Right CHR Image",
+        "end_time": 363
+      },
+      {
+        "start_time": 363,
+        "title": "Deploy MikroTik via Cloud Config (Method 2)",
+        "end_time": 634
+      },
+      {
+        "start_time": 634,
+        "title": "Fix Bandwidth Limitations + Activate Trial License",
+        "end_time": 700
+      }
+    ],
+    "tags": [
+      "mikrotik",
+      "hetzner",
+      "mikrotik chr",
+      "mikrotik server",
+      "install mikrotik on server",
+      "mikrotik on linux server",
+      "mikrotik hetzner cloud",
+      "hetzner cloud",
+      "mikrotik routeros",
+      "mikrotik initial setup",
+      "net admin hub",
+      "netadminhub",
+      "ramtin",
+      "Ramtin Rahmani Nejad"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "0hX-v1LNYtU.vtt"
+    }
+  },
+  {
+    "id": "7jeM2Xt9jAE",
+    "title": "Auto-Adjust MikroTik WiFi Range | Boost & Limit Coverage with Script 🔥",
+    "description": "In this NetAdminPlus video, you'll learn how to automatically adjust the wireless range of your MikroTik router to optimize WiFi coverage.\n\n⏱️ Video Chapters:\n00:00 - Introduction\n00:39 - Increasing MikroTik WiFi Range\n02:01 - Automating Wireless Power Adjustment with a Script\n\nBy increasing your MikroTik WiFi range, you can enhance signal quality and reduce dead zones in your network.\n\nFirst, we'll manually increase the wireless power of MikroTik and discuss its impact on WiFi performance.\n\nThen, we'll automate the process using a MikroTik script, allowing us to increase WiFi power during working hours and reduce it during off-hours to optimize performance and router health.\n\nThis MikroTik automation script helps you balance WiFi range, power efficiency, and network stability, ensuring optimal performance without overloading your router.\n\n⚠️ Important: Increasing WiFi range does NOT increase your internet speed. It only improves signal coverage and reduces dead zones, but your actual internet bandwidth remains unchanged.\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\nAbout MikroTik RouterOS\n\nMikroTik RouterOS is a powerful, all-in-one operating system that can turn any computer into a high-performance router. Known for its stability, security, and flexibility, RouterOS is a top choice for network administrators and service providers worldwide.\n\nIt offers advanced features like routing, firewalls, bandwidth management, and VPN servers. One of its key strengths is its support for multiple VPN protocols, making it an excellent choice for setting up MikroTik VPN servers quickly and easily.\n\nWhy MikroTik RouterOS?\nRouterOS is a powerful and flexible operating system that turns any machine into a robust router. It's widely trusted for its stability, VPN support, routing features, firewall, bandwidth control, and more. MikroTik also manufactures a variety of hardware like routers, switches, and wireless gear—all powered by RouterOS.\n#mikrotik\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n🔵 Telegram: https://t.me/netadminhub\n🟡 Instagram: https://instagram.com/netadminhub\n🔴 Support the channel: https://netadminhub.com/donate",
+    "upload_date": "20250321",
+    "duration": 433,
+    "view_count": 1378,
+    "like_count": 28,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=7jeM2Xt9jAE",
+    "thumbnail": "https://i.ytimg.com/vi_webp/7jeM2Xt9jAE/sddefault.webp",
+    "chapters": [
+      {
+        "start_time": 0,
+        "title": "Introduction",
+        "end_time": 39
+      },
+      {
+        "start_time": 39,
+        "title": "Increasing MikroTik WiFi Range",
+        "end_time": 121
+      },
+      {
+        "start_time": 121,
+        "title": "Automating Wireless Power Adjustment with a Script",
+        "end_time": 433
+      }
+    ],
+    "tags": [
+      "routerboard",
+      "mikrotik",
+      "wi-fi",
+      "mikrotik wifi",
+      "mikrotik wifi access point setup",
+      "mikrotik router",
+      "mikrotik tutorial",
+      "netadminhub",
+      "net admin hub",
+      "ramtin",
+      "mikrotik wireless",
+      "routeros",
+      "latvia",
+      "951g 2hnd",
+      "networking",
+      "wireless router"
+    ],
+    "categories": null,
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "7jeM2Xt9jAE.vtt"
+    }
+  }
+]

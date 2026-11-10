@@ -3,7 +3,7 @@ title: "MikroTik Reverse Proxy: Host Multiple Services on One Public IP"
 date: 2026-09-01
 slug: mikrotik-reverse-proxy-multiple-services-one-public-ip
 categories: ["MikroTik", "Youtube Videos"]
-youtube_id: x04MG1na8EA
+youtube_id: kJp0NVP3hUU
 image: /assets/images/mikrotik-reverse-proxy-netadminhub.com_.webp
 description: "RouterOS now includes a built-in Reverse Proxy. In this hands-on lab, we’ll publish three web applications with different domains over HTTPS using a single public IP address."
 migrated_from: netadminhub.com
