@@ -195,6 +195,22 @@ a.page-link:hover { border-color: var(--color-accent); color: var(--color-accent
   border-radius: var(--radius-lg); padding: var(--space-4) 18px; overflow-x: auto; margin: 0 0 var(--space-5);
 }
 .article-body pre code { background: none; border: 0; padding: 0; font-size: var(--font-size-md); line-height: var(--line-height-code); }
+
+/* Copy buttons — code blocks get a wrapper so the button stays put while
+   long lines scroll; .copyable inline values (wallet addresses on the
+   Donate page) get a small button right after them. */
+.code-wrap { position: relative; margin: 0 0 var(--space-5); }
+.article-body .code-wrap pre { margin: 0; }
+.copy-btn {
+  position: absolute; top: var(--space-2); right: var(--space-2);
+  background: var(--color-surface-2); border: 1px solid var(--color-border);
+  color: var(--color-text-muted); border-radius: var(--radius-sm);
+  font-family: var(--font-mono); font-size: var(--font-size-xs);
+  padding: var(--space-1) var(--space-2); cursor: pointer; line-height: 1.4;
+}
+.copy-btn:hover { color: var(--color-text); border-color: var(--color-accent); }
+.copy-btn.copied { color: var(--color-success); border-color: var(--color-success); }
+.copy-btn-inline { position: static; margin-left: var(--space-2); vertical-align: middle; }
 .article-body blockquote {
   border-left: 3px solid var(--color-accent); margin: 0 0 var(--space-5); padding: var(--space-1) 0 var(--space-1) 18px; color: var(--color-text-muted);
 }

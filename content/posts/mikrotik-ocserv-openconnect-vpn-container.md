@@ -1,318 +1,413 @@
 ---
-title: "How to Run an OpenConnect VPN (ocserv) Container on MikroTik"
-date: 2026-05-25
+title: "How to Run an OpenConnect VPN (ocserv) Container on MikroTik with Let's Encrypt"
+date: 2026-11-12
 slug: mikrotik-ocserv-openconnect-vpn-container
 categories: ["MikroTik", "VPN"]
 image: /assets/images/ocserv-openconnect-vpn-mikrotik-container.webp
-description: "A step-by-step guide to running an OpenConnect VPN server (ocserv) as a container on MikroTik RouterOS. Covers networking, firewall rules, user management, and the gotchas most guides skip."
-migrated_from: netadminhub.com
+description: "Run an OpenConnect VPN server as a container on MikroTik RouterOS 7, with a real Let's Encrypt certificate on port 443 and copy-paste commands for every step — networking, certificates, NAT, and user management."
 ---
 
-If you’ve spent any time with MikroTik’s container feature, you already know how it goes — you get one thing running and suddenly you want to run everything on it. This time I wanted a proper [OpenConnect VPN](https://github.com/openconnect) server, the kind that speaks Cisco AnyConnect protocol, sitting directly on my MikroTik as a container. No separate VPS, no extra monthly cost, just the router doing one more useful thing.
-The good news is that once you understand how the container networking fits together on RouterOS, the whole setup of ocserv MikroTik container is pretty clean. Let me walk you through it step by step.
+If you want a VPN server on your router that works with any AnyConnect-compatible client, ocserv is the straightforward answer. It speaks the OpenConnect protocol, so Cisco Secure Client, the open-source client, and the mobile apps connect without anything special.
 
-## ocserv MikroTik container?! What We’re Building?!
+The catch with most ocserv guides is the certificate: a self-signed cert means a warning on every first connection and a CA to install on every device. This setup avoids that — the router gets a real Let's Encrypt certificate, and clients connect cleanly.
 
-Before touching anything, here’s the full picture:
+I run ocserv as a container on RouterOS 7, using my own image, `ramtiin/mikrotik-ocserv:1.0.0`. Here is what we build:
 
-- MikroTik RouterOS 7.22.1 running with a public IP on ether1
-- We’ll run aminvakil/ocserv as a container, give it a static IP on an internal bridge (172.18.0.3), and forward external port 4433 to it
-- VPN clients will get IPs from the 10.10.10.0/24 pool
-- Their internet traffic goes out through WAN (ether1) — same as any other device on the network
+- A dedicated bridge and veth interface for the container (172.18.0.0/24)
+- A Let's Encrypt certificate for your domain, issued by RouterOS itself
+- The ocserv container, listening on TCP and UDP 443
+- NAT rules and a VPN pool of 10.10.10.0/24, so clients reach the internet through your WAN
 
-**One thing worth flagging before we start:** the reason we’re using port 4433 externally instead of 443 is to avoid conflicts with any other service that might already be listening on 443. The container itself listens on 443 internally — that’s fine. We just forward a different external port to it.
+Every command block has a copy button. Paste the commands in order and check the expected result after each step. Validated on RouterOS 7.25.1.
 
-## Prerequisites
+## Before You Start
 
-Make sure you have these in place before running any command:
+You need these in place before running any command:
 
-- **RouterOS version:** 7.12 or later (tested on 7.22.1) Container mode: Enabled (container: yes)
-- **Container bridge:** An existing bridge — e.g. bridge1-container with gateway 172.18.0.1 **Registry:** https://registry-1.docker.io (Docker Hub) tmpdir: Must be set — RouterOS needs scratch space to unpack image layers
+- **RouterOS:** 7.12 or later (I validated this on 7.25.1)
+- **Container package:** installed, and container mode enabled (`container: yes`)
+- **Architecture:** amd64 / x86_64
+- **RAM:** 512 MB minimum, and 500 MB free storage
+- **Public IPv4:** assigned to your WAN interface (ether1 in this guide)
+- **DNS:** an A record pointing your VPN hostname to the router's WAN IP, DNS-only, no proxy
+- **Ports:** TCP and UDP 443 open to the internet, and TCP 80 reachable for the ACME challenge
 
-### Enable Container Mode
+One thing up front: your firewall filter policy must allow inbound TCP/UDP 443 and forwarded traffic to the container subnet. Firewall filter configuration is not covered here.
 
-Check first:
+Check the starting state first:
 
-```
-/system/device-mode/print
-```
-
-If you don’t see container: yes, enable it:
-
-```
-/system/device-mode/update container=yes
-```
-
-Then physically press the reset or mode button on the device when it prompts you. This is MikroTik’s way of confirming you have physical access to the hardware before enabling something this powerful. Annoying if you’re remote, but it’s a genuinely good safety check.
-
-### Set the Registry and tmpdir
-
-Run this once before anything else:
-
-```
-/container/config/set registry-url=https://registry-1.docker.io tmpdir=/pull
+```routeros
+/system resource print
+/system package print where name=container
+/system device-mode print
 ```
 
-**Don’t skip the tmpdir.** Without it, image layer extraction fails with a “broken tar” error and you’ll spend a while wondering what went wrong before you find the fix.
+Expected: RouterOS 7.x, the container package present, and `container: yes`.
 
-## Step 1 — Create the veth Interface
+## Step 1 — Prepare RouterOS
 
-Every container on MikroTik needs its own virtual ethernet interface. This is how the router and the container talk to each other.
+Set the container storage paths and the clock — certificates and ACME both depend on correct time:
 
-```
-/interface veth add name=veth-ocserv address=172.18.0.3/24 gateway=172.18.0.1
-```
-
-We’re giving the container the IP 172.18.0.3. The gateway 172.18.0.1 is the bridge — the router’s side of that connection.
-
-## Step 2 — Attach the veth to Your Container Bridge
-
-```
-/interface bridge port add bridge=bridge1-container interface=veth-ocserv
+```routeros
+/container config set layer-dir=/container-layers tmpdir=/container-tmp
+/system ntp client set enabled=yes
+/system ntp client servers add address=0.pool.ntp.org
+/system ntp client servers add address=1.pool.ntp.org
 ```
 
-If you already have other containers running on bridge1-container, this just adds ocserv alongside them. They won’t interfere with each other.
+Then confirm the clock is synchronized (wait up to 60 seconds):
 
-## Step 3 — Create a Persistent Config Mount
-
-This is the step people skip and then regret. Without a persistent mount, every time the container restarts it regenerates its TLS certificates — which means your clients get a certificate warning and you have to redistribute the CA all over again.
-
-```
-/container mounts add name=ocserv-config src=/ocserv/config dst=/etc/ocserv list=ocserv
+```routeros
+/system ntp client print
 ```
 
-![ocserv container mount configuration in MikroTik Winbox showing persistent config path](/assets/images/ocserv-container-mounts-mikrotik-winbox.webp-netadminplus.com_.webp)
+Expected: `status: synchronized`.
 
-The /ocserv/config folder on the router gets created automatically on first run. Your certificates and user credentials live there and survive reboots and image updates without you having to do anything.
+## Step 2 — Set Up the Container Network
 
-## Step 4 — Set the Environment Variables
+The container gets its own bridge and veth interface — router side 172.18.0.1, container side 172.18.0.2 — plus a route for the VPN pool:
 
-The **aminvakil/ocserv** image handles TLS certificate generation automatically on first boot, using the environment variables you pass in. Here’s what you need:
-
-```
-/container envs
-add key=CA_CN list=ocserv value="OpenConnect CA"
-add key=CA_ORG list=ocserv value=MyOrg
-add key=CA_DAYS list=ocserv value=3650
-add key=SRV_CN list=ocserv value=YOUR.PUBLIC.IP
-add key=SRV_ORG list=ocserv value=MyOrg
-add key=SRV_DAYS list=ocserv value=3650
-add key=NO_TEST_USER list=ocserv value=1
-add key=OC_IPV4_NETWORK list=ocserv value=10.10.10.0
-add key=OC_IPV4_NETMASK list=ocserv value=255.255.255.0
+```routeros
+/interface bridge add name=br-ocserv comment="ocserv-vpn"
+/ip address add address=172.18.0.1/24 interface=br-ocserv comment="ocserv-vpn"
+/interface veth add name=veth-ocserv address=172.18.0.2/24 gateway=172.18.0.1 gateway6="" comment="ocserv-vpn"
+/interface bridge port add bridge=br-ocserv interface=veth-ocserv comment="ocserv-vpn"
+/ip route add dst-address=10.10.10.0/24 gateway=172.18.0.2 comment="ocserv-vpn"
 ```
 
-![ocserv OpenConnect VPN container running on MikroTik RouterOS](/assets/images/ocserv-openconnect-vpn-mikrotik-container-netadminhub.com_.webp)
+Every object carries the `ocserv-vpn` comment, so the whole setup is easy to find — and easy to remove later.
 
-CA_CN / CA_ORG / CA_DAYS — Your self-signed CA details SRV_CN — Set this to your public IP or domain. This goes into the server certificate. NO_TEST_USER=1 — Disables the default test/test account. Always set this. OC_IPV4_NETWORK / OC_IPV4_NETMASK — The IP pool your VPN clients will get addresses from
+## Step 3 — Issue the Let's Encrypt Certificate
 
-**One thing that will quietly break your setup if you get it wrong:** do not wrap values in extra quotes. The correct form is value=MyOrg, not value=””MyOrg””. RouterOS handles the quoting itself. Extra escaping causes certtool to fail with “Warning: skipping unknown option” and produces a corrupt CA — one that looks fine in the logs until your client actually tries to connect.
+First, create the directories the container mounts:
 
-## Step 5 — Create the ocserv MikroTik container
-
-```
-/container add name=ocserv
-remote-image=aminvakil/ocserv:latest
-interface=veth-ocserv
-envlists=ocserv
-mountlists=ocserv
-root-dir=/ocserv/root
-hostname=ocserv
-logging=yes
-start-on-boot=yes
-workdir=/etc/ocserv
+```routeros
+/file add name="ocserv" type=directory
+/file add name="ocserv/config" type=directory
+/file add name="ocserv/config/certs" type=directory
 ```
 
-**Two things to pay attention to here.**
+Before the next step, confirm your DNS record resolves to this router's WAN IP and the RouterOS HTTP service on port 80 is reachable from the internet — the ACME challenge needs both. Then issue the certificate, replacing `oc.ramtiin.ir` with your own hostname:
 
-- First, make sure you include start-on-boot=yes so the ocserv MikroTik container comes back up automatically after a reboot. It’s easy to skip and then wonder why your VPN is down after a power cycle.
-- Second, adding the container triggers the image download automatically. Monitor the progress with:
-
-```
-/log/print where topics~"container"
+```routeros
+/ip service enable www
+/certificate add-acme name=oc.ramtiin.ir domain-names=oc.ramtiin.ir
 ```
 
-Wait until you see: container,info ocserv: container stopped
+Wait up to 60 seconds for the challenge, then check:
 
-That’s completely normal. On first boot, the container runs a setup script to generate the certificates and then stops. It’s not broken — it’s just finished with the first-run setup. Start it properly now:
-
-```
-/container/start [find name=ocserv]
+```routeros
+/certificate print detail where name=oc.ramtiin.ir
 ```
 
-Check the logs one more time and look for these two lines:
+Expected: `issuer=Let's Encrypt`, `days-valid=89`, flag `K` present, and an `acme-status` line. Then turn the HTTP service back off:
 
-```
-listening on 0.0.0.0:443 (TCP) listening on 0.0.0.0:443 (UDP DTLS)
-```
-
-Both lines means the server is up and ready.
-
-## Step 6 — Firewall Rules
-
-### Port Forwarding — External 4433 to Container 443
-
-```
-/ip firewall nat
-add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=4433 to-addresses=172.18.0.3 to-ports=443 comment="ocserv TCP" place-before=0
-add chain=dstnat action=dst-nat in-interface=ether1 protocol=udp dst-port=4433 to-addresses=172.18.0.3 to-ports=443 comment="ocserv UDP/DTLS" place-before=0
+```routeros
+/ip service disable www
 ```
 
-You need both TCP and UDP. OpenConnect uses TCP for the TLS handshake and initial setup, then switches to DTLS over UDP for the actual data tunnel. DTLS gives significantly better performance — if you only forward TCP it still works, but it falls back to TCP for everything and you’ll notice the difference.
+## Step 4 — Export and Place the Certificate Files
 
-### Allow Traffic in the Firewall Filter
+The container needs the certificate and private key as files. Export them with a passphrase — pick a strong one and remember it, because the container reads it from a file next:
 
-```
-/ip firewall filter
-add chain=input action=accept protocol=tcp dst-port=4433 comment="Allow OpenConnect TCP" place-before=0
-add chain=input action=accept protocol=udp dst-port=4433 comment="Allow OpenConnect UDP/DTLS" place-before=0
-add chain=forward action=accept src-address=10.10.10.0/24 comment="Allow OpenConnect VPN forward" place-before=0
+```routeros
+/certificate export-certificate oc.ramtiin.ir export-passphrase=<KEY-PASSPHRASE>
 ```
 
-### Masquerade VPN Client Traffic
+Warning: a passphrase typed into a RouterOS command appears in the command history. Use a strong value, and consider changing it after setup.
 
-VPN clients get addresses in the 10.10.10.0/24 range. For their traffic to go out through your WAN correctly, you need a masquerade rule:
+Check the export produced both files:
 
-```
-/ip firewall nat
-add chain=srcnat action=masquerade src-address=10.10.10.0/24 out-interface=ether1 comment="ocserv VPN clients NAT"
-```
-
-This is what lets your VPN clients actually reach the internet. Without it, their packets go out with a private source address and never come back.
-
-## Step 7 — Add VPN Users
-
-Shell into the running container:
-
-```
-/container/shell [find name=ocserv]
+```routeros
+/file print where name~"cert_export"
 ```
 
-Then manage users with ocpasswd:
+Expected: `cert_export_oc.ramtiin.ir.crt` (the leaf certificate) and `cert_export_oc.ramtiin.ir.key` (the encrypted private key).
 
-**Add a user (you’ll be prompted for a password)**
+Move both into the mount directory, under the names the container expects:
 
-```
-ocpasswd -c /etc/ocserv/ocpasswd username
-```
-
-**Change a password**
-
-```
-ocpasswd -c /etc/ocserv/ocpasswd username
+```routeros
+/file set [find name="cert_export_oc.ramtiin.ir.crt"] name="ocserv/config/certs/server.pem"
+/file set [find name="cert_export_oc.ramtiin.ir.key"] name="ocserv/config/certs/server-key.pem"
 ```
 
-**Delete a user**
+Then create the passphrase file with the same passphrase:
 
-```
-ocpasswd -c /etc/ocserv/ocpasswd -d username
-```
-
-![adding a VPN user with ocpasswd inside the ocserv container on MikroTik terminal](/assets/images/ocserv-add-vpn-user-ocpasswd-mikrotik-terminal-netadminhub.com_.webp)
-
-Credentials are stored in /etc/ocserv/ocpasswd on the persistent mount, so they survive container restarts and image updates.
-
-## Step 8 — Connect Your Clients
-
-Server: Your public IP or domain
-
-- **Port:** 4433
-- **Protocol:** SSL / OpenConnect / AnyConnect Username /
-- **Password:** Whatever you set in Step 7
-- **Accept certificate:** Yes on first connect (self-signed)
-
-Any AnyConnect-compatible client works — [Cisco AnyConnect](https://www.cisco.com/c/en/us/support/security/anyconnect-secure-mobility-client-v4-x/model.html), the open-source [OpenConnect client](https://play.google.com/store/apps/details?id=xyz.opcx.mph&hl=en_US), or mobile apps on Android and iOS. On first connection you’ll get a certificate warning because the cert is self-signed. Accept it once and the client remembers it from then on.
-
-### Optional — Get Rid of the Certificate Warning
-
-If you want clients to connect without any warnings, export the CA and install it as trusted on their devices.
-
-Shell into the container:
-
-```
-/container/shell [find name=ocserv]
+```routeros
+/file add name=key-pin.txt type=file contents="<KEY-PASSPHRASE>"
+/file set [find name="key-pin.txt"] name="ocserv/config/certs/key-pin.txt"
 ```
 
-Then:
+Verify all three files are in place:
+
+```routeros
+/file print where name~"ocserv/config/certs"
+```
+
+Expected: `server.pem`, `server-key.pem`, and `key-pin.txt`.
+
+## Step 5 — Configure the Container
+
+Add the mount for the container's configuration directory:
+
+```routeros
+/container mounts add list=ocserv-config src=ocserv/config dst=/etc/ocserv
+```
+
+Then the environment variables — replace `<VPN-PASSWORD>` with your VPN users' password:
+
+```routeros
+/container envs add list=ocserv-env key=VPN_USER value=vpnuser comment="ocserv-vpn"
+/container envs add list=ocserv-env key=VPN_PASS value=<VPN-PASSWORD> comment="ocserv-vpn"
+/container envs add list=ocserv-env key=VPN_POOL value=10.10.10.0 comment="ocserv-vpn"
+/container envs add list=ocserv-env key=VPN_MASK value=255.255.255.0 comment="ocserv-vpn"
+/container envs add list=ocserv-env key=SERVER_CERT value=/etc/ocserv/certs/server.pem comment="ocserv-vpn"
+/container envs add list=ocserv-env key=SERVER_KEY value=/etc/ocserv/certs/server-key.pem comment="ocserv-vpn"
+/container envs add list=ocserv-env key=KEY_PIN_FILE value=/etc/ocserv/certs/key-pin.txt comment="ocserv-vpn"
+```
+
+Now add the container:
+
+```routeros
+/container add remote-image=ramtiin/mikrotik-ocserv:1.0.0 interface=veth-ocserv root-dir=/container-layers/ocserv envlists=ocserv-env mountlists=ocserv-config dns=8.8.8.8 hostname=ocserv-vpn privileged=yes logging=yes start-on-boot=yes comment="ocserv-vpn"
+```
+
+Adding the container starts the download. The image is 91 MB, so allow 30–90 seconds. Watch the status change from `E` (extracting) to `S` (stopped) — do not start it yet:
+
+```routeros
+/container print
+```
+
+## Step 6 — Set Up NAT
+
+NAT goes in before the first start — the container needs outbound internet access on its first run to fetch the intermediate certificate:
+
+```routeros
+/ip firewall nat add chain=dstnat in-interface=ether1 protocol=tcp dst-port=443 action=dst-nat to-addresses=172.18.0.2 to-ports=443 comment="ocserv-vpn"
+/ip firewall nat add chain=dstnat in-interface=ether1 protocol=udp dst-port=443 action=dst-nat to-addresses=172.18.0.2 to-ports=443 comment="ocserv-vpn"
+/ip firewall nat add chain=srcnat out-interface=ether1 src-address=172.18.0.0/24 action=masquerade comment="ocserv-vpn"
+/ip firewall nat add chain=srcnat out-interface=ether1 src-address=10.10.10.0/24 action=masquerade comment="ocserv-vpn"
+```
+
+The first two rules forward VPN traffic to the container; the last two masquerade the container subnet and the VPN pool out through your WAN.
+
+## Step 7 — Start the Container and Check the Logs
+
+Confirm the image finished downloading (status `S`), then start:
+
+```routeros
+/container print
+/container start [find comment="ocserv-vpn"]
+```
+
+Wait 15 seconds, then read the logs:
+
+```routeros
+/log print proplist=message where message~"ocserv"
+```
+
+On a fresh install, expect lines like these:
 
 ```
-cat /etc/ocserv/ssl/ca.pem
+[ocserv] created user: vpnuser
+[ocserv] cert has 1 cert — fetching intermediate
+[ocserv] intermediate appended — chain is now complete
+[ocserv] configuration written
+[ocserv] starting...
+listening (TCP) on 0.0.0.0:443...
+listening (UDP) on 0.0.0.0:443...
+sec-mod initialized
 ```
 
-Copy that output and install it as a trusted CA on your client devices. After that, the connection is completely clean.
+Two notes. If the log says `cert chain has 2 certs — OK` instead, that is also fine — the exported certificate already contained the full chain. And I want to be precise about `start-on-boot=yes`: it is set, but I have not tested it through a full reboot yet. Reboot and check `/container print` to confirm.
 
-## How the Traffic Actually Flows
+## Step 8 — Connect and Test
 
-Just so the full picture is clear:
+Check the certificate chain from the outside first, from a terminal on your computer:
 
-1. Client connects to YOUR.PUBLIC.IP:4433
-1. MikroTik ether1 receives it
-1. dstnat forwards tcp/udp 4433 to 172.18.0.3:443
-1. ocserv container handles the TLS handshake and assigns the client a 10.10.10.x address
-1. Client traffic comes back out of the container sourced from 10.10.10.x
-1. srcnat masquerades it to your WAN IP
-1. Traffic goes out ether1 to the internet
-1. Replies come back, get translated, and reach the client
+```bash
+openssl s_client -connect oc.ramtiin.ir:443 -showcerts </dev/null 2>&1 | grep -c "BEGIN CERTIFICATE"
+```
+
+Expected: `2` — the leaf and the intermediate.
+
+```bash
+openssl s_client -connect oc.ramtiin.ir:443 </dev/null 2>&1 | grep -E "subject=|issuer="
+```
+
+Expected: the issuer contains `Let's Encrypt`.
+
+Then connect with Cisco Secure Client or any AnyConnect-compatible client:
+
+- **Server:** oc.ramtiin.ir (your hostname)
+- **Username:** vpnuser
+- **Password:** the `<VPN-PASSWORD>` you set
+
+While connected, verify the tunnel carries your traffic — your public IP should be the router's WAN IP:
+
+```bash
+curl -4 https://api.ipify.org
+```
+
+Check DNS resolution too:
+
+```bash
+nslookup google.com
+```
+
+Expected: it resolves via 8.8.8.8.
+
+One honest note: I confirmed the TCP-based TLS tunnel working. DTLS over UDP 443 was not explicitly verified — the logs show the UDP listener active, and AnyConnect upgrades automatically when UDP 443 is reachable, but I did not test that path.
+
+## Managing VPN Users
+
+The first user comes from `VPN_USER` and `VPN_PASS`, and the container stores the credentials in `ocserv/config/ocpasswd` on the router. Later starts keep the file, so users survive restarts.
+
+The limitation: you cannot add or change users interactively at runtime. The `ocpasswd` tool lives only inside the container, and RouterOS gives you no docker-exec-style way to run it. So user changes go through Docker on your computer.
+
+One honest note: this flow is the documented procedure from my runbook — I have not run it against a live deployment yet.
+
+Stop the container first, so nothing writes to the credential file while you edit it:
+
+```routeros
+/container stop [find comment="ocserv-vpn"]
+```
+
+Download the credential file (SSH on port 2212; replace the address with your router's WAN IP):
+
+```bash
+scp -P 2212 admin@<ROUTER-WAN-IP>:/ocserv/config/ocpasswd /tmp/ocpasswd
+```
+
+Add a user, or change an existing user's password — existing entries are preserved:
+
+```bash
+printf '<NEW-PASSWORD>\n<NEW-PASSWORD>\n' | \
+  docker run --rm -i -v /tmp:/tmp ramtiin/mikrotik-ocserv:1.0.0 \
+  ocpasswd -c /tmp/ocpasswd <USERNAME>
+```
+
+Delete a user:
+
+```bash
+docker run --rm -i -v /tmp:/tmp ramtiin/mikrotik-ocserv:1.0.0 \
+  ocpasswd -c /tmp/ocpasswd -d <USERNAME>
+```
+
+Upload the file back, remove the local copy, and restart:
+
+```bash
+scp -P 2212 /tmp/ocpasswd admin@<ROUTER-WAN-IP>:/ocserv/config/ocpasswd
+rm /tmp/ocpasswd
+```
+
+```routeros
+/container start [find comment="ocserv-vpn"]
+```
+
+To start over with a single user, delete the credential file and restart — the container creates a fresh one from `VPN_USER` and `VPN_PASS`. Update the variables first if the username or password should change:
+
+```routeros
+/container stop [find comment="ocserv-vpn"]
+/file remove [find name="ocserv/config/ocpasswd"]
+/container envs set [find key=VPN_USER] value=<NEW-USERNAME>
+/container envs set [find key=VPN_PASS] value=<NEW-PASSWORD>
+/container start [find comment="ocserv-vpn"]
+```
 
 ## Troubleshooting
 
-- **broken tar during image extraction** — tmpdir is not set. Run /container/config/set tmpdir=/pull
-- **Container exits right after first start** — This is normal. First run generates certificates then stops. Run /container/start again.
-- **Warning: skipping unknown option in logs** — Extra escaping in env var values. Remove all env vars and re-add them with plain value=MyOrg format.
-- **Base64 unexpected header error in logs** — Corrupt CA from bad env vars. Delete /ocserv/config/ssl/, fix the env vars, restart the container.
-- **listening on 0.0.0.0:443 never appears** — Check env var format. Run /log/print where topics~”container” and read carefully.
-- **Clients connect but have no internet** — Missing the srcnat masquerade rule for 10.10.10.0/24. Add it and test again.
-- **Port conflict on 443** — Another service is using 443. Use external port 4433 for ocserv as shown in this guide.
+**The intermediate certificate fetch fails on first start.** The container had no outbound internet access when it first started. Confirm the Step 6 NAT rules are in place, then restart:
 
-## Full Copy-Paste Config for ocserv MikroTik container
-
-```
-/container/config/set registry-url=https://registry-1.docker.io tmpdir=/pull
-/interface veth add name=veth-ocserv address=172.18.0.3/24 gateway=172.18.0.1
-/interface bridge port add bridge=bridge1-container interface=veth-ocserv
-/container mounts add name=ocserv-config src=/ocserv/config dst=/etc/ocserv list=ocserv
-/container envs
-add key=CA_CN list=ocserv value="OpenConnect CA"
-
-add key=CA_ORG list=ocserv value=MyOrg
-
-add key=CA_DAYS list=ocserv value=3650
-
-add key=SRV_CN list=ocserv value=YOUR.PUBLIC.IP
-
-add key=SRV_ORG list=ocserv value=MyOrg
-
-add key=SRV_DAYS list=ocserv value=3650
-
-add key=NO_TEST_USER list=ocserv value=1
-
-add key=OC_IPV4_NETWORK list=ocserv value=10.10.10.0
-
-add key=OC_IPV4_NETMASK list=ocserv value=255.255.255.0
-
-/container add
-
-name=ocserv remote-image=aminvakil/ocserv:latest interface=veth-ocserv envlists=ocserv mountlists=ocserv root-dir=/ocserv/root hostname=ocserv logging=yes start-on-boot=yes workdir=/etc/ocserv
+```routeros
+/container stop [find comment="ocserv-vpn"]
+/container start [find comment="ocserv-vpn"]
 ```
 
-**Wait for pull + first-run cert generation, then:**
+If the fetch still fails, append the intermediate manually:
 
+```bash
+scp -P 2212 admin@<ROUTER-WAN-IP>:/ocserv/config/certs/server.pem /tmp/server.pem
+LEAF=$(openssl x509 -in /tmp/server.pem -noout -text | grep "CA Issuers" | sed 's/.*URI://' | tr -d ' \r\n')
+curl -s "$LEAF" | openssl x509 -inform DER >> /tmp/server.pem
+scp -P 2212 /tmp/server.pem admin@<ROUTER-WAN-IP>:/ocserv/config/certs/server.pem
+rm /tmp/server.pem
 ```
-/container/start [find name=ocserv]
-/ip firewall nat
-add chain=dstnat action=dst-nat in-interface=ether1 protocol=tcp dst-port=4433 to-addresses=172.18.0.3 to-ports=443 comment="ocserv TCP" place-before=0
-add chain=dstnat action=dst-nat in-interface=ether1 protocol=udp dst-port=4433 to-addresses=172.18.0.3 to-ports=443 comment="ocserv UDP/DTLS" place-before=0
-/ip firewall filter add chain=input action=accept protocol=tcp dst-port=4433 comment="Allow OpenConnect TCP" place-before=0
-add chain=input action=accept protocol=udp dst-port=4433 comment="Allow OpenConnect UDP/DTLS" place-before=0
-add chain=forward action=accept src-address=10.10.10.0/24 comment="Allow OpenConnect VPN forward" place-before=0
-/ip firewall nat add chain=srcnat action=masquerade src-address=10.10.10.0/24
-out-interface=ether1 comment="ocserv VPN clients NAT"
+
+```routeros
+/container start [find comment="ocserv-vpn"]
+```
+
+**AnyConnect keeps asking for the password.** Two causes. First, a wrong credential-file format:
+
+```bash
+scp -P 2212 admin@<ROUTER-WAN-IP>:/ocserv/config/ocpasswd ./check
+grep -o ":" ./check | wc -l
+```
+
+Expected: `2` (three fields: `username:*:hash`). If the result is `1`, delete the file and restart — the image recreates it correctly. Second, an IP ban from repeated failed attempts: restart the container, or wait 20 minutes (ban resets after 1200 seconds).
+
+**The container starts but ocserv does not listen.** Read the logs:
+
+```routeros
+/log print proplist=message where message~"ocserv"
+```
+
+`cannot open file` or `certificate not found` means the certificate files are missing from the mount — go back to Step 4. `could not fetch intermediate cert` means no internet access — see the first item above.
+
+**The VPN connects, then drops immediately.** Remove any `no-route` entries from `ocserv.conf` — only `route = default` should be present.
+
+## Certificate Renewal
+
+RouterOS renews the certificate automatically, around day 71. After a renewal, the container needs the new files — automatic pushing has not been tested, so treat this as manual:
+
+```routeros
+/certificate export-certificate oc.ramtiin.ir export-passphrase=<KEY-PASSPHRASE>
+/file set [find name="cert_export_oc.ramtiin.ir.crt"] name="ocserv/config/certs/server.pem"
+/file set [find name="cert_export_oc.ramtiin.ir.key"] name="ocserv/config/certs/server-key.pem"
+```
+
+`key-pin.txt` only changes if the passphrase changes. Then restart:
+
+```routeros
+/container stop [find comment="ocserv-vpn"]
+/container start [find comment="ocserv-vpn"]
+```
+
+## Cleanup
+
+Every object carries the `ocserv-vpn` comment, so one block removes the whole setup:
+
+```routeros
+/container stop [find comment="ocserv-vpn"]
+:delay 5s
+/container remove [find comment="ocserv-vpn"]
+/container mounts remove [find list=ocserv-config]
+/container envs remove [find list=ocserv-env]
+/interface bridge port remove [find comment="ocserv-vpn"]
+/ip address remove [find comment="ocserv-vpn"]
+/interface veth remove [find comment="ocserv-vpn"]
+/interface bridge remove [find comment="ocserv-vpn"]
+/ip route remove [find comment="ocserv-vpn"]
+/ip firewall nat remove [find comment="ocserv-vpn"]
+/certificate remove [find name=oc.ramtiin.ir]
+/file remove [find name="ocserv/config/certs/server.pem"]
+/file remove [find name="ocserv/config/certs/server-key.pem"]
+/file remove [find name="ocserv/config/certs/key-pin.txt"]
+/file remove [find name="ocserv/config/ocpasswd"]
+/file remove [find name="ocserv/config/ocserv.conf"]
+/ip service disable www
 ```
 
 ## Final Thoughts
 
-Honestly the container itself is the straightforward part. The pieces that trip people up are almost always the same two things — the tmpdir being missing before the pull, and the env var quoting issue on first boot. Get those right and the rest falls into place quickly.
+This is the VPN setup I wanted on my own router: a real certificate, a standard protocol every client already speaks, and no separate server to maintain.
 
-If you’re already running the Nginx container on MikroTik or have a V2Ray setup going, the workflow here is going to feel very familiar. Same bridge, same veth pattern, different container with different firewall requirements.
+The honest limits are the ones I flagged: `start-on-boot` untested through a reboot, DTLS not verified directly, and the Docker user-management flow documented but not yet run live. None of those change the core setup — but I would rather state them than let you discover them.
 
-If you run into something that’s not in the troubleshooting section, drop it in the comments below. There’s a good chance someone else has hit the exact same wall.
+If you hit something outside the troubleshooting section, drop it in the comments — someone else has probably hit the same wall.
+
+## References
+
+- [MikroTik Container documentation](https://manual.mikrotik.com/docs/containers/)
+- [ocserv manual — ocserv(8)](https://ocserv.openconnect-vpn.net/ocserv.8.html)

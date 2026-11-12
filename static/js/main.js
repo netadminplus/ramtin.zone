@@ -144,3 +144,67 @@
   if (search) search.addEventListener("input", apply);
   apply();
 })();
+
+// Copy buttons — every <pre> code block gets a Copy button (wrapped so the
+// button stays fixed while long lines scroll), and every <code
+// class="copyable"> (wallet addresses on the Donate page) gets a small Copy
+// button right after it. Runs on every page; the filter IIFE above returns
+// early off the home page, so this lives separately.
+(function () {
+  function copyText(text, btn) {
+    function done() {
+      btn.textContent = "Copied!";
+      btn.classList.add("copied");
+      setTimeout(function () {
+        btn.textContent = "Copy";
+        btn.classList.remove("copied");
+      }, 2000);
+    }
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); done(); } catch (e) { /* leave the button as-is */ }
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else {
+      fallback();
+    }
+  }
+
+  function makeButton() {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "copy-btn";
+    btn.textContent = "Copy";
+    btn.setAttribute("aria-label", "Copy to clipboard");
+    return btn;
+  }
+
+  // Code blocks: wrap each <pre> so the button is positioned against the
+  // visible block, not the scrolling content inside it.
+  Array.prototype.slice.call(document.querySelectorAll("pre")).forEach(function (pre) {
+    var code = pre.querySelector("code");
+    var text = code ? code.textContent : pre.textContent;
+    var wrap = document.createElement("div");
+    wrap.className = "code-wrap";
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+    var btn = makeButton();
+    btn.addEventListener("click", function () { copyText(text, btn); });
+    wrap.appendChild(btn);
+  });
+
+  // Copyable inline values (Donate wallet addresses).
+  Array.prototype.slice.call(document.querySelectorAll("code.copyable")).forEach(function (el) {
+    var btn = makeButton();
+    btn.classList.add("copy-btn-inline");
+    btn.addEventListener("click", function () { copyText(el.textContent.trim(), btn); });
+    el.parentNode.insertBefore(btn, el.nextSibling);
+  });
+})();

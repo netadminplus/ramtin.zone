@@ -24,31 +24,31 @@ You can join the community and support me here: **[My Patreon Page](https://patr
 Let’s be honest: getting a crypto notification is one of the coolest feelings :). If you prefer sending a one-time tip via crypto, here are my addresses:
 
 - **Bitcoin (BTC)**
-  - **Address:** `bc1q2llgpfnzjtf2tfwnun0grtsjkdm87zeedhe30v`
+  - **Address:** <code class="copyable">bc1q2llgpfnzjtf2tfwnun0grtsjkdm87zeedhe30v</code>
   - **Network:** Bitcoin (Native)
 
 <img src="/assets/images/donate-bitcoin-netadminhub.com_.webp" alt="Bitcoin QR code" width="240">
 
 - **Ethereum (ETH)**
-  - **Address:** `0xB219edC3F6560FF7F27038924968ac0B76Cd2C43`
+  - **Address:** <code class="copyable">0xB219edC3F6560FF7F27038924968ac0B76Cd2C43</code>
   - **Network:** Ethereum Mainnet / Base (Lowest Fees) / Arbitrum
 
 <img src="/assets/images/donate-eth-netadminhub.com_.webp" alt="Ethereum QR code" width="240">
 
 - **Tether (USDT)**
-  - **Address:** `TCYrKuMPLYEoSWms2ZLZseTDcRPoYJR1fW`
+  - **Address:** <code class="copyable">TCYrKuMPLYEoSWms2ZLZseTDcRPoYJR1fW</code>
   - **Network:** TRC20 (Tron)
 
 <img src="/assets/images/donate-usdt-netadminhub.com_.webp" alt="Tether QR code" width="240">
 
 - **Litecoin (LTC)**
-  - **Address:** `ltc1q94e6m4nrxmf37452ytvsnl9gptla5cxuy6ld75`
+  - **Address:** <code class="copyable">ltc1q94e6m4nrxmf37452ytvsnl9gptla5cxuy6ld75</code>
   - **Network:** Litecoin (Native)
 
 <img src="/assets/images/donate-ltc-netadminhub.com_.webp" alt="Litecoin QR code" width="240">
 
 - **Tron (TRX)**
-  - **Address:** `TCYrKuMPLYEoSWms2ZLZseTDcRPoYJR1fW`
+  - **Address:** <code class="copyable">TCYrKuMPLYEoSWms2ZLZseTDcRPoYJR1fW</code>
   - **Network:** Tron Native
 
 <img src="/assets/images/donate-trx-netadminhub.com_.webp" alt="Tron QR code" width="240">
