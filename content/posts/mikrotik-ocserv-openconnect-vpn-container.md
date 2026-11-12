@@ -7,18 +7,22 @@ image: /assets/images/ocserv-openconnect-vpn-mikrotik-container.webp
 description: "Run an OpenConnect VPN server as a container on MikroTik RouterOS 7, with a real Let's Encrypt certificate on port 443 and copy-paste commands for every step — networking, certificates, NAT, and user management."
 ---
 
-If you want a VPN server on your router that works with any AnyConnect-compatible client, ocserv is the straightforward answer. It speaks the OpenConnect protocol, so Cisco Secure Client, the open-source client, and the mobile apps connect without anything special.
+If you want a VPN server on your router that works with any AnyConnect-compatible client, ocserv is the straightforward answer. It speaks the OpenConnect protocol, so Cisco Secure Client, the open-source client, and mobile apps connect without anything special.
 
 The catch with most ocserv guides is the certificate: a self-signed cert means a warning on every first connection and a CA to install on every device. This setup avoids that — the router gets a real Let's Encrypt certificate, and clients connect cleanly.
 
 I run ocserv as a container on RouterOS 7, using my own image, `ramtiin/mikrotik-ocserv:1.0.0`. Here is what we build:
 
 - A dedicated bridge and veth interface for the container (172.18.0.0/24)
-- A Let's Encrypt certificate for your domain, issued by RouterOS itself
+- A Let's Encrypt certificate, issued by RouterOS itself
 - The ocserv container, listening on TCP and UDP 443
 - NAT rules and a VPN pool of 10.10.10.0/24, so clients reach the internet through your WAN
 
 Every command block has a copy button. Paste the commands in order and check the expected result after each step. Validated on RouterOS 7.25.1.
+
+Here is the whole setup at a glance:
+
+![OpenConnect VPN architecture on MikroTik RouterOS 7](/assets/images/ocserv-openconnect-architecture-mikrotik.webp)
 
 ## Before You Start
 
@@ -75,7 +79,7 @@ The container gets its own bridge and veth interface — router side 172.18.0.1,
 /ip route add dst-address=10.10.10.0/24 gateway=172.18.0.2 comment="ocserv-vpn"
 ```
 
-Every object carries the `ocserv-vpn` comment, so the whole setup is easy to find — and easy to remove later.
+Every object carries the `ocserv-vpn` comment, so the setup is easy to find — and remove later.
 
 ## Step 3 — Issue the Let's Encrypt Certificate
 
@@ -87,20 +91,20 @@ First, create the directories the container mounts:
 /file add name="ocserv/config/certs" type=directory
 ```
 
-Before the next step, confirm your DNS record resolves to this router's WAN IP and the RouterOS HTTP service on port 80 is reachable from the internet — the ACME challenge needs both. Then issue the certificate, replacing `oc.ramtiin.ir` with your own hostname:
+Before the next step, confirm your DNS record resolves to this router's WAN IP and the RouterOS HTTP service on port 80 is reachable from the internet — the ACME challenge needs both. Then issue the certificate, replacing `oc.ramtiin.zone` with your own hostname:
 
 ```routeros
 /ip service enable www
-/certificate add-acme name=oc.ramtiin.ir domain-names=oc.ramtiin.ir
+/certificate add-acme name=oc.ramtiin.zone domain-names=oc.ramtiin.zone
 ```
 
 Wait up to 60 seconds for the challenge, then check:
 
 ```routeros
-/certificate print detail where name=oc.ramtiin.ir
+/certificate print detail where name=oc.ramtiin.zone
 ```
 
-Expected: `issuer=Let's Encrypt`, `days-valid=89`, flag `K` present, and an `acme-status` line. Then turn the HTTP service back off:
+Expected: `issuer=Let's Encrypt`, `days-valid=89`, flag `K`, and an `acme-status` line. Then turn HTTP back off:
 
 ```routeros
 /ip service disable www
@@ -111,10 +115,10 @@ Expected: `issuer=Let's Encrypt`, `days-valid=89`, flag `K` present, and an `acm
 The container needs the certificate and private key as files. Export them with a passphrase — pick a strong one and remember it, because the container reads it from a file next:
 
 ```routeros
-/certificate export-certificate oc.ramtiin.ir export-passphrase=<KEY-PASSPHRASE>
+/certificate export-certificate oc.ramtiin.zone export-passphrase=<KEY-PASSPHRASE>
 ```
 
-Warning: a passphrase typed into a RouterOS command appears in the command history. Use a strong value, and consider changing it after setup.
+Warning: a passphrase typed into a RouterOS command appears in command history. Use a strong value, and consider changing it after setup.
 
 Check the export produced both files:
 
@@ -122,13 +126,13 @@ Check the export produced both files:
 /file print where name~"cert_export"
 ```
 
-Expected: `cert_export_oc.ramtiin.ir.crt` (the leaf certificate) and `cert_export_oc.ramtiin.ir.key` (the encrypted private key).
+Expected: `cert_export_oc.ramtiin.zone.crt` (the leaf certificate) and `cert_export_oc.ramtiin.zone.key` (the encrypted private key).
 
 Move both into the mount directory, under the names the container expects:
 
 ```routeros
-/file set [find name="cert_export_oc.ramtiin.ir.crt"] name="ocserv/config/certs/server.pem"
-/file set [find name="cert_export_oc.ramtiin.ir.key"] name="ocserv/config/certs/server-key.pem"
+/file set [find name="cert_export_oc.ramtiin.zone.crt"] name="ocserv/config/certs/server.pem"
+/file set [find name="cert_export_oc.ramtiin.zone.key"] name="ocserv/config/certs/server-key.pem"
 ```
 
 Then create the passphrase file with the same passphrase:
@@ -189,7 +193,7 @@ NAT goes in before the first start — the container needs outbound internet acc
 /ip firewall nat add chain=srcnat out-interface=ether1 src-address=10.10.10.0/24 action=masquerade comment="ocserv-vpn"
 ```
 
-The first two rules forward VPN traffic to the container; the last two masquerade the container subnet and the VPN pool out through your WAN.
+The first two forward VPN traffic to the container; the last two masquerade the container subnet and VPN pool out through your WAN.
 
 ## Step 7 — Start the Container and Check the Logs
 
@@ -219,27 +223,27 @@ listening (UDP) on 0.0.0.0:443...
 sec-mod initialized
 ```
 
-Two notes. If the log says `cert chain has 2 certs — OK` instead, that is also fine — the exported certificate already contained the full chain. And I want to be precise about `start-on-boot=yes`: it is set, but I have not tested it through a full reboot yet. Reboot and check `/container print` to confirm.
+Two notes. `cert chain has 2 certs — OK` is also fine — the exported certificate already contained the full chain. And I want to be precise about `start-on-boot=yes`: it is set, but I have not tested it through a full reboot yet. Reboot and check `/container print` to confirm.
 
 ## Step 8 — Connect and Test
 
-Check the certificate chain from the outside first, from a terminal on your computer:
+Check the certificate chain from the outside, from a terminal:
 
 ```bash
-openssl s_client -connect oc.ramtiin.ir:443 -showcerts </dev/null 2>&1 | grep -c "BEGIN CERTIFICATE"
+openssl s_client -connect oc.ramtiin.zone:443 -showcerts </dev/null 2>&1 | grep -c "BEGIN CERTIFICATE"
 ```
 
 Expected: `2` — the leaf and the intermediate.
 
 ```bash
-openssl s_client -connect oc.ramtiin.ir:443 </dev/null 2>&1 | grep -E "subject=|issuer="
+openssl s_client -connect oc.ramtiin.zone:443 </dev/null 2>&1 | grep -E "subject=|issuer="
 ```
 
 Expected: the issuer contains `Let's Encrypt`.
 
 Then connect with Cisco Secure Client or any AnyConnect-compatible client:
 
-- **Server:** oc.ramtiin.ir (your hostname)
+- **Server:** oc.ramtiin.zone (your hostname)
 - **Username:** vpnuser
 - **Password:** the `<VPN-PASSWORD>` you set
 
@@ -267,7 +271,7 @@ The limitation: you cannot add or change users interactively at runtime. The `oc
 
 One honest note: this flow is the documented procedure from my runbook — I have not run it against a live deployment yet.
 
-Stop the container first, so nothing writes to the credential file while you edit it:
+Stop the container first, so nothing writes to the credential file:
 
 ```routeros
 /container stop [find comment="ocserv-vpn"]
@@ -362,9 +366,9 @@ Expected: `2` (three fields: `username:*:hash`). If the result is `1`, delete th
 RouterOS renews the certificate automatically, around day 71. After a renewal, the container needs the new files — automatic pushing has not been tested, so treat this as manual:
 
 ```routeros
-/certificate export-certificate oc.ramtiin.ir export-passphrase=<KEY-PASSPHRASE>
-/file set [find name="cert_export_oc.ramtiin.ir.crt"] name="ocserv/config/certs/server.pem"
-/file set [find name="cert_export_oc.ramtiin.ir.key"] name="ocserv/config/certs/server-key.pem"
+/certificate export-certificate oc.ramtiin.zone export-passphrase=<KEY-PASSPHRASE>
+/file set [find name="cert_export_oc.ramtiin.zone.crt"] name="ocserv/config/certs/server.pem"
+/file set [find name="cert_export_oc.ramtiin.zone.key"] name="ocserv/config/certs/server-key.pem"
 ```
 
 `key-pin.txt` only changes if the passphrase changes. Then restart:
@@ -390,7 +394,7 @@ Every object carries the `ocserv-vpn` comment, so one block removes the whole se
 /interface bridge remove [find comment="ocserv-vpn"]
 /ip route remove [find comment="ocserv-vpn"]
 /ip firewall nat remove [find comment="ocserv-vpn"]
-/certificate remove [find name=oc.ramtiin.ir]
+/certificate remove [find name=oc.ramtiin.zone]
 /file remove [find name="ocserv/config/certs/server.pem"]
 /file remove [find name="ocserv/config/certs/server-key.pem"]
 /file remove [find name="ocserv/config/certs/key-pin.txt"]
@@ -403,7 +407,7 @@ Every object carries the `ocserv-vpn` comment, so one block removes the whole se
 
 This is the VPN setup I wanted on my own router: a real certificate, a standard protocol every client already speaks, and no separate server to maintain.
 
-The honest limits are the ones I flagged: `start-on-boot` untested through a reboot, DTLS not verified directly, and the Docker user-management flow documented but not yet run live. None of those change the core setup — but I would rather state them than let you discover them.
+The honest limits are the ones I flagged: `start-on-boot` untested through a reboot, DTLS unverified, and the Docker user-management flow documented but not yet run live. None of those change the core setup — but I would rather state them than let you discover them.
 
 If you hit something outside the troubleshooting section, drop it in the comments — someone else has probably hit the same wall.
 
