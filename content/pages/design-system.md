@@ -144,6 +144,19 @@ add name=bridge-containers
 
 Press <kbd>Ctrl</kbd> + <kbd>C</kbd> to copy. Keyboard keys use the `kbd` element.
 
+## Copy buttons
+
+Every code block on the site gets a Copy button at its top-right corner, added by JavaScript. Clicking it copies the block and briefly shows "Copied!" in green. The button stays fixed while long lines scroll — try it on this block:
+
+```
+/ip/firewall/nat
+add chain=srcnat action=masquerade out-interface=ether1
+```
+
+Inline values readers need to copy — wallet addresses on the Donate page — use `code.copyable` and get a small Copy button right after them: <code class="copyable">YOUR-WALLET-ADDRESS</code>
+
+Classes: `.code-wrap` (positions the button against the visible block), `.copy-btn`, `.copy-btn-inline`, `code.copyable`. The clipboard API is used, with a textarea fallback for older browsers.
+
 ## Tables
 
 | Feature | Action | Benefit |

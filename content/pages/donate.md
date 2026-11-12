@@ -5,7 +5,7 @@ slug: donate
 
 This page is all about how you can support **Ramtin Tech Zone**. I’m genuinely happy and motivated that you’re even considering this—it honestly keeps me going.
 
-![🙂](https://s.w.org/images/core/emoji/17.0.2/svg/1f642.svg)
+<img src="https://s.w.org/images/core/emoji/17.0.2/svg/1f642.svg" alt="🙂" width="32">
 
 Here are a few ways you can help me dedicate more time to creating content and scripts:
 
