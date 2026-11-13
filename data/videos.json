@@ -1,5 +1,54 @@
 [
   {
+    "id": "hSuHQZoeta4",
+    "title": "OpenConnect VPN Server on MikroTik RouterOS 7 | ocserv (Cisco AnyConnect Compatible)",
+    "description": "In this video, I'll show you how to run an OpenConnect VPN server on MikroTik RouterOS 7 using an ocserv Docker container, and connect to it using Cisco Secure Client (AnyConnect).\n\nMikroTik already supports VPN protocols like WireGuard, OpenVPN, and SSTP. But running ocserv gives us another option: an SSL VPN server compatible with Cisco AnyConnect clients that can operate over TLS on TCP port 443.\n\nWe'll deploy a custom ocserv Docker image directly on MikroTik RouterOS, configure the container networking, set up a Let's Encrypt TLS certificate, and configure NAT and routing for VPN clients.\n\nI'll also demonstrate the connection using Cisco Secure Client on macOS, verify the VPN's public IP address, and troubleshoot issues encountered during the setup.\n\n📖 **Step-by-step Guide & RouterOS Commands:**\nhttps://ramtin.zone/posts/mikrotik-ocserv-openconnect-vpn-container/\n\n🐳 **ocserv Docker Image for MikroTik:**\nhttps://hub.docker.com/r/ramtiin/mikrotik-ocserv\n\n🎥 **New to MikroTik Containers?**\n\nWatch my previous tutorial on hosting a website using an Nginx container on MikroTik, including container networking, domain configuration, and HTTPS.\n\nHost Your Website on MikroTik with Nginx Container + Domain & HTTPS 🔥\nhttps://youtu.be/GHJFKlAn0ZY\n\n**Topics Covered:**\n• OpenConnect VPN and Cisco AnyConnect compatibility\n• Running ocserv as a container on MikroTik RouterOS 7\n• Container networking with Bridge and VETH interfaces\n• Let's Encrypt SSL/TLS certificate configuration\n• Docker image deployment, mounts, and environment variables\n• TCP/UDP port 443 forwarding and NAT configuration\n• VPN client routing and full-tunnel internet access\n• Connecting with Cisco Secure Client (AnyConnect)\n• Connection testing and troubleshooting\n\n#MikroTik #OpenConnect #RouterOS",
+    "upload_date": "20261112",
+    "duration": 1410,
+    "view_count": 34,
+    "like_count": 3,
+    "uploader": "Ramtin Tech Zone",
+    "channel_id": "UCd_1KGo_C1ijG7Y3fUI2B6w",
+    "webpage_url": "https://www.youtube.com/watch?v=hSuHQZoeta4",
+    "thumbnail": "https://i.ytimg.com/vi/hSuHQZoeta4/maxresdefault.jpg",
+    "chapters": null,
+    "tags": [
+      "OpenConnect VPN",
+      "OpenConnect MikroTik",
+      "MikroTik OpenConnect",
+      "ocserv",
+      "ocserv MikroTik",
+      "MikroTik ocserv Docker",
+      "Cisco AnyConnect",
+      "AnyConnect MikroTik",
+      "AnyConnect VPN Server",
+      "Cisco Secure Client",
+      "OpenConnect Server",
+      "MikroTik RouterOS 7",
+      "RouterOS Container",
+      "MikroTik Container",
+      "MikroTik Docker",
+      "MikroTik VPN Server",
+      "ocserv Docker",
+      "SSL VPN",
+      "TLS VPN",
+      "Ramtin Tech Zone",
+      "Ramtin",
+      "Ramtin Rahmani Nejad",
+      "mikrotik tutorial",
+      "mikrotik",
+      "routeros"
+    ],
+    "categories": [
+      "Science & Technology"
+    ],
+    "transcript": {
+      "source": "auto",
+      "lang": "en",
+      "file": "hSuHQZoeta4.vtt"
+    }
+  },
+  {
     "id": "lheaAh0YZyk",
     "title": "How to Block Ads on OpenWrt | Network-Wide Ad Blocking",
     "description": "With OpenWrt, you can block advertising and tracking domains across your network using the Adblock package, without installing a separate Pi-hole server or configuring ad blockers on individual devices.\n\nIn this video, I demonstrate how to install and configure Adblock on an OpenWrt router and test DNS-based ad blocking in a real network environment.\n\nI start by explaining how DNS-based ad blocking works and how it prevents devices from resolving domains associated with advertisements and tracking.\n\nThen I explore the available Adblock packages, install Adblock and its LuCI interface, and configure the DNS backend and blocklist sources.\n\nI also configure Force Local DNS to redirect standard DNS requests through the router, helping prevent clients from bypassing the local DNS filtering through external DNS servers.\n\nFinally, I test domain blocking, examine DNS responses, and configure DNS reporting to monitor DNS queries and blocked domains.\n\n⏱️ Video Chapters:\n\nTo be added based on the final video timestamps.\n\n🔑 Key Takeaways:\n\n- Network-Wide Ad Blocking: OpenWrt can filter advertising and tracking domains for devices using the router's DNS service.\n- Adblock Package: The Adblock package provides DNS-based domain filtering directly on OpenWrt.\n- LuCI Interface: luci-app-adblock provides a web interface for managing Adblock settings, blocklists, and reports.\n- DNS Blocklists: Multiple blocklist sources can be used to identify and block advertising and tracking domains.\n- Force Local DNS: Redirects standard DNS requests on port 53 to the router's local DNS service.\n- **DNS Reporting:** Uses tcpdump to capture DNS traffic and generate reports about DNS requests and blocked domains.\n- Testing: DNS lookups can be used to verify whether selected domains are being blocked.\n- Limitations: DNS-based filtering cannot reliably block advertisements served from the same domains as legitimate content, including most YouTube ads.\n\n🔗 Related Videos:\n\n▶️ What is OpenWrt? The Powerful Open-Source OS for Your Router\nhttps://youtu.be/eTzKk8yJP3A\n\n▶️ OpenWrt 25.12: OPKG is Gone, APK Is Here!\nhttps://youtu.be/fl99lo_5GLs\n\n▶️ Block ALL Ads on Your Network with MikroTik AdList (No Pi-hole Needed!) 🔥\nhttps://youtu.be/6RuiR985A78\n\n🔗 Useful Resources & Documentation:\n\nOpenWrt Official Website:\nhttps://openwrt.org/\n\nOpenWrt Ad Blocking Documentation:\nhttps://openwrt.org/docs/guide-user/services/ad-blocking\n\nAdblock Package Source Code:\nhttps://github.com/openwrt/packages/tree/master/net/adblock\n\n⚠️ Important Note:\n\nDNS-based ad blocking does not guarantee that every advertisement will be blocked. Its effectiveness depends on the selected blocklists, DNS configuration, and how applications deliver advertisements.\n\nForce Local DNS redirects conventional DNS traffic on port 53, but it does not automatically prevent clients from using encrypted DNS protocols such as DNS over HTTPS (DoH).\n\nDNS reporting requires a properly configured Report Interface and a working tcpdump installation. After enabling reporting or changing the Report Interface, restart the Adblock service to initialize DNS capture.\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n#OpenWrt #Adblock #AdBlocking #Networking #DNS\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n🔵 Telegram: https://t.me/ramtintechzone\n🟡 Instagram: https://instagram.com/ramtintechzone\n🔴 Website: https://ramtin.zone",
