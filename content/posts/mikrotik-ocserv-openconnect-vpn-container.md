@@ -3,6 +3,7 @@ title: "How to Run an OpenConnect VPN (ocserv) Container on MikroTik with Let's 
 date: 2026-11-12
 slug: mikrotik-ocserv-openconnect-vpn-container
 categories: ["MikroTik", "VPN"]
+youtube_id: hSuHQZoeta4
 image: /assets/images/ocserv-openconnect-vpn-mikrotik-container.webp
 description: "Run an OpenConnect VPN server as a container on MikroTik RouterOS 7, with a real Let's Encrypt certificate on port 443 and copy-paste commands for every step — networking, certificates, NAT, and user management."
 ---
