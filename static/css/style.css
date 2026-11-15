@@ -344,15 +344,6 @@ body.links-standalone .site-footer { display: none; }
 .link-btn-featured:hover { background: var(--color-accent-hover); border-color: var(--color-accent-hover); }
 .link-btn-featured .icon, .link-btn-featured:hover .icon { color: var(--color-text-on-accent); }
 .link-btn-featured .link-btn-sub { color: var(--color-text-on-accent); opacity: 0.85; }
-.links-socials { display: flex; justify-content: center; gap: var(--space-3); margin-top: var(--space-8); }
-.links-socials a {
-  display: grid; place-items: center; width: var(--space-12); height: var(--space-12);
-  background: var(--color-surface); border: 1px solid var(--color-border);
-  border-radius: var(--radius-full); color: var(--color-text-muted);
-  transition: border-color var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
-}
-.links-socials a:hover { color: var(--color-text); border-color: var(--color-border-strong); }
-.links-socials .icon { width: var(--space-5); height: var(--space-5); }
 .links-foot { text-align: center; margin-top: var(--space-8); color: var(--color-text-muted); font-size: var(--font-size-sm); }
 
 /* Responsive */
