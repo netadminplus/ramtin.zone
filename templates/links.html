@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% from "icons.html" import brand, lucide %}
+{% block body_class %}links-standalone{% endblock %}
+{% block title %}Links — {{ site.name }}{% endblock %}
+{% block description %}{{ page.description | default(site.description) }}{% endblock %}
+{% block content %}
+<div class="links-wrap">
+  <div class="links-profile">
+    <div class="links-avatar" aria-hidden="true">R</div>
+    <h1 class="links-name">Ramtin Tech Zone</h1>
+    <p class="links-bio">Practical videos about networking, infrastructure, DevOps and AI.</p>
+  </div>
+  <div class="links-list">
+    <a class="link-btn link-btn-featured" href="https://youtube.com/@ramtintechzone">{{ brand('youtube') }}<span class="link-btn-text"><span class="link-btn-label">YouTube</span><span class="link-btn-sub">Watch the latest videos</span></span></a>
+    <a class="link-btn" href="/">{{ lucide('globe') }}<span class="link-btn-text"><span class="link-btn-label">Blog</span><span class="link-btn-sub">Articles from every video</span></span></a>
+    <a class="link-btn" href="https://t.me/ramtintechzone">{{ brand('telegram') }}<span class="link-btn-text"><span class="link-btn-label">Telegram</span><span class="link-btn-sub">News &amp; video updates</span></span></a>
+    <a class="link-btn" href="https://github.com/netadminplus">{{ brand('github') }}<span class="link-btn-text"><span class="link-btn-label">GitHub</span><span class="link-btn-sub">Scripts &amp; open-source tools</span></span></a>
+    <a class="link-btn" href="/donate/">{{ lucide('heart') }}<span class="link-btn-text"><span class="link-btn-label">Donate</span><span class="link-btn-sub">Support the channel</span></span></a>
+    <a class="link-btn" href="mailto:ramtin.rahmani@gmail.com">{{ lucide('mail') }}<span class="link-btn-text"><span class="link-btn-label">Email</span><span class="link-btn-sub">ramtin.rahmani@gmail.com</span></span></a>
+  </div>
+  <div class="links-socials">
+    <a href="https://instagram.com/ramtintechzone" aria-label="Instagram" title="Instagram">{{ brand('instagram') }}</a>
+    <a href="https://x.com/ramtin_rahmani" aria-label="X" title="X">{{ brand('x') }}</a>
+    <a href="https://linkedin.com/in/ramtin-rahmani" aria-label="LinkedIn" title="LinkedIn">{{ brand('linkedin') }}</a>
+  </div>
+  <p class="links-foot">Persian courses &amp; community: <a href="https://netadminplus.com">netadminplus.com</a></p>
+</div>
+{% endblock %}

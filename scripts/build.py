@@ -273,7 +273,7 @@ def main():
     # ---- static pages ----------------------------------------------
     for path in sorted((CONTENT / "pages").glob("*.md")):
         fm, body = parse_post(path)
-        html = env.get_template("page.html").render(
+        html = env.get_template(fm.get("template", "page.html")).render(
             **ctx,
             page={"title": fm["title"], "body_html": relink(render_md(body), "../"),
                   "description": fm.get("description")},
@@ -324,7 +324,7 @@ def main():
         urls.append((f"posts/{p['slug']}/", p["date"]))
     for n in range(2, total_pages + 1):
         urls.append((f"page/{n}/", posts[0]["date"] if posts else "2026-11-10"))
-    for slug in ("about", "donate", "contact", "projects", "design-system"):
+    for slug in ("about", "donate", "contact", "projects", "design-system", "links"):
         urls.append((f"{slug}/", "2026-11-10"))
     sm = "".join(
         f"  <url><loc>{SITE_URL}/{u}</loc><lastmod>{lm}</lastmod></url>\n"

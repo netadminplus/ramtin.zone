@@ -173,6 +173,17 @@ Classes: `.code-wrap` (positions the button against the visible block), `.copy-b
   <p style="margin:0; color:var(--color-text-muted); font-size:14px">Inputs use the surface background, a 1px border, and 10px corners. Focus shows the accent ring.</p>
 </div>
 
+## Link buttons
+
+<div class="ds-demo">
+  <div class="links-list">
+    <a class="link-btn link-btn-featured" href="#"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg><span class="link-btn-text"><span class="link-btn-label">YouTube</span><span class="link-btn-sub">Watch the latest videos</span></span></a>
+    <a class="link-btn" href="#"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg><span class="link-btn-text"><span class="link-btn-label">Blog</span><span class="link-btn-sub">Articles from every video</span></span></a>
+  </div>
+</div>
+
+Link buttons are the `/links/` bio page: one narrow column (480px, `--max-width-links`), one featured action, plain surface buttons with an icon, a label, and one sub-line. The page hides the site header and footer. Icons are inlined from `templates/icons.html` — Simple Icons for brands, Lucide for the rest. The link list itself lives in `templates/links.html`.
+
 ## Motion and focus
 
 Motion is minimal: cards lift in 0.15s, nothing else animates. Every link, button, and input shows a visible focus ring when navigated by keyboard — try tabbing through this page. Selection uses the accent color.
