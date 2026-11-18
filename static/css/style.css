@@ -185,11 +185,15 @@ a.page-link:hover { border-color: var(--color-accent); color: var(--color-accent
 .article-body li { margin-bottom: 6px; }
 .article-body li::marker { color: var(--color-accent-hover); }
 .article-body img { border-radius: var(--radius-lg); border: 1px solid var(--color-border); margin: var(--space-2) 0; }
+.article-body img.qr { margin: var(--space-2) auto; }
 .article-body code {
   background: var(--color-surface-2); border: 1px solid var(--color-border);
   padding: 2px 6px; border-radius: var(--radius-sm); font-size: 0.88em;
   font-family: var(--font-mono);
 }
+/* Long unbroken inline values (wallet addresses on the Donate page) must
+   wrap instead of forcing horizontal scroll on narrow screens. */
+.article-body code.copyable { overflow-wrap: anywhere; }
 .article-body pre {
   background: var(--color-code-bg); border: 1px solid var(--color-border);
   border-radius: var(--radius-lg); padding: var(--space-4) 18px; overflow-x: auto; margin: 0 0 var(--space-5);

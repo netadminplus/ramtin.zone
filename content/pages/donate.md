@@ -3,9 +3,7 @@ title: "Donate"
 slug: donate
 ---
 
-This page is all about how you can support **Ramtin Tech Zone**. I’m genuinely happy and motivated that you’re even considering this—it honestly keeps me going.
-
-<img src="https://s.w.org/images/core/emoji/17.0.2/svg/1f642.svg" alt="🙂" width="32">
+This page is all about how you can support **Ramtin Tech Zone**. I’m genuinely happy and motivated that you’re even considering this—it honestly keeps me going :)
 
 Here are a few ways you can help me dedicate more time to creating content and scripts:
 
@@ -27,31 +25,31 @@ Let’s be honest: getting a crypto notification is one of the coolest feelings 
   - **Address:** <code class="copyable">bc1q2llgpfnzjtf2tfwnun0grtsjkdm87zeedhe30v</code>
   - **Network:** Bitcoin (Native)
 
-<img src="/assets/images/donate-bitcoin-netadminhub.com_.webp" alt="Bitcoin QR code" width="240">
+<img src="/assets/images/donate-bitcoin-netadminhub.com_.webp" alt="Bitcoin QR code" width="240" class="qr">
 
 - **Ethereum (ETH)**
   - **Address:** <code class="copyable">0xB219edC3F6560FF7F27038924968ac0B76Cd2C43</code>
   - **Network:** Ethereum Mainnet / Base (Lowest Fees) / Arbitrum
 
-<img src="/assets/images/donate-eth-netadminhub.com_.webp" alt="Ethereum QR code" width="240">
+<img src="/assets/images/donate-eth-netadminhub.com_.webp" alt="Ethereum QR code" width="240" class="qr">
 
 - **Tether (USDT)**
   - **Address:** <code class="copyable">TCYrKuMPLYEoSWms2ZLZseTDcRPoYJR1fW</code>
   - **Network:** TRC20 (Tron)
 
-<img src="/assets/images/donate-usdt-netadminhub.com_.webp" alt="Tether QR code" width="240">
+<img src="/assets/images/donate-usdt-netadminhub.com_.webp" alt="Tether QR code" width="240" class="qr">
 
 - **Litecoin (LTC)**
   - **Address:** <code class="copyable">ltc1q94e6m4nrxmf37452ytvsnl9gptla5cxuy6ld75</code>
   - **Network:** Litecoin (Native)
 
-<img src="/assets/images/donate-ltc-netadminhub.com_.webp" alt="Litecoin QR code" width="240">
+<img src="/assets/images/donate-ltc-netadminhub.com_.webp" alt="Litecoin QR code" width="240" class="qr">
 
 - **Tron (TRX)**
   - **Address:** <code class="copyable">TCYrKuMPLYEoSWms2ZLZseTDcRPoYJR1fW</code>
   - **Network:** Tron Native
 
-<img src="/assets/images/donate-trx-netadminhub.com_.webp" alt="Tron QR code" width="240">
+<img src="/assets/images/donate-trx-netadminhub.com_.webp" alt="Tron QR code" width="240" class="qr">
 
 ---
 
