@@ -25,6 +25,14 @@ jobs:
       - name: Sync new videos
         run: |
           python scripts/sync.py
+      - name: Refresh view counts
+        # data/videos.json feeds the view counts on the post cards. sync.py
+        # only creates drafts for new videos and never touches it, so the
+        # counts froze at first-fetch values. This refreshes them every
+        # morning; a YouTube bot-check must not block the sync above.
+        continue-on-error: true
+        run: |
+          python scripts/refresh_views.py
       - name: Commit and push if changed
         run: |
           git config user.name "ramtin.zone sync"
