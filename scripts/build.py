@@ -19,6 +19,7 @@ from pathlib import Path
 
 import yaml
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+from markupsafe import Markup
 import markdown as md_lib
 
 HERE = Path(__file__).resolve().parent
@@ -152,7 +153,11 @@ def main():
         loader=FileSystemLoader(str(TEMPLATES)),
         autoescape=select_autoescape(["html", "xml"]),
     )
-    env.filters["tojson"] = lambda v: json.dumps(v, ensure_ascii=False)
+    # tojson MUST return Markup: with autoescape on, a plain str from
+    # json.dumps gets HTML-escaped (" -> &#34;), which made every post's
+    # JSON-LD unparsable for Google (GSC "Unparsable structured data",
+    # 23 Nov 2026). Markup marks the JSON safe so quotes survive verbatim.
+    env.filters["tojson"] = lambda v: Markup(json.dumps(v, ensure_ascii=False))
 
     video_meta = load_video_meta()
 

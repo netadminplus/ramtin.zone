@@ -105,6 +105,10 @@ Chips filter content. Tags label a post's topics. Badges show a status — succe
 
 Cards are the home page. One image (16:9), one tag, one title, a three-line description, and a footer with reading time. On hover the card lifts 3px and the border brightens.
 
+## Page images
+
+Inline photos on static pages (About, Donate) are capped at 480px (`--max-width-page-image`) and centered. Without the cap a 768px portrait rendered ~740px wide in the 780px column and dominated the page. QR codes keep their own 240px width. Tutorial screenshots inside post bodies are not capped — they stay full-width.
+
 ## Pagination
 
 The home page shows 12 posts per page. Page 1 is `/`, later pages are `/page/2/`, `/page/3/`, and so on. The footer stays reachable on every page, no matter how many posts the site grows to.

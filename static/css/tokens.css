@@ -106,6 +106,7 @@
   --max-width: 1120px;
   --max-width-narrow: 780px;
   --max-width-links: 480px;     /* bio-link landing page column */
+  --max-width-page-image: 480px; /* inline photos on static pages (About, Donate) */
   --header-height: 64px;
 
   /* ---- Motion ---------------------------------------------------------- */
