@@ -72,6 +72,14 @@
   "updated": "2026-01-31"
  },
  {
+  "name": "hotwrt",
+  "url": "https://github.com/netadminplus/hotwrt",
+  "description": "The Hotspot Package for OpenWrt",
+  "stars": 0,
+  "language": "",
+  "updated": "2026-11-27"
+ },
+ {
   "name": "issabel5-easyvpn",
   "url": "https://github.com/netadminplus/issabel5-easyvpn",
   "description": "",
