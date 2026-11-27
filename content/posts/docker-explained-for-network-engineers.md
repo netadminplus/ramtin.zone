@@ -75,6 +75,6 @@ Start with the official Docker documentation. My recommendation from the video i
 
 ## Useful Links
 
-- Official Docker Documentation: https://docs.docker.com/
-- Docker Get Started: https://docs.docker.com/get-started/
-- Docker Hub: https://hub.docker.com/
+- [Official Docker Documentation](https://docs.docker.com/)
+- [Docker Get Started](https://docs.docker.com/get-started/)
+- [Docker Hub](https://hub.docker.com/)

@@ -75,6 +75,26 @@ def main():
             if phrase in line.lower():
                 errors.append(f'banned phrase "{phrase}" on line {i}')
 
+    # Bare URLs render as plain, unclickable text (Python-Markdown has
+    # no autolink — 2026-11-27: 8 bare URLs shipped as text in the
+    # Links sections of 3 articles). Links must be [label](url).
+    # Code blocks and inline code are exempt: a URL in a command is
+    # code, not a link.
+    url_re = re.compile(r"https?://[^\s<>\"')\]]+")
+    in_fence = False
+    for i, line in enumerate(body.splitlines(), 1):
+        if line.strip().startswith("```"):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
+        probe = re.sub(r"\[[^\]]*\]\([^)]*\)", "", line)
+        probe = re.sub(r"<https?://[^>]+>", "", probe)
+        probe = re.sub(r"`[^`]*`", "", probe)
+        for m in url_re.finditer(probe):
+            errors.append(f"bare URL on line {i} — write it as "
+                          f"[label](url): {m.group(0)[:60]}")
+
     secs = sections(body)
     if not any(h != "(intro)" for h, _ in secs):
         errors.append("no ## sections found")

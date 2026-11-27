@@ -79,6 +79,6 @@ A Hotspot is one of those RouterOS features that looks complex from the outside 
 
 ## Links
 
-MikroTik HotSpot documentation: https://manual.mikrotik.com/docs/7.25/authentication-authorization-accounting/hotspot-captive-portal/
+[MikroTik HotSpot documentation](https://manual.mikrotik.com/docs/7.25/authentication-authorization-accounting/hotspot-captive-portal/)
 
-Custom login page video and guide: https://ramtin.zone/posts/how-to-customize-a-mikrotik-hotspot-login-page-with-ai-custom-login-template/
+[Custom login page video and guide](https://ramtin.zone/posts/how-to-customize-a-mikrotik-hotspot-login-page-with-ai-custom-login-template/)

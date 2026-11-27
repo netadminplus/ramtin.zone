@@ -98,8 +98,8 @@ It is not a replacement for a VPN when you need your whole network. This reaches
 
 ## Links
 
-Cloudflare Tunnel documentation: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/
+[Cloudflare Tunnel documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)
 
-Browser-based RDP (Cloudflare blog): https://blog.cloudflare.com/browser-based-rdp/
+[Browser-based RDP (Cloudflare blog)](https://blog.cloudflare.com/browser-based-rdp/)
 
-Cloudflare Zero Trust dashboard: https://one.dash.cloudflare.com/
+[Cloudflare Zero Trust dashboard](https://one.dash.cloudflare.com/)

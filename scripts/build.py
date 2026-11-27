@@ -44,9 +44,52 @@ def parse_post(path):
 
 
 def render_md(body):
-    return md_lib.markdown(
+    return autolink_bare_urls(md_lib.markdown(
         body, extensions=["tables", "fenced_code", "smarty"], output_format="html5"
-    )
+    ))
+
+
+_SKIP_TAGS = {"a", "code", "pre", "script", "style"}
+_URL_RE = re.compile(r"https?://[^\s<>\"')\]]+")
+
+
+def _link_match(m):
+    url = m.group(0)
+    trail = ""
+    while url and url[-1] in ".,;:!?":
+        trail = url[-1] + trail
+        url = url[:-1]
+    while url.endswith(")") and url.count("(") < url.count(")"):
+        trail = ")" + trail
+        url = url[:-1]
+    return f'<a href="{url}">{url}</a>{trail}'
+
+
+def autolink_bare_urls(html):
+    """Wrap bare URLs in text nodes with <a> tags.
+
+    Safety net (2026-11-27): Python-Markdown does NOT auto-link a bare
+    URL, so "Label: https://..." in an article rendered as plain,
+    unclickable text in the Links sections of 3 articles. A bare URL
+    must never ship as text again. Skips content inside <a>, <code>,
+    <pre>, <script>, <style> and anything inside a tag (attributes).
+    Sources must still write proper [label](url) links — this is only
+    the backstop; verify_article.py fails the article on bare URLs.
+    """
+    out = []
+    skip_depth = 0
+    for part in re.split(r"(<[^>]+>)", html):
+        if part.startswith("<"):
+            tag = re.match(r"</?([a-zA-Z][a-zA-Z0-9]*)", part)
+            if tag and tag.group(1).lower() in _SKIP_TAGS:
+                if part.startswith("</"):
+                    skip_depth = max(0, skip_depth - 1)
+                elif not part.endswith("/>"):
+                    skip_depth += 1
+            out.append(part)
+            continue
+        out.append(part if skip_depth else _URL_RE.sub(_link_match, part))
+    return "".join(out)
 
 
 def human_date(d):
