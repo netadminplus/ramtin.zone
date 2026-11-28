@@ -25,7 +25,7 @@
     "name": {{ post.title | tojson }},
     "description": {{ post.description | tojson }},
     "thumbnailUrl": {{ post.thumb_abs | tojson }},
-    "uploadDate": "{{ post.date }}",
+    "uploadDate": "{{ post.date_iso }}",
     "embedUrl": "https://www.youtube.com/embed/{{ post.youtube_id }}"
   }
   {% endif %}

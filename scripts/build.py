@@ -247,6 +247,11 @@ def main():
                 "title": fm["title"],
                 "slug": fm["slug"],
                 "date": str(fm["date"])[:10],
+                # Full ISO 8601 datetime with timezone: Google's VideoObject
+                # requires uploadDate as a datetime, not a bare date
+                # (GSC 25 Nov 2026: "Invalid datetime value" / "missing a
+                # timezone"). Dates are Tehran-local; Iran is +03:30 year-round.
+                "date_iso": str(fm["date"])[:10] + "T00:00:00+03:30",
                 "date_human": human_date(fm["date"]),
                 "categories": fm.get("categories", []),
                 "description": fm.get("description", ""),
